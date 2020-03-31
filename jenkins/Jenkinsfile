@@ -18,7 +18,7 @@ pipeline {
 
             steps {
 
-                sh 'python -m py_compile ../tryitout.py'
+                sh 'python -m py_compile tryitout.py'
 
             }
 
