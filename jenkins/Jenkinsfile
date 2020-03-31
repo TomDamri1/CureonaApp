@@ -43,11 +43,6 @@ pipeline {
 
             }
 
-            post {
-
-
-
-            }
 
         }
 
