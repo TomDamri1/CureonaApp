@@ -17,7 +17,7 @@ api = Api(app)
 class EMPTY(Resource):
 
     def get(self):
-        return "<h1>hello</h1>"
+        return "<h1>hello world</h1>"
 
 
 # adding the defined resources along with their corresponding urls
