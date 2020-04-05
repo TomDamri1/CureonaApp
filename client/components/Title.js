@@ -10,6 +10,17 @@ import Colors from '../constants/Colors'
 
 
 export default Title = props => {
+    if(props.title.toUpperCase()==="CUREONA")
+    return (
+        <View>
+            <View style={styles.imageContainer}>
+                <Image style={styles.titleImage} source={require('../assets/cureonaTitle.png')}/>
+            </View>
+            <View >
+                <Text style={styles.subTitle}>{props.subTitle}</Text>
+            </View>
+        </View>
+    )
     if (props.subTitle) {
         return (
             <View>
@@ -24,9 +35,9 @@ export default Title = props => {
     }
     else {
         return (
-        <View >
-            <Text style={styles.subTitle}>{props.title}</Text>
-        </View>
+            <View >
+                <Text style={styles.subTitle}>{props.title}</Text>
+            </View>
         )
     }
 
@@ -35,25 +46,26 @@ export default Title = props => {
 
 const styles = StyleSheet.create({
     title: {
-      padding:50,
-      textAlign: 'center',
-      fontWeight: 'bold',
-      fontSize: 50,
-      color: Colors.primaryColor,
-      fontStyle: 'italic'
+        marginVertical: 20,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 50,
+        color: Colors.primaryColor,
+        fontStyle: 'italic'
     },
     subTitle: {
-      padding:0,
-      textAlign: 'center', 
-      fontWeight: 'bold',
-      fontSize: 35,
-      color: Colors.primaryColor,
+        padding: 0,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 35,
+        color: Colors.primaryColor,
     },
-    titleImage : {
-        flex: 1,
-        width: null,
-        height: null,
-        resizeMode: 'contain'
+    titleImage: {
+        width:'80%',
+        
+    },
+    imageContainer:{
+        alignItems:'center',
+        marginVertical:30
     }
-  });
-  
+});

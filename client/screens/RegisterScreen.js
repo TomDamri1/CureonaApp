@@ -142,12 +142,6 @@ const RegisterScreen = props => {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   form: {
     margin: 20,
   },

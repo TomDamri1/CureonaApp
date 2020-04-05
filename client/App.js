@@ -8,7 +8,7 @@ import LoginNavigator from './navigation/LoginNavigator';
 
 export default function App() {
   return (
-    <LoginNavigator/>
+    <LoginNavigator />
   );
 }
 
