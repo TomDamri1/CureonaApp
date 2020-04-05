@@ -35,11 +35,8 @@ class Registration(Resource):
         json_doc = new_col.find_one({"user_name": data['user_name']})
         # if user with the same user name is not exist, create new user.
         if not json_doc:
-            # print(data)
-            # print(data['type'])
             if data['type'] == 'business_owner':
                 data['workers'] = []
-            # print(data)
             new_col.insert_one(data)
             return jsonify({'state': 'success'})
         # if user with the same user name is exist, return to server that: 'user name already exist'.
