@@ -1,13 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import LoginScreen from './screens/LoginScreen';
+import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from './screens/RegisterScreen';
-import MainScreen from './screens/Main';
 
 export default function App() {
   return (
-    <RegisterScreen/>
+    <LoginScreen/>
   );
 }
 

@@ -11,11 +11,11 @@ import {
   Alert,
 } from 'react-native';
 
-const ADMIN = "admin";
-const CUSTOMER = "customer";
-const BUSINESS_OWNER = "business_owner"
+import Title from '../components/Title'
+import text from '../constants/text'
 
-const RegisterScreen = () => {
+
+const RegisterScreen = props => {
   const [username, setUsername] = useState('');
   const [usernameIsValid, setUsernameIsValid] = useState(false);
   const [userPassword, setUserPassword] = useState('');
@@ -24,7 +24,7 @@ const RegisterScreen = () => {
   const [passwordAuthentication, setPasswordAuthentication] = useState('');
   const [passwordIsValid, setPasswordIsValid] = useState(false);
   const [passwordAuthenticationIsValid, setPasswordAuthenticationIsValid] = useState(false);
-  
+
   /*const registerHandler = useCallback(() => {
     if (!passwordIsValid) {
       Alert.alert('Password is invalid', 'Please check the errors in the form.', [
@@ -35,8 +35,8 @@ const RegisterScreen = () => {
   })[username, userPassword, passwordAuthentication, passwordIsValid];*/
 
   //username validation testing
-  const usernameChangeHandler = text =>{
-    if (/^[a-zA-Z]+$/.test(text)){
+  const usernameChangeHandler = text => {
+    if (/^[a-zA-Z]+$/.test(text)) {
       setUsernameIsValid(true);
     } else {
       setUsernameIsValid(false);
@@ -45,18 +45,18 @@ const RegisterScreen = () => {
   };
 
   //password validation testing
-  const passwordChangeHandler = text =>{
-    if (text.lenght < 6 || text.lenght > 8){
+  const passwordChangeHandler = text => {
+    if (text.lenght < 6 || text.lenght > 8) {
       setPasswordIsValid(false);
     } else {
       setPasswordIsValid(true);
     }
     setUserPassword(text);
   };
-  
+
   //password Authentication validation testing
-  const passwordAuthenticationChangeHandler = text =>{
-    if (text=={userPassword}){
+  const passwordAuthenticationChangeHandler = text => {
+    if (text == { userPassword }) {
       setPasswordAuthenticationIsValid(true);
     } else {
       setPasswordAuthenticationIsValid(false);
@@ -68,50 +68,45 @@ const RegisterScreen = () => {
   return (
     <ScrollView>
       <View style={styles.form}>
-        <View>
-        <Text style={styles.title}>CureOna</Text>
-        </View>
-        <View >
-            <Text style={styles.subTitle}>Registration</Text>
-        </View>
+        <Title title={text.applicationName} subTitle={text.registration} />
         <View style={styles.formControl}>
-          <Text style={styles.label}>Username</Text>
+          <Text style={styles.label}>{text.username}</Text>
           <TextInput
-            placeholder="The username consists of A-Z, a-z letters" 
+            placeholder={text.placeholder.username}
             style={styles.input}
             value={username}
-            onChangeText = {usernameChangeHandler} //{text => setUsername(text)}
+            onChangeText={usernameChangeHandler} //{text => setUsername(text)}
             returnKeyType="next"
             keyboardType='default'
             returnKeyType='next'
           />
         </View>
         <View style={styles.formControl}>
-          <Text style={styles.label}>Password</Text>
+          <Text style={styles.label}>{text.password}</Text>
           <TextInput
-            placeholder="Password must be between 6-8 characters" 
+            placeholder={text.placeholder.password}
             style={styles.input}
             value={userPassword}
-            onChangeText= {passwordChangeHandler}//{text => setUserPassword(text)}
+            onChangeText={passwordChangeHandler}//{text => setUserPassword(text)}
             secureTextEntry={true}
             keyboardType='default'
             returnKeyType='next'
           />
         </View>
         <View style={styles.formControl}>
-          <Text style={styles.label}>Password Authentication</Text>
+          <Text style={styles.label}>{text.passwordAuthentication}</Text>
           <TextInput
-            placeholder="Enter the password again"
+            placeholder={text.placeholder.passwordAuthentication}
             style={styles.input}
             value={passwordAuthentication}
-            onChangeText = {passwordAuthenticationChangeHandler}//{text => setPasswordAuthentication(text)}
+            onChangeText={passwordAuthenticationChangeHandler}//{text => setPasswordAuthentication(text)}
             secureTextEntry={true}
             keyboardType='default'
             returnKeyType='next'
             onSubmitEditing={() => console.log('onSubmitingEditing')}//shows a massege when the user done input the authnt. password
           />
         </View>
-        <Button title="Register" onPress={()=>(({passwordIsValid} && {passwordAuthenticationIsValid} && {usernameIsValid}) ? alert('the data is correct'): alert('invalid data'))} />
+        <Button title={text.register} onPress={() => (({ passwordIsValid } && { passwordAuthenticationIsValid } && { usernameIsValid }) ? alert('the data is correct') : alert('invalid data'))} />
       </View>
     </ScrollView>
   );
@@ -143,7 +138,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1
   },
   title: {
-    padding:50,
+    padding: 50,
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 50,
@@ -151,8 +146,8 @@ const styles = StyleSheet.create({
     fontStyle: 'italic'
   },
   subTitle: {
-    padding:0,
-    textAlign: 'center', 
+    padding: 0,
+    textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 35,
     color: 'teal',
