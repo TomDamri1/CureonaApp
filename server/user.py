@@ -1,5 +1,7 @@
 from flask import jsonify
 from flask_restful import reqparse, Resource
+import hashlib
+
 
 from server.mongo_connection import *
 import hashlib
@@ -14,7 +16,6 @@ Login_parser.add_argument('password')
 class Login(Resource):
     def post(self):
         data = Login_parser.parse_args()
-        print(data)
         json_doc = new_col.find_one({"user_name": data['username']})
         print(json_doc)
         sha_encrypt = hashlib.sha256(data.password.encode()).hexdigest()
@@ -46,6 +47,8 @@ class Registration(Resource):
             if data['type'] == 'business_owner':
                 data['workers'] = []
             # print(data)
+            data['password'] = hashlib.sha256(data.password.encode()).hexdigest()
+            print(data['password'])
             new_col.insert_one(data)
             return jsonify({'state': 'success'})
         # if user with the same user name is exist, return to server that: 'user name already exist'.
