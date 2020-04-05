@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         fontStyle: 'italic'
     },
     subTitle: {
-        padding: 0,
+        padding: 10,
         textAlign: 'center',
         fontWeight: 'bold',
         fontSize: 35,
@@ -66,6 +66,6 @@ const styles = StyleSheet.create({
     },
     imageContainer:{
         alignItems:'center',
-        marginVertical:30
+        marginVertical:25
     }
 });

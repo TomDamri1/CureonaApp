@@ -9,6 +9,10 @@ import {
   Button,
   TouchableOpacity,
   Alert,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard
 } from 'react-native';
 
 import Title from '../components/Title'
@@ -40,7 +44,7 @@ const LoginScreen = props => {
     console.log(resData);
     if (resData.state === Response.success) {
 
-      switch (resData.type){
+      switch (resData.type) {
 
         case text.type.customer:
           props.navigation.navigate({
@@ -51,10 +55,29 @@ const LoginScreen = props => {
           })
           break;
 
+        case text.type.businessOwner:
+          props.navigation.navigate({
+            routeName: "BusinessOwnerScreen",
+            params: {
+              username: username,
+              business: "fake Business!!!"
+            }
+          })
+          break;
+
+        case text.type.admin:
+          props.navigation.navigate({
+            routeName: "AdminScreen",
+            params: {
+              username: username,
+            }
+          })
+          break;
+
         default:
-          Alert.alert(text.alert.pleaseCheckYourUserNameAndPassword)    
+          Alert.alert(text.alert.pleaseCheckYourUserNameAndPassword)
       }
-      
+
     }
     else {
       Alert.alert(text.alert.pleaseCheckYourUserNameAndPassword)
@@ -69,40 +92,47 @@ const LoginScreen = props => {
   }
 
   return (
-    <ScrollView>
-      <Title title={text.applicationName} subTitle={text.login} />
-      <View style={styles.form}>
-        <View style={styles.formControl}>
-          <Text style={styles.label}>{text.username}</Text>
-          <TextInput
-            style={styles.input}
-            value={username}
-            onChangeText={text => setUsername(text)}
-            returnKeyType="next"
+    <KeyboardAvoidingView
+      behavior={Platform.Os == "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView>
+          <Title title={text.applicationName} subTitle={text.login} />
+          <View style={styles.form}>
+            <View style={styles.formControl}>
+              <Text style={styles.label}>{text.username}</Text>
+              <TextInput
+                style={styles.input}
+                value={username}
+                onChangeText={text => setUsername(text)}
+                returnKeyType="next"
 
-          />
-        </View>
-        <View style={styles.formControl}>
-          <Text style={styles.label}>{text.password}</Text>
-          <TextInput
-            style={styles.input}
-            value={userPassword}
-            onChangeText={text => setUserPassword(text)}
-            secureTextEntry={true}
+              />
+            </View>
+            <View style={styles.formControl}>
+              <Text style={styles.label}>{text.password}</Text>
+              <TextInput
+                style={styles.input}
+                value={userPassword}
+                onChangeText={text => setUserPassword(text)}
+                secureTextEntry={true}
 
-          />
-        </View>
-        <View style={styles.gap} />
-        <Button color={Colors.primaryColor} title={text.login} onPress={() => { handleLogin() }} />
-        <View style={styles.registerContainer}>
-          <Text>{text.or_if_you_dont_have_user}</Text>
-          <TouchableOpacity onPress={() => handleRegister()}>
-            <Text style={styles.registerText}>{text.register}</Text>
-          </TouchableOpacity>
-        </View>
+              />
+            </View>
+            <View style={styles.gap} />
+            <Button color={Colors.primaryColor} title={text.login} onPress={() => { handleLogin() }} />
+            <View style={styles.registerContainer}>
+              <Text>{text.or_if_you_dont_have_user}</Text>
+              <TouchableOpacity onPress={() => handleRegister()}>
+                <Text style={styles.registerText}>{text.register}</Text>
+              </TouchableOpacity>
+            </View>
 
-      </View>
-    </ScrollView>
+          </View>
+        </ScrollView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 
