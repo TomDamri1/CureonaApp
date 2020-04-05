@@ -1,8 +1,3 @@
-export const _applicationName = "CureOna";
-export const _login = "Login";
-export const _registration = "Registration";
-export const _username = "Username";
-export const _password = "Password";
 export default {
     applicationName : "CureOna",
     login : "Login",
