@@ -70,10 +70,12 @@ class RegisterBusiness(Resource):
         if not json_doc and not CID:
             data['password'] = hashlib.sha256(data.password.encode()).hexdigest()
             print(data['password'])
+            data['CompanyId']= CID
+            data['workers'] = []
             #TO-DO
             #add comprehnsion between CID of the owner and the data base of br7
             new_col.insert_one(data)
             return jsonify({'state': 'success'})
         # if user with the same user name is exist, return to server that: 'user name already exist'.
-        return jsonify({'state': 'user name already exist'})
+        return jsonify({'state': 'user name or cid already exist'})
 
