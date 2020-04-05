@@ -9,7 +9,11 @@ import {
   Button,
   Image,
   Alert,
-  TouchableOpacity
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 
 import Title from '../components/Title'
@@ -69,7 +73,7 @@ const RegisterScreen = props => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          user_name: username,
+          username: username,
           password: userPassword,
           type: "customer"
         }),
@@ -86,7 +90,7 @@ const RegisterScreen = props => {
           }
         })
       }
-      else if (resData.state === Response.userExist){
+      else if (resData.state === Response.userExist) {
         Alert.alert(Response.userExist)
       }
 
@@ -97,56 +101,63 @@ const RegisterScreen = props => {
   }
 
   return (
-    <ScrollView>
-      <Title title={text.register} />
-      <View style={styles.form}>
-        <View style={styles.formControl}>
-          <Text style={styles.label}>{text.username}</Text>
-          <TextInput
-            placeholder = {text.placeholder.username}
-            style={styles.input}
-            value={username}
-            onChangeText={text => setUsername(text)}
-            returnKeyType="next"
+    <KeyboardAvoidingView
+      behavior={Platform.Os == "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView>
+          <Title title={text.register} />
+          <View style={styles.form}>
+            <View style={styles.formControl}>
+              <Text style={styles.label}>{text.username}</Text>
+              <TextInput
+                placeholder={text.placeholder.username}
+                style={styles.input}
+                value={username}
+                onChangeText={text => setUsername(text)}
+                returnKeyType="next"
 
-          />
-        </View>
-        <View style={styles.formControl}>
-          <Text style={styles.label}>{text.password}</Text>
-          <TextInput
-            placeholder = {text.placeholder.password}
-            style={styles.input}
-            value={userPassword}
-            onChangeText={text => setUserPassword(text)}
-            secureTextEntry={true}
+              />
+            </View>
+            <View style={styles.formControl}>
+              <Text style={styles.label}>{text.password}</Text>
+              <TextInput
+                placeholder={text.placeholder.password}
+                style={styles.input}
+                value={userPassword}
+                onChangeText={text => setUserPassword(text)}
+                secureTextEntry={true}
 
-          />
-        </View>
-        <View style={styles.formControl}>
-          <Text style={styles.label}>{text.passwordAuthentication}</Text>
-          <TextInput
-            placeholder = {text.placeholder.passwordAuthentication}
-            style={styles.input}
-            value={userPasswordAuthentication}
-            onChangeText={text => setUserPasswordAuthentication(text)}
-            secureTextEntry={true}
+              />
+            </View>
+            <View style={styles.formControl}>
+              <Text style={styles.label}>{text.passwordAuthentication}</Text>
+              <TextInput
+                placeholder={text.placeholder.passwordAuthentication}
+                style={styles.input}
+                value={userPasswordAuthentication}
+                onChangeText={text => setUserPasswordAuthentication(text)}
+                secureTextEntry={true}
 
-          />
-        </View>
-        <View style={styles.gap} />
-        <Button color={Colors.primaryColor} title={text.register} onPress={() => { handleRegister() }} />
+              />
+            </View>
+            <View style={styles.gap} />
+            <Button color={Colors.primaryColor} title={text.register} onPress={() => { handleRegister() }} />
 
-      </View>
-    </ScrollView>
+          </View>
+          <View style={styles.image}>
+            <Image style={{width:80,height:80}}source={require('../assets/cureonaIcon.png')}/>
+          </View>
+        </ScrollView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  image:{
+    alignItems:'center'
   },
   form: {
     margin: 20,

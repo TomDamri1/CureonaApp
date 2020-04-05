@@ -16,7 +16,9 @@ export default {
         pleaseCheckYourUserNameAndPassword: "please check your username and password.",
     },
     type: {
-        customer : "customer",
+        customer: "customer",
+        businessOwner: "business_owner",
+        admin: "admin"
     },
 
 

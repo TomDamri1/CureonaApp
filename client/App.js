@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView } from 'react-native';
 
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from './screens/RegisterScreen';
@@ -8,7 +8,7 @@ import LoginNavigator from './navigation/LoginNavigator';
 
 export default function App() {
   return (
-    <LoginNavigator/>
+      <LoginNavigator />
   );
 }
 
