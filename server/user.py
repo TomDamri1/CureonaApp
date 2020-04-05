@@ -38,6 +38,8 @@ class Registration(Resource):
         if not json_doc:
             # print(data)
             # print(data['type'])
+            if data['type'] == 'business_owner':
+                data['workers'] = []
             # print(data)
             new_col.insert_one(data)
             return jsonify({'state': 'success'})
