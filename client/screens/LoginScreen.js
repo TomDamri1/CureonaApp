@@ -13,18 +13,18 @@ import {
 
 import Title from '../components/Title'
 import text from '../constants/text';
-import Colors from '../constants/Colors'
+import Colors from '../constants/Colors';
+import Urls from '../constants/Urls';
+import Response from '../constants/Response';
 
 
 
 const LoginScreen = props => {
   const [username, setUsername] = useState('');
-  const [usernameIsValid, setUsernameIsValid] = useState(false);
   const [userPassword, setUserPassword] = useState('');
-  const [userType, setUserType] = useState('customer');
 
   const handleLogin = async () => {
-    const response = await fetch('https://cureona.herokuapp.com/Login', {
+    const response = await fetch(Urls.routes.login, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -36,25 +36,35 @@ const LoginScreen = props => {
       }),
     });
 
-  const resData = await response.json();
-  console.log(resData);
-  if (resData.state === "success"){
-    props.navigation.navigate({
-      routeName:"UserScreen",
-      params:{
-        username:username,
+    const resData = await response.json();
+    console.log(resData);
+    if (resData.state === Response.success) {
+
+      switch (resData.type){
+
+        case text.type.customer:
+          props.navigation.navigate({
+            routeName: "UserScreen",
+            params: {
+              username: username,
+            }
+          })
+          break;
+
+        default:
+          Alert.alert(text.alert.pleaseCheckYourUserNameAndPassword)    
       }
-    })
-  }
-  else{
-    Alert.alert("pleas check your username and password.")
-  }
+      
+    }
+    else {
+      Alert.alert(text.alert.pleaseCheckYourUserNameAndPassword)
+    }
 
   }
 
-  const handleRegister = () =>{
+  const handleRegister = () => {
     props.navigation.navigate({
-      routeName:"Registration",
+      routeName: "Registration",
     })
   }
 
@@ -82,12 +92,12 @@ const LoginScreen = props => {
 
           />
         </View>
-        <View style={styles.gap}/>
+        <View style={styles.gap} />
         <Button color={Colors.primaryColor} title={text.login} onPress={() => { handleLogin() }} />
         <View style={styles.registerContainer}>
           <Text>{text.or_if_you_dont_have_user}</Text>
-          <TouchableOpacity onPress={()=>handleRegister()}>
-            <Text>{text.register}</Text>
+          <TouchableOpacity onPress={() => handleRegister()}>
+            <Text style={styles.registerText}>{text.register}</Text>
           </TouchableOpacity>
         </View>
 
@@ -116,10 +126,13 @@ const styles = StyleSheet.create({
   gap: {
     margin: 50,
   },
-  registerContainer:{
-    marginTop:20,
-    alignContent:"center",
-    alignItems:"center"
+  registerContainer: {
+    marginTop: 20,
+    alignContent: "center",
+    alignItems: "center"
+  },
+  registerText: {
+    color: Colors.primaryColor
   }
 });
 
