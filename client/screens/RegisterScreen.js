@@ -15,6 +15,8 @@ import {
 import Title from '../components/Title'
 import text from '../constants/text'
 import Colors from '../constants/Colors';
+import Urls from '../constants/Urls'
+import Response from '../constants/Response';
 
 
 const RegisterScreen = props => {
@@ -60,7 +62,7 @@ const RegisterScreen = props => {
     if (validatingUsername && passwordLengthValidating && validatingPassword) {
       console.log("we all good now send somthing to matan!")
 
-      const response = await fetch('https://cureona.herokuapp.com/Registration', {
+      const response = await fetch(Urls.routes.register, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -75,7 +77,7 @@ const RegisterScreen = props => {
 
       const resData = await response.json();
       console.log(resData);
-      if (resData.state === "success") {
+      if (resData.state === Response.success) {
         props.navigation.popToTop();
         props.navigation.navigate({
           routeName: "UserScreen",
@@ -84,10 +86,13 @@ const RegisterScreen = props => {
           }
         })
       }
-      else {
-        Alert.alert("pleas check your username and password.")
+      else if (resData.state === Response.userExist){
+        Alert.alert(Response.userExist)
       }
 
+    }
+    else {
+      Alert.alert(text.alert.pleaseEnterValidUsernameAndPassword)
     }
   }
 
@@ -98,6 +103,7 @@ const RegisterScreen = props => {
         <View style={styles.formControl}>
           <Text style={styles.label}>{text.username}</Text>
           <TextInput
+            placeholder = {text.placeholder.username}
             style={styles.input}
             value={username}
             onChangeText={text => setUsername(text)}
@@ -108,6 +114,7 @@ const RegisterScreen = props => {
         <View style={styles.formControl}>
           <Text style={styles.label}>{text.password}</Text>
           <TextInput
+            placeholder = {text.placeholder.password}
             style={styles.input}
             value={userPassword}
             onChangeText={text => setUserPassword(text)}
@@ -118,6 +125,7 @@ const RegisterScreen = props => {
         <View style={styles.formControl}>
           <Text style={styles.label}>{text.passwordAuthentication}</Text>
           <TextInput
+            placeholder = {text.placeholder.passwordAuthentication}
             style={styles.input}
             value={userPasswordAuthentication}
             onChangeText={text => setUserPasswordAuthentication(text)}
