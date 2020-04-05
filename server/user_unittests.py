@@ -5,3 +5,5 @@ from server.user import *
 
 class TestUser(unittest.TestCase):
    pass
+
+

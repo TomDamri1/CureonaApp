@@ -13,7 +13,7 @@ Login_parser.add_argument('password')
 class Login(Resource):
     def post(self):
         data = Login_parser.parse_args()
-        json_doc = new_col.find_one({"user_name": data['username']})
+        json_doc = new_col.find_one({"username": data['username']})
         print(json_doc)
         sha_encrypt = hashlib.sha256(data.password.encode()).hexdigest()
         print(sha_encrypt)
@@ -26,7 +26,7 @@ class Login(Resource):
 
 
 Registration_parser = reqparse.RequestParser()
-Registration_parser.add_argument('user_name', required=True, help="user_name cannot be blank!")
+Registration_parser.add_argument('username', required=True, help="user_name cannot be blank!")
 Registration_parser.add_argument('password', required=True, help="password cannot be blank!")
 Registration_parser.add_argument('type', required=True, help="type cannot be blank!")
 
@@ -36,7 +36,7 @@ class Registration(Resource):
     def post(self):
         data = Registration_parser.parse_args()
         # search user with the same user name.
-        json_doc = new_col.find_one({"user_name": data['user_name']})
+        json_doc = new_col.find_one({"username": data['username']})
         # if user with the same user name is not exist, create new user.
         if not json_doc:
             # print(data)
