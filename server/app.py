@@ -21,6 +21,7 @@ class EMPTY(Resource):
 
 
 # adding the defined resources along with their corresponding urls
+api.add_resource(Registration, '/Registration')
 api.add_resource(Login, '/Login')
 api.add_resource(EMPTY, '/')
 # driver function
