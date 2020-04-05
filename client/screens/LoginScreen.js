@@ -8,6 +8,7 @@ import {
   Picker,
   Button,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 
 import Title from '../components/Title'
@@ -16,7 +17,7 @@ import Colors from '../constants/Colors'
 
 
 
-const LoginScreen = () => {
+const LoginScreen = props => {
   const [username, setUsername] = useState('');
   const [usernameIsValid, setUsernameIsValid] = useState(false);
   const [userPassword, setUserPassword] = useState('');
@@ -38,9 +39,24 @@ const LoginScreen = () => {
   const resData = await response.json();
   console.log(resData);
   if (resData.state === "success"){
-    console.log("good");
+    props.navigation.navigate({
+      routeName:"UserScreen",
+      params:{
+        username:username,
+      }
+     
+    })
+  }
+  else{
+    Alert.alert("pleas check your username and password.")
   }
 
+  }
+
+  const handleRegister = () =>{
+    props.navigation.navigate({
+      routeName:"Registration",
+    })
   }
 
   return (
@@ -67,11 +83,11 @@ const LoginScreen = () => {
 
           />
         </View>
-        <View style={styles.button}></View>
+        <View style={styles.gap}></View>
         <Button color={Colors.primaryColor} title={text.login} onPress={() => { handleLogin() }} />
         <View style={styles.registerContainer}>
           <Text>{text.or_if_you_dont_have_user}</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>handleRegister()}>
             <Text>{text.register}</Text>
           </TouchableOpacity>
         </View>
@@ -98,7 +114,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ccc',
     borderBottomWidth: 1
   },
-  button: {
+  gap: {
     margin: 50,
   },
   registerContainer:{
@@ -107,7 +123,6 @@ const styles = StyleSheet.create({
     alignItems:"center"
   }
 });
-
 
 
 export default LoginScreen;
