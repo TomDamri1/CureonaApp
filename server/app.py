@@ -17,10 +17,12 @@ api = Api(app)
 class EMPTY(Resource):
 
     def get(self):
-        return "<h1>hello</h1>"
+        return "<h1>hello world</h1>"
 
 
 # adding the defined resources along with their corresponding urls
+api.add_resource(Registration, '/Registration')
+api.add_resource(Login, '/Login')
 api.add_resource(EMPTY, '/')
 # driver function
 if __name__ == '__main__':
