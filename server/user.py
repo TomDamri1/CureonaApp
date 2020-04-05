@@ -1,8 +1,5 @@
 from flask import jsonify
 from flask_restful import reqparse, Resource
-import hashlib
-
-
 from server.mongo_connection import *
 import hashlib
 
