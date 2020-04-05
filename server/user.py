@@ -56,10 +56,10 @@ RegisterBuisness_parser = reqparse.RequestParser()
 RegisterBuisness_parser.add_argument('username', required=True, help="user_name cannot be blank!")
 RegisterBuisness_parser.add_argument('password', required=True, help="password cannot be blank!")
 RegisterBuisness_parser.add_argument('type', required=True, help="type cannot be blank!")
-RegisterBuisness_parser.add_argument('buisnessName', required=True, help="buisness name cannot be blank!")
+RegisterBuisness_parser.add_argument('BusinessName', required=True, help="buisness name cannot be blank!")
 RegisterBuisness_parser.add_argument('CompanyId', required=True, help="Company id cannot be blank!")
 
-class RegisterBuisness(Resource):
+class RegisterBusiness(Resource):
 
     def post(self):
         data = Registration_parser.parse_args()
