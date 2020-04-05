@@ -44,7 +44,6 @@ const LoginScreen = props => {
       params:{
         username:username,
       }
-     
     })
   }
   else{
@@ -83,7 +82,7 @@ const LoginScreen = props => {
 
           />
         </View>
-        <View style={styles.gap}></View>
+        <View style={styles.gap}/>
         <Button color={Colors.primaryColor} title={text.login} onPress={() => { handleLogin() }} />
         <View style={styles.registerContainer}>
           <Text>{text.or_if_you_dont_have_user}</Text>
@@ -114,7 +113,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ccc',
     borderBottomWidth: 1
   },
-  gap: {
+  button: {
     margin: 50,
   },
   registerContainer:{

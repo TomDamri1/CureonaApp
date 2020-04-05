@@ -13,6 +13,7 @@ import {
 
 import Title from '../components/Title'
 import text from '../constants/text'
+import Colors from '../constants/Colors';
 
 
 const RegisterScreen = props => {
@@ -68,14 +69,14 @@ const RegisterScreen = props => {
   return (
     <ScrollView>
       <View style={styles.form}>
-        <Title title={text.applicationName} subTitle={text.registration} />
+        <Title title={text.registration}/>
         <View style={styles.formControl}>
           <Text style={styles.label}>{text.username}</Text>
           <TextInput
             placeholder={text.placeholder.username}
             style={styles.input}
             value={username}
-            onChangeText={usernameChangeHandler} //{text => setUsername(text)}
+            onChangeText={text => setUsername(text)}
             returnKeyType="next"
             keyboardType='default'
             returnKeyType='next'
@@ -87,7 +88,7 @@ const RegisterScreen = props => {
             placeholder={text.placeholder.password}
             style={styles.input}
             value={userPassword}
-            onChangeText={passwordChangeHandler}//{text => setUserPassword(text)}
+            onChangeText={text => setUserPassword(text)}
             secureTextEntry={true}
             keyboardType='default'
             returnKeyType='next'
@@ -99,14 +100,19 @@ const RegisterScreen = props => {
             placeholder={text.placeholder.passwordAuthentication}
             style={styles.input}
             value={passwordAuthentication}
-            onChangeText={passwordAuthenticationChangeHandler}//{text => setPasswordAuthentication(text)}
+            onChangeText={text => setPasswordAuthentication(text)}
             secureTextEntry={true}
             keyboardType='default'
             returnKeyType='next'
             onSubmitEditing={() => console.log('onSubmitingEditing')}//shows a massege when the user done input the authnt. password
           />
         </View>
-        <Button title={text.register} onPress={() => (({ passwordIsValid } && { passwordAuthenticationIsValid } && { usernameIsValid }) ? alert('the data is correct') : alert('invalid data'))} />
+        <View style={styles.gap}/>
+        <Button 
+          color = {Colors.primaryColor}
+          title={text.register} 
+          onPress={() => {}} 
+          />
       </View>
     </ScrollView>
   );
@@ -137,27 +143,15 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ccc',
     borderBottomWidth: 1
   },
-  title: {
-    padding: 50,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 50,
-    color: 'teal',
-    fontStyle: 'italic'
-  },
-  subTitle: {
-    padding: 0,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 35,
-    color: 'teal',
-  },
   Instructions:
   {
     marginVertical: 8,
     color: 'red',
     fontSize: 12,
-  }
+  },
+  gap: {
+    margin: 50,
+  },
 });
 
 
