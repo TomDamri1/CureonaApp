@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ccc',
     borderBottomWidth: 1
   },
-  button: {
+  gap: {
     margin: 50,
   },
   registerContainer:{
