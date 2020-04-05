@@ -15,7 +15,10 @@ class Login(Resource):
         data = Login_parser.parse_args()
         print(data)
         json_doc = new_col.find_one({"user_name": data['username']})
-        if data.password == json_doc['password']:
-            return jsonify({'state': 'success', 'type': json_doc['type']})
+        if json_doc:
+            if data.password == json_doc['password']:
+                return jsonify({'state': 'success', 'type': json_doc['type']})
+            else:
+                return jsonify({'state': 'failed'})
         else:
             return jsonify({'state': 'failed'})
