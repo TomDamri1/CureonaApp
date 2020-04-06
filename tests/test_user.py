@@ -1,6 +1,6 @@
 import unittest
+
 import requests
-from server.user import *
 
 
 class TestUser(unittest.TestCase):
@@ -28,8 +28,9 @@ class TestUser(unittest.TestCase):
         myobj = {'username': 'asdfasdf', 'password': '1234'}
         response = requests.post(url, data=myobj)
         self.assertEqual(response.json(), {'state': 'failed'})
-    #---------------------------------------------------------------------
-    #business owner - check tommorow
+
+    # ---------------------------------------------------------------------
+    # business owner - check tommorow
     def test_Login_Failed_business_owner_not_exist(self):
         url = 'https://cureona.herokuapp.com/Login'
         myobj = {'username': 'asdfasdf', 'password': '1234'}
@@ -46,7 +47,7 @@ class TestUser(unittest.TestCase):
         url = 'https://cureona.herokuapp.com/Login'
         myobj = {'username': 'michal', 'password': '12345'}
         response = requests.post(url, data=myobj)
-        self.assertEqual(response.json(), {'state': 'success', 'type' : 'business_owner'})
+        self.assertEqual(response.json(), {'state': 'success', 'type': 'business_owner'})
 
     # def test_Registration_business_owner(self):
     #     url = 'https://cureona.herokuapp.com/RegisterBusiness'
