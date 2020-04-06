@@ -17,4 +17,4 @@ json = username: "shlomo123" , "password" :"12345"}
 
 Buisness registration  :
 url : https://cureona.herokuapp.com/RegisterBusiness
-json = username: "shlomo123" , "password" :"12345" , "type": "customer", "BusinessName" : "MYBusiness", "CompanyId":""}
+json = username: "shlomo123" , "password" :"12345" , "type": "business_owner", "BusinessName" : "MYBusiness", "CompanyId":""}
