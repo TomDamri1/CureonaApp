@@ -6,8 +6,8 @@ server root url : https://cureona.herokuapp.com/
 ## simple stories:
 
 ### customer registration  :
-url : https://cureona.herokuapp.com/Registration
-json example :
+#### url : https://cureona.herokuapp.com/Registration
+#### json example :
 ```
 { 
   "username": "shlomo123",
@@ -17,8 +17,8 @@ json example :
 ```
 
 ### customer Login :
-url : https://cureona.herokuapp.com/Login
-json example :
+#### url : https://cureona.herokuapp.com/Login
+#### json example :
 ```
 {
   "username": "shlomo123", 
@@ -29,8 +29,8 @@ json example :
 
 
 ### Buisness registration  :
-url : https://cureona.herokuapp.com/RegisterBusiness
-json example :
+#### url : https://cureona.herokuapp.com/RegisterBusiness
+#### json example :
 ```
 { 
   "username": "shlomo123", 
