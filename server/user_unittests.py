@@ -53,3 +53,7 @@ class TestUser(unittest.TestCase):
     #     myobj = {'username': 'michal', 'password': '12345', 'CompanyId': '123456'}
     #     response = requests.post(url, data=myobj)
     #     self.assertEqual(response.json(), {'state': 'user name or cid already exist'})
+
+
+if __name__ == '__main__':
+    unittest.main()
