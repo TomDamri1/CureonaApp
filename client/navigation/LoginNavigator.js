@@ -10,6 +10,7 @@ import RegisterScreen from "../screens/RegisterScreen";
 import UserScreen from "../screens/UserScreen";
 import BusinessOwnerScreen from "../screens/BusinessOwnerScreen";
 import AdminScreen from '../screens/AdminScreen';
+import LoadingScreen from '../screens/LoadingScreen';
 
 const LoginNavigator = createStackNavigator({
     Login: LoginScreen,
@@ -17,6 +18,12 @@ const LoginNavigator = createStackNavigator({
     UserScreen: UserScreen,
     BusinessOwnerScreen: BusinessOwnerScreen,
     AdminScreen: AdminScreen,
+    Loading : {
+        screen :LoadingScreen,
+        navigationOptions:{
+            headerShown : false
+        }
+    }
 })
 
 

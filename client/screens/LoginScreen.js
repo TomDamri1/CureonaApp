@@ -28,6 +28,9 @@ const LoginScreen = props => {
   const [userPassword, setUserPassword] = useState('');
 
   const handleLogin = async () => {
+    props.navigation.navigate({
+      routeName: "Loading"
+    })
     const response = await fetch(Urls.routes.login, {
       method: 'POST',
       headers: {
@@ -42,6 +45,7 @@ const LoginScreen = props => {
 
     const resData = await response.json();
     console.log(resData);
+    props.navigation.pop();
     if (resData.state === Response.success) {
 
       switch (resData.type) {

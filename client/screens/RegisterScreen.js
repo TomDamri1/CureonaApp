@@ -21,6 +21,7 @@ import text from '../constants/text'
 import Colors from '../constants/Colors';
 import Urls from '../constants/Urls'
 import Response from '../constants/Response';
+import LoadingScreen from './LoadingScreen';
 
 
 const RegisterScreen = props => {
@@ -64,7 +65,10 @@ const RegisterScreen = props => {
     console.log("validate username: ", validatingUsername);
 
     if (validatingUsername && passwordLengthValidating && validatingPassword) {
-      console.log("we all good now send somthing to matan!")
+      console.log("we all good now send somthing to the server!")
+      props.navigation.navigate({
+        routeName: "Loading"
+      })
 
       const response = await fetch(Urls.routes.register, {
         method: 'POST',
@@ -81,6 +85,7 @@ const RegisterScreen = props => {
 
       const resData = await response.json();
       console.log(resData);
+      props.navigation.pop();
       if (resData.state === Response.success) {
         props.navigation.popToTop();
         props.navigation.navigate({
