@@ -50,8 +50,9 @@ class TestUser(unittest.TestCase):
         self.assertEqual(response.json(), {'state': 'success', 'type': 'business_owner'})
 
     def test_Registration_business_owner(self):
-        url = 'https://127.0.0.1:5000/RegisterBusiness'
-        myobj = {'username': 'michal', 'password': '12345', 'type': 'business_owner', 'CompanyId': '123456'}
+        url = 'https://cureona.herokuapp.com/RegisterBusiness'
+        myobj = {'username': 'talfi', 'password': '987', 'type':
+            'business_owner', 'BusinessName': 'shufersal', 'CompanyId': '15951'}
         response = requests.post(url, data=myobj)
         self.assertEqual(response.json(), {'state': 'user name or cid already exist'})
 
