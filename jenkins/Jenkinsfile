@@ -18,7 +18,7 @@ pipeline {
 
             steps {
 
-                sh 'python -m py_compile tryitout.py'
+                sh 'python -m py_compile server/app.py'
 
             }
 
@@ -35,14 +35,14 @@ pipeline {
                 }
 
             }
-
             steps {
-
-                
-               sh "echo 'done steps' "
-
+                sh 'py.test --verbose --junit-xml test-reports/results.xml server/user_unittests.py'
             }
-
+            post {
+                always {
+                    junit 'test-reports/results.xml'
+                }
+            }
 
         }
 
