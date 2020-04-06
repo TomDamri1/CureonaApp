@@ -62,15 +62,13 @@ RegisterBuisness_parser.add_argument('CompanyId', required=True, help="Company i
 class RegisterBusiness(Resource):
 
     def post(self):
-        data = Registration_parser.parse_args()
+        data = RegisterBuisness_parser.parse_args()
         # search user with the same user name.
         json_doc = new_col.find_one({"username": data['username']})
         CID = new_col.find_one({"CompanyId": data['CompanyId']})
         # if user with the same user name and CID is not exist, create new user.
         if not json_doc and not CID:
             data['password'] = hashlib.sha256(data.password.encode()).hexdigest()
-            print(data['password'])
-            data['CompanyId']= CID
             data['workers'] = []
             #TO-DO
             #add comprehnsion between CID of the owner and the data base of br7
