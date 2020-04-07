@@ -67,6 +67,10 @@ class TestUser(unittest.TestCase):
         myobj = {'username': 'matan', 'password': '12344'}
         response = requests.post(url, data=myobj)
         self.assertEqual(response.json(), {'state': 'failed'})
-
+    def test_Login_success_admin(self):
+        url = 'https://cureona.herokuapp.com/Login'
+        myobj = {'username': 'matan', 'password': '123'}
+        response = requests.post(url, data=myobj)
+        self.assertEqual(response.json(), {'state': 'success', 'type': 'admin'})
 if __name__ == '__main__':
     unittest.main()
