@@ -55,6 +55,7 @@ class TestUser(unittest.TestCase):
             'business_owner', 'BusinessName': 'shufersal', 'CompanyId': '15951'}
         response = requests.post(url, data=myobj)
         self.assertEqual(response.json(), {'state': 'user name or cid already exist'})
+
     # ---------------------------------------------------------------------
     # admin login checks
     def test_Login_Failed_admin_not_exist(self):
@@ -62,11 +63,13 @@ class TestUser(unittest.TestCase):
         myobj = {'username': 'asdfasdf', 'password': '1234'}
         response = requests.post(url, data=myobj)
         self.assertEqual(response.json(), {'state': 'failed'})
+
     def test_Login_Failed_admin_wrong_password(self):
         url = 'https://cureona.herokuapp.com/Login'
         myobj = {'username': 'matan', 'password': '12344'}
         response = requests.post(url, data=myobj)
         self.assertEqual(response.json(), {'state': 'failed'})
+
     def test_Login_success_admin(self):
         url = 'https://cureona.herokuapp.com/Login'
         myobj = {'username': 'matan', 'password': '123'}
