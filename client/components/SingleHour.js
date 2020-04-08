@@ -9,7 +9,9 @@ const registerToHour = (hour) => {
         //here notify the server for this user registration to the hour
         //push navigtaion - loading
         //pop navigation
-        Alert.alert("Sucsses!" ,`you are now registerd to ${hour}. please dont be late.`  )
+        const code = "12345"
+        Alert.alert("Sucsses!" ,`you are now registerd to ${hour}. please dont be late. \nyour code is :${code}`  )
+        //generate a code in the server, save the code in the server under the customer.
     }
 }
 
