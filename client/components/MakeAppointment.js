@@ -14,7 +14,6 @@ const MakeAppointment = props => {
                 keyExtractor={(item, index) => index.toString()}
                 style={styles.gap}
             />
-            <Text>{props.item.name}</Text>
         </View>
     )
 }
