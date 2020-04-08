@@ -20,6 +20,9 @@ export default {
         businessOwner: "business_owner",
         admin: "admin"
     },
+    screenHeaders : {
+        search : "Search"
+    },
 
 
     or_if_you_dont_have_user: "Or if you dont have a user, "

@@ -52,7 +52,7 @@ const LoginScreen = props => {
 
         case text.type.customer:
           props.navigation.navigate({
-            routeName: "UserScreen",
+            routeName: "CustomerScreen",
             params: {
               username: username,
             }
