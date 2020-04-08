@@ -21,13 +21,21 @@ import text from '../constants/text'
 import Colors from '../constants/Colors';
 import Urls from '../constants/Urls'
 import Response from '../constants/Response';
-import LoadingScreen from './LoadingScreen';
+import { CheckBox } from "react-native-elements";
+import BusinessOwnerRegistration from "../components/BusinessOwnerRegistration";
 
 
 const RegisterScreen = props => {
   const [username, setUsername] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [userPasswordAuthentication, setUserPasswordAuthentication] = useState('');
+  const [isBusinessOwner, setIsBusinessOwner] = useState(false);
+  //for business only
+  const [businessName, setBusinessName] = useState('');
+  const [cid, setCid] = useState('');
+  const [ownerName, setOwnerName] = useState('');
+  const [ownerLastName, setOwnerLastName] = useState('');
+  const [ownerId, setOwnerId] = useState('');
 
   const validatePassword = () => {
     if (userPassword === userPasswordAuthentication) {
@@ -147,12 +155,27 @@ const RegisterScreen = props => {
 
               />
             </View>
+            <CheckBox
+              title='Im business owner'
+              checked={isBusinessOwner}
+              onPress={() => setIsBusinessOwner(!isBusinessOwner)}
+            />
+            <BusinessOwnerRegistration
+              isBusinessOwner={isBusinessOwner}
+              businessNameState={[businessName, setBusinessName]}
+              cidState={[cid, setCid]}
+              ownerNameState={[ownerName, setOwnerName]}
+              ownerLastNameState={[ownerLastName, setOwnerLastName]}
+              ownerIdState={[ownerId, setOwnerId]}
+            />
+
+
             <View style={styles.gap} />
             <Button color={Colors.primaryColor} title={text.register} onPress={() => { handleRegister() }} />
 
           </View>
           <View style={styles.image}>
-            <Image style={{width:80,height:80}}source={require('../assets/cureonaIcon.png')}/>
+            <Image style={{ width: 80, height: 80 }} source={require('../assets/cureonaIcon.png')} />
           </View>
         </ScrollView>
       </TouchableWithoutFeedback>
@@ -161,8 +184,8 @@ const RegisterScreen = props => {
 }
 
 const styles = StyleSheet.create({
-  image:{
-    alignItems:'center'
+  image: {
+    alignItems: 'center'
   },
   form: {
     margin: 20,
