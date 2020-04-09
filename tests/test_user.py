@@ -43,6 +43,12 @@ class TestUser(unittest.TestCase):
         response = requests.post(url, data=myobj)
         self.assertEqual(response.json(), {'state': 'failed'})
 
+    def test_Login_Failed_business_owner_wrong_password2(self):
+        url = 'https://cureona.herokuapp.com/Login'
+        myobj = {'username': 'tomdamrib', 'password': '112233'}
+        response = requests.post(url, data=myobj)
+        self.assertEqual(response.json(), {'state': 'failed'})
+
     def test_Login_success_business_owner(self):
         url = 'https://cureona.herokuapp.com/Login'
         myobj = {'username': 'michal', 'password': '12345'}
