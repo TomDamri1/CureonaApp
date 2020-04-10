@@ -84,24 +84,46 @@ const RegisterScreen = props => {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          username: username,
-          password: userPassword,
-          type: "customer"
-        }),
+        body: !isBusinessOwner ?
+          JSON.stringify({
+            username: username,
+            password: userPassword,
+            type: text.type.customer
+          })
+          :
+          JSON.stringify({
+            username: username,
+            password: userPassword,
+            type: text.type.businessOwner,
+            BusinessName: businessName,
+            CompanyId: cid,
+          })
+        ,
       });
 
       const resData = await response.json();
       console.log(resData);
       props.navigation.pop();
       if (resData.state === Response.success) {
-        props.navigation.popToTop();
-        props.navigation.navigate({
-          routeName: "UserScreen",
-          params: {
-            username: username,
-          }
-        })
+        if (!isBusinessOwner) {
+          props.navigation.popToTop();
+          props.navigation.navigate({
+            routeName: "UserScreen",
+            params: {
+              username: username,
+            }
+          })
+        }
+        else {
+          props.navigation.popToTop();
+          props.navigation.navigate({
+            routeName: "BusinessOwnerScreen",
+            params: {
+              username: username,
+              businessName : businessName,
+            }
+          })
+        }
       }
       else if (resData.state === Response.userExist) {
         Alert.alert(Response.userExist)
