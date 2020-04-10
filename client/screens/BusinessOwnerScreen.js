@@ -6,7 +6,7 @@ const BusinessOwnerScreen = props => {
     return(
         <View>
             <Title title="welcome!" subTitle={props.navigation.getParam('username')}/>
-            <Title title={`your business : ${props.navigation.getParam('business')}`}/>
+            <Title title={`your business : ${props.navigation.getParam('businessName')}`}/>
         </View>
 
     )
