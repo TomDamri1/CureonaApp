@@ -2,26 +2,45 @@ import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Colors from '../constants/Colors';
+import text from '../constants/text'
 
 
-const makeAnAppointment = (item,navigation) => {
-    console.log(item , navigation)
-    navigation.setParams({item : item});
+const makeAnAppointment = (item, navigation) => {
+    console.log(item, navigation)
+    navigation.setParams({ item: item });
     navigation.navigate({
         routeName: "AppointmentScreen",
-            params: {
-              item: item,
-            }
+        params: {
+            item: item,
+        }
     });
 }
 
-decideWhatToDo = {
-    "makeAnAppointment" : makeAnAppointment,
+const adminChanges = (item, navigation) => {
+    console.log(item, navigation)
+    navigation.setParams({ item: item });
+    navigation.navigate({
+        routeName: "AdminChangesScreen",
+        params: {
+            item: item,
+            USERTYPE : navigation.getParam('USERTYPE')
+        }
+    });
+
+}
+
+const decideWhatToDo = {
+    "makeAnAppointment": makeAnAppointment,
+    "adminChanges": adminChanges,
 }
 
 const SearchItem = props => {
+    console.log("item : ",props.content);
+    console.log("nav : ",props.navigation.getParam('item'))
     return (
-        <TouchableOpacity onPress={()=>makeAnAppointment(props.content,props.navigation)}>
+        <TouchableOpacity onPress={() =>
+            decideWhatToDo[props.pressAction](props.content, props.navigation)
+        }>
             <View style={styles.container}>
                 <Text style={styles.title}>
                     {props.title}
@@ -48,9 +67,9 @@ const styles = StyleSheet.create({
     address: {
 
     },
-    row :{
-        flexDirection:"row",
-        justifyContent:"space-between",
+    row: {
+        flexDirection: "row",
+        justifyContent: "space-between",
 
     },
     container: {

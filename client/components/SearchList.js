@@ -14,6 +14,7 @@ import {
 import SearchItem from './SearchItem';
 import DATA from '../data/dummydata';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
+import text from '../constants/text';
 
 const SearchList = props => {
     const [searchInput, setSearchInput] = useState('');
@@ -32,7 +33,7 @@ const SearchList = props => {
     useEffect(() => {
         filterData();
     }, [searchInput])
-
+    console.log("user type : ",props.navigation.getParam('USERTYPE'))
 
     return (
 
@@ -55,7 +56,11 @@ const SearchList = props => {
                             title={item.name}
                             address={item.address}
                             keywords={item.keywords}
-                            pressAction={"makeAnAppointment"}
+                            pressAction={
+                                props.navigation.getParam('USERTYPE') === text.type.admin ? 
+                                text.decisions.adminChanges
+                                :
+                                text.decisions.makeAnAppointment}
                             content = {item}
                             navigation={props.navigation}
                         />}

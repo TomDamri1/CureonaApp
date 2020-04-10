@@ -55,6 +55,7 @@ const LoginScreen = props => {
             routeName: "CustomerScreen",
             params: {
               username: username,
+              USERTYPE: text.type.customer
             }
           })
           break;
@@ -64,7 +65,8 @@ const LoginScreen = props => {
             routeName: "BusinessOwnerScreen",
             params: {
               username: username,
-              businessName: "fake Business!!!"
+              businessName: "fake Business!!!",
+              USERTYPE: text.type.businessOwner
             }
           })
           break;
@@ -74,6 +76,7 @@ const LoginScreen = props => {
             routeName: "AdminScreen",
             params: {
               username: username,
+              USERTYPE: text.type.admin
             }
           })
           break;

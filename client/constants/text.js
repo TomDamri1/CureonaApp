@@ -33,6 +33,10 @@ export default {
     screenHeaders : {
         search : "Search"
     },
+    decisions : {
+        makeAnAppointment : "makeAnAppointment",
+        adminChanges : "adminChanges",
+    },
 
 
     or_if_you_dont_have_user: "Or if you dont have a user, "

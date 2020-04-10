@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View, Button } from 'react-native';
 import Title from '../components/Title'
 
-const UserScreen = props => {
+const CustomerScreen = props => {
     return (
         <View>
             <Title title="welcome!" subTitle={props.navigation.getParam('username')} />
@@ -19,4 +19,4 @@ const UserScreen = props => {
 
 
 
-export default UserScreen
+export default CustomerScreen
