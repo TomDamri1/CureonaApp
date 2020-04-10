@@ -6,7 +6,6 @@ import text from '../constants/text'
 
 
 const makeAnAppointment = (item, navigation) => {
-    console.log(item, navigation)
     navigation.setParams({ item: item });
     navigation.navigate({
         routeName: "AppointmentScreen",
@@ -17,7 +16,6 @@ const makeAnAppointment = (item, navigation) => {
 }
 
 const adminChanges = (item, navigation) => {
-    console.log(item, navigation)
     navigation.setParams({ item: item });
     navigation.navigate({
         routeName: "AdminChangesScreen",
@@ -35,8 +33,6 @@ const decideWhatToDo = {
 }
 
 const SearchItem = props => {
-    console.log("item : ",props.content);
-    console.log("nav : ",props.navigation.getParam('item'))
     return (
         <TouchableOpacity onPress={() =>
             decideWhatToDo[props.pressAction](props.content, props.navigation)
