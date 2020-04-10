@@ -64,7 +64,7 @@ const LoginScreen = props => {
             routeName: "BusinessOwnerScreen",
             params: {
               username: username,
-              business: "fake Business!!!"
+              businessName: "fake Business!!!"
             }
           })
           break;
