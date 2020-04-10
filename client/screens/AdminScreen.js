@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import Title from '../components/Title';
 import text from '../constants/text'
 
-const UserScreen = props => {
+const AdminScreen = props => {
     return(
         <View>
             <Title title="welcome!" subTitle={props.navigation.getParam('username')}/>

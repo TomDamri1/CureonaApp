@@ -45,7 +45,7 @@ const LoginScreen = props => {
 
     const resData = await response.json();
     console.log(resData);
-    props.navigation.pop();
+    props.navigation.pop(); //pop out the loading screen from the stack 
     if (resData.state === Response.success) {
 
       switch (resData.type) {
