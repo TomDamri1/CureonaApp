@@ -108,7 +108,7 @@ const RegisterScreen = props => {
         if (!isBusinessOwner) {
           props.navigation.popToTop();
           props.navigation.navigate({
-            routeName: "UserScreen",
+            routeName: "CustomerScreen",
             params: {
               username: username,
             }

@@ -22,4 +22,4 @@ const AdminScreen = props => {
 
 
 
-export default UserScreen
+export default AdminScreen
