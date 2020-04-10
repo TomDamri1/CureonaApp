@@ -14,6 +14,7 @@ import LoadingScreen from '../screens/LoadingScreen';
 import CustomerSearchScreen from '../screens/CustomerSearchScreen'
 import text from '../constants/text';
 import AppointmentScreen from '../screens/AppointmentScreen';
+import AdminChangesScreen from '../screens/AdminChangesScreen';
 
 const LoginNavigator = createStackNavigator({
     Login: LoginScreen,
@@ -33,7 +34,8 @@ const LoginNavigator = createStackNavigator({
         navigationOptions:{
             headerShown : false
         }
-    }
+    },
+    AdminChangesScreen : AdminChangesScreen
 })
 
 
