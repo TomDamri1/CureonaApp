@@ -2,6 +2,7 @@
 # import necessary libraries and functions
 from flask_restful import Api
 from server.user import *
+from server.queue_management import *
 from flask import Flask
 
 # creating the flask app
@@ -24,6 +25,7 @@ class EMPTY(Resource):
 api.add_resource(RegisterBusiness, '/RegisterBusiness')
 api.add_resource(Registration, '/Registration')
 api.add_resource(Login, '/Login')
+api.add_resource(Login, '/GetQueue')
 api.add_resource(EMPTY, '/')
 # driver function
 if __name__ == '__main__':
