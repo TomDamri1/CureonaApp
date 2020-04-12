@@ -4,39 +4,54 @@ from server.mongo_connection import *
 import random
 import string
 
-Queue = new_db["user_queue"]
+user_queue = new_db["user_queue"]
+business_info = new_db["business_info"]
+login = new_db["login"]
 
 GetQueue_parser = reqparse.RequestParser()
 GetQueue_parser.add_argument('username', required=True, help="username name cannot be blank!")
 GetQueue_parser.add_argument('BusinessName', required=True, help="business name cannot be blank!")
-GetQueue_parser.add_argument('Date', required=True, help="Date cannot be blank!")
+GetQueue_parser.add_argument('Day', required=True, help="Date cannot be blank!")
+GetQueue_parser.add_argument('Hour', required=True, help="Date cannot be blank!")
+
+letters = string.ascii_lowercase
+
+
+def random_string(stringLength=4):
+    """Generate a random string of fixed length """
+
+    return ''.join(random.choice(letters) for i in range(stringLength))
+
+
+def calc_date(Date):
+    """Generate a random string of fixed length """
+    pass
 
 
 class GetQueue(Resource):
 
-    def random_string(self, stringLength=4):
-        """Generate a random string of fixed length """
-        letters = string.ascii_lowercase
-        return ''.join(random.choice(letters) for i in range(stringLength))
-
     def post(self):
         data = GetQueue_parser.parse_args()
         print(data)
-        queue_key = self.random_string(4)
+        queue_key = random_string(4)
         print(queue_key)
-        json_doc = Queue.find_one({"username": data['username']})
+        json_doc = user_queue.find_one({"username": data['username']})
         if json_doc:
             # add queue to customer
-            order = [data['BusinessName'], data['Date'], queue_key]
+            order = [data['BusinessName'], "30/4/2020", queue_key]
             print(order)
-            Queue.update({'username': data['username']}, {"$push": {'orders': order}})
+            user_queue.update({'username': data['username']}, {"$push": {'orders': order}})
+            business_info.update({'business_name': data['BusinessName']}, {"$push": {"queue." + data['Day'] + "." + data['Hour']: queue_key}})
             return jsonify({'state': 'success'})
         # make the first queue
-        orders = []
-        orders.append([data['BusinessName'], data['Date'], queue_key])
+        # check if user exist
+        json_doc = login.find_one({"username": data['username']})
+        if not json_doc:
+            return jsonify({'state': 'User does not exist'})
+        # create the first order
+        orders = [[data['BusinessName'], "30/4/2020", queue_key]]
         # print(orders)
         userQueue = {"username": data['username'], "orders": orders}
         # print(userQueue)
-        Queue.insert_one(userQueue)
+        user_queue.insert_one(userQueue)
         return jsonify({'state': 'success'})
-
