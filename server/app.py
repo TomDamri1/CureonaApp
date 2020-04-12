@@ -25,7 +25,7 @@ class EMPTY(Resource):
 api.add_resource(RegisterBusiness, '/RegisterBusiness')
 api.add_resource(Registration, '/Registration')
 api.add_resource(Login, '/Login')
-api.add_resource(Login, '/GetQueue')
+api.add_resource(GetQueue, '/GetQueue')
 api.add_resource(EMPTY, '/')
 # driver function
 if __name__ == '__main__':
