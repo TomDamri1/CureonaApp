@@ -9,7 +9,7 @@ Queue = new_db["user_queue"]
 GetQueue_parser = reqparse.RequestParser()
 GetQueue_parser.add_argument('username', required=True, help="username name cannot be blank!")
 GetQueue_parser.add_argument('BusinessName', required=True, help="business name cannot be blank!")
-GetQueue_parser.add_argument('Date', required=True, help="business name cannot be blank!")
+GetQueue_parser.add_argument('Date', required=True, help="Date cannot be blank!")
 
 
 class GetQueue(Resource):
@@ -26,19 +26,17 @@ class GetQueue(Resource):
         print(queue_key)
         json_doc = Queue.find_one({"username": data['username']})
         if json_doc:
+            # add queue to customer
             order = [data['BusinessName'], data['Date'], queue_key]
             print(order)
-            # print(data['business_owner_username'])
-            #Queue.update({'username': data['username']}, {"push": {'orders': order}})
+            Queue.update({'username': data['username']}, {"$push": {'orders': order}})
             return jsonify({'state': 'success'})
+        # make the first queue
         orders = []
-        #order = []
         orders.append([data['BusinessName'], data['Date'], queue_key])
-        #print(order)
-        #orders.append(order)
-        print(orders)
+        # print(orders)
         userQueue = {"username": data['username'], "orders": orders}
-        print(userQueue)
-        #Queue.insert_one(userQueue)
+        # print(userQueue)
+        Queue.insert_one(userQueue)
         return jsonify({'state': 'success'})
 
