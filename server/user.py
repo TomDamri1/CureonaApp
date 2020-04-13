@@ -24,7 +24,6 @@ class Login(Resource):
             return jsonify({'state': 'failed'})
 
 
-
 Registration_parser = reqparse.RequestParser()
 Registration_parser.add_argument('username', required=True, help="user_name cannot be blank!")
 Registration_parser.add_argument('password', required=True, help="password cannot be blank!")
@@ -52,28 +51,63 @@ class Registration(Resource):
         return jsonify({'state': 'user name already exist'})
 
 
+business_info = new_db["business_info"]
+
 RegisterBuisness_parser = reqparse.RequestParser()
 RegisterBuisness_parser.add_argument('username', required=True, help="user_name cannot be blank!")
 RegisterBuisness_parser.add_argument('password', required=True, help="password cannot be blank!")
-RegisterBuisness_parser.add_argument('type', required=True, help="type cannot be blank!")
-RegisterBuisness_parser.add_argument('BusinessName', required=True, help="buisness name cannot be blank!")
-RegisterBuisness_parser.add_argument('CompanyId', required=True, help="Company id cannot be blank!")
+RegisterBuisness_parser.add_argument('business_name', required=True, help="buisness name cannot be blank!")
+RegisterBuisness_parser.add_argument('address', required=True, help="Company id cannot be blank!")
+RegisterBuisness_parser.add_argument('company_id', required=True, help="Company id cannot be blank!")
+RegisterBuisness_parser.add_argument('search_key', required=True, help="Company id cannot be blank!")
+
+hours = {'8': [], '9': [], '10': [], '11': [], '12': [], '13': [], '14': [], '15': [], '16': [], '17': [], '18': [],
+         '19': [], '20': [], '21': [], '22': [], '23': [], '00': [], '1': [], '2': [], '3': [], '4': [], '5': [],
+         '6': [], '7': []}
+
+my_calendar = {'sunday': hours,
+               'monday': hours,
+               'tuesday': hours,
+               'wednesday': hours,
+               'thursday': hours,
+               'friday': hours,
+               'saturday': hours
+               }
+
 
 class RegisterBusiness(Resource):
 
     def post(self):
         data = RegisterBuisness_parser.parse_args()
+
         # search user with the same user name.
         json_doc = new_col.find_one({"username": data['username']})
-        CID = new_col.find_one({"CompanyId": data['CompanyId']})
+        CID = business_info.find_one({"company_id": data['company_id']})
         # if user with the same user name and CID is not exist, create new user.
         if not json_doc and not CID:
-            data['password'] = hashlib.sha256(data.password.encode()).hexdigest()
-            data['workers'] = []
-            #TO-DO
-            #add comprehnsion between CID of the owner and the data base of br7
-            new_col.insert_one(data)
+
+            login_dict, business_info_dict = {}, {}
+
+            login_dict['username'] = data['username']
+            login_dict['password'] = hashlib.sha256(data.password.encode()).hexdigest()
+            login_dict['type'] = 'business_owner'
+
+            business_info_dict['username'] = data['username']
+            business_info_dict['business_name'] = data['business_name']
+            business_info_dict['address'] = data['address']
+            business_info_dict['company_id'] = data['company_id']
+            business_info_dict['workers'] = []
+            business_info_dict['open'] = True
+            business_info_dict['search_key'] = data['search_key']
+            business_info_dict['open_hours'] = {'sunday': 'closed', 'monday': 'closed', 'tuesday': 'closed',
+                                                'wednesday': 'closed', 'thursday': 'closed', 'friday': 'closed',
+                                                'saturday': 'closed'}
+            business_info_dict['queue'] = my_calendar
+            business_info_dict['max_capacity'] = '10'
+
+            new_col.insert_one(login_dict)
+            business_info.insert_one(business_info_dict)
+
             return jsonify({'state': 'success'})
         # if user with the same user name is exist, return to server that: 'user name already exist'.
         return jsonify({'state': 'user name or cid already exist'})
-
