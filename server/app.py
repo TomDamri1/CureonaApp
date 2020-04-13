@@ -27,6 +27,7 @@ class EMPTY(Resource):
 api.add_resource(RegisterBusiness, '/RegisterBusiness')
 api.add_resource(Registration, '/Registration')
 api.add_resource(Login, '/Login')
+api.add_resource(AvailableQueues, '/AvailableQueues')
 api.add_resource(GetQueue, '/GetQueue')
 api.add_resource(EMPTY, '/')
 api.add_resource(updateSettings, '/businessSettings')
