@@ -59,9 +59,9 @@ RegisterBuisness_parser = reqparse.RequestParser()
 RegisterBuisness_parser.add_argument('username', required=True, help="user_name cannot be blank!")
 RegisterBuisness_parser.add_argument('password', required=True, help="password cannot be blank!")
 RegisterBuisness_parser.add_argument('business_name', required=True, help="buisness name cannot be blank!")
-RegisterBuisness_parser.add_argument('address', required=True, help="Company id cannot be blank!")
+RegisterBuisness_parser.add_argument('address', required=True, help="address cannot be blank!")
 RegisterBuisness_parser.add_argument('company_id', required=True, help="Company id cannot be blank!")
-RegisterBuisness_parser.add_argument('search_key', required=True, help="Company id cannot be blank!")
+RegisterBuisness_parser.add_argument('search_key', required=True, help="search_key cannot be blank!")
 
 
 
