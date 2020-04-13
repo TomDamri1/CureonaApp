@@ -19,12 +19,12 @@ letters = string.ascii_lowercase
 
 def random_string(stringLength=4):
     """Generate a random string of fixed length """
-
     return ''.join(random.choice(letters) for i in range(stringLength))
 
 
 def calc_date(Date):
-    """Generate a random string of fixed length """
+    """calc date from day """
+
     pass
 
 
@@ -33,6 +33,7 @@ class GetQueue(Resource):
     def post(self):
         data = GetQueue_parser.parse_args()
         print(data)
+        date = calc_date(data['Day'])
         queue_key = random_string(4)
         print(queue_key)
         json_doc = user_queue.find_one({"username": data['username']})
@@ -60,11 +61,18 @@ class GetQueue(Resource):
 
 AvailableQueues_parser = reqparse.RequestParser()
 AvailableQueues_parser.add_argument('company_id', required=True, help="company_id name cannot be blank!")
-
+hours = ["08:00-09:00" , "09:00-10:00" , "11:00-12:00", "12:00-13:00"]
 
 class AvailableQueues(Resource):
     def post(self):
         data = AvailableQueues_parser.parse_args()
         print(data)
-        json_doc = business_info.find_one({"company_id": data['company_id']})
-        return jsonify({'state': 'success', 'queue': json_doc['queue']})
+        # json_doc = business_info.find_one({"company_id": data['company_id']})
+        AvailableQueues = {'sunday': hours,
+               'monday': hours,
+               'tuesday': hours,
+               'wednesday': hours,
+               'thursday': hours,
+               'friday': hours,
+               'saturday': hours}
+        return jsonify({'state': 'success', 'queue': AvailableQueues})
