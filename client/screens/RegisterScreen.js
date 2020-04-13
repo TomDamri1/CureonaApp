@@ -95,8 +95,9 @@ const RegisterScreen = props => {
             username: username,
             password: userPassword,
             type: text.type.businessOwner,
-            BusinessName: businessName,
-            CompanyId: cid,
+            business_name: businessName,
+            company_id: cid,
+            search_key:[],
           })
         ,
       });
