@@ -41,8 +41,9 @@ class GetQueue(Resource):
             order = [data['BusinessName'], "30/4/2020", queue_key]
             print(order)
             user_queue.update({'username': data['username']}, {"$push": {'orders': order}})
-            business_info.update({'business_name': data['BusinessName']}, {"$push": {"queue." + data['Day'] + "." + data['Hour']: queue_key}})
-            return jsonify({'state': 'success'})
+            business_info.update({'business_name': data['BusinessName']},
+                                 {"$push": {"queue." + data['Day'] + "." + data['Hour']: queue_key}})
+            return jsonify({'state': 'success', 'key': queue_key})
         # make the first queue
         # check if user exist
         json_doc = login.find_one({"username": data['username']})
@@ -54,4 +55,16 @@ class GetQueue(Resource):
         userQueue = {"username": data['username'], "orders": orders}
         # print(userQueue)
         user_queue.insert_one(userQueue)
-        return jsonify({'state': 'success'})
+        return jsonify({'state': 'success', 'key': queue_key})
+
+
+AvailableQueues_parser = reqparse.RequestParser()
+AvailableQueues_parser.add_argument('company_id', required=True, help="company_id name cannot be blank!")
+
+
+class AvailableQueues(Resource):
+    def post(self):
+        data = AvailableQueues_parser.parse_args()
+        print(data)
+        json_doc = business_info.find_one({"company_id": data['company_id']})
+        return jsonify({'state': 'success', 'queue': json_doc['queue']})
