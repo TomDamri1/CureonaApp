@@ -1,5 +1,7 @@
 from flask import jsonify
 from flask_restful import reqparse, Resource
+
+from server.apps_calendar import *
 from server.mongo_connection import *
 import hashlib
 
@@ -61,18 +63,6 @@ RegisterBuisness_parser.add_argument('address', required=True, help="Company id 
 RegisterBuisness_parser.add_argument('company_id', required=True, help="Company id cannot be blank!")
 RegisterBuisness_parser.add_argument('search_key', required=True, help="Company id cannot be blank!")
 
-hours = {'8': [], '9': [], '10': [], '11': [], '12': [], '13': [], '14': [], '15': [], '16': [], '17': [], '18': [],
-         '19': [], '20': [], '21': [], '22': [], '23': [], '00': [], '1': [], '2': [], '3': [], '4': [], '5': [],
-         '6': [], '7': []}
-
-my_calendar = {'sunday': hours,
-               'monday': hours,
-               'tuesday': hours,
-               'wednesday': hours,
-               'thursday': hours,
-               'friday': hours,
-               'saturday': hours
-               }
 
 
 class RegisterBusiness(Resource):
