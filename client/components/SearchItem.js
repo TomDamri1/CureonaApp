@@ -1,29 +1,60 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Alert } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Colors from '../constants/Colors';
-import text from '../constants/text'
+import text from '../constants/text';
+import Urls from '../constants/Urls'
 
 
-const makeAnAppointment = (item, navigation , username) => {
-    navigation.setParams({ item: item , username : username});
-    navigation.navigate({
-        routeName: "AppointmentScreen",
-        params: {
-            item: item,
-            username : username,
-        }
-    });
+const makeAnAppointment = async (item, navigation, username) => {
+    console.log(item.id);
+    console.log("mymsg : ", JSON.stringify({
+        company_id: "1230",
+    }));
+    console.log("into : ", Urls.routes.avilableQueues)
+
+    navigation.navigate({ routeName: "Loading" });
+    try {
+        const response = await fetch(Urls.routes.avilableQueues, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                company_id: "1230",
+            }),
+        });
+
+        const resData = await response.json();
+        console.log(resData);
+        navigation.pop();
+        navigation.setParams({ item: item, username: username, schedule: resData,});
+        navigation.navigate({
+            routeName: "AppointmentScreen",
+            params: {
+                item: item,
+                username: username,
+                schedule: resData,
+            }
+        });
+    }
+    catch{
+        Alert.alert("somthing went wrong , try again");
+    }
+    
+
+
 }
 
-const adminChanges = (item, navigation,username) => {
-    navigation.setParams({item: item , username : username });
+const adminChanges = (item, navigation, username) => {
+    navigation.setParams({ item: item, username: username });
     navigation.navigate({
         routeName: "AdminChangesScreen",
         params: {
             item: item,
-            USERTYPE : navigation.getParam('USERTYPE'),
-            username : username,
+            USERTYPE: navigation.getParam('USERTYPE'),
+            username: username,
         }
     });
 
@@ -37,7 +68,7 @@ const decideWhatToDo = {
 const SearchItem = props => {
     return (
         <TouchableOpacity onPress={() =>
-            decideWhatToDo[props.pressAction](props.content, props.navigation , props.username)
+            decideWhatToDo[props.pressAction](props.content, props.navigation, props.username)
         }>
             <View style={styles.container}>
                 <Text style={styles.title}>

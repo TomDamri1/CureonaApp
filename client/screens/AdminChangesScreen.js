@@ -1,53 +1,70 @@
-import React, {useState} from 'react';
-import { Switch, StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import React, { useState } from 'react';
+import { Switch, StyleSheet, Text, View, Button, TextInput, Alert } from 'react-native';
 import Title from '../components/Title';
 import SearchList from '../components/SearchList';
+import Colors from '../constants/Colors';
 
 
 const AdminChangesScreen = props => {
-    const item = props.navigation.getParam('item');
-    const [switchValue, setSwitchValue] = useState(false);
-    const [amountOfPeople, setAmountOfPeople] = useState(); // show the current amount
+  const item = props.navigation.getParam('item');
+  const [switchValue, setSwitchValue] = useState(false);
+  const [amountOfPeople, setAmountOfPeople] = useState('50'); // shows the current amount - need to get from the server
 
-    return (
-        <View>
-            <Title title='' subTitle='Here you can make any changes to the business' />
-            <Text>this is {item.name} page!</Text>
-            <Text>Close or Open the business:</Text>
-            <View style={styles.container}>
-                <Text>{switchValue?'Switch is ON':'Switch is OFF'}</Text>
-                <Switch
-                style={{marginTop:30}}
-                onValueChange = {() => setSwitchValue(!switchValue)}
-                value = {switchValue}/>
-            </View>
-            <Text>change the amount of people in the business:</Text>
-            <TextInput
-                style={styles.formControl}
-                placeholder="Enter the maximum amount for people"
-                onChangeText={amountOfPeople => setAmountOfPeople(amountOfPeople)}
-                defaultValue={amountOfPeople}
-            />
-            <Button title='apply the changes' onPress={() =>{console.log(switchValue); console.log(amountOfPeople);} }/>
+  const handleApply = () => {
+    Alert.alert("Changes",
+      `You just commited changes to the business ${item.name}.\nThe business is now : ${switchValue?"open" : "close"}.\nThe new amount of people allowed is : ${amountOfPeople}.\n`)
+  }
+  return (
+    <View style={styles.form}>
+      <View>
+        <Title title={`Here you can make any changes to ${item.name}`} />
+        <View style={styles.Row}>
+          <Text style={styles.label}>Close/Open</Text>
+          <Switch
+            onValueChange={() => setSwitchValue(!switchValue)}
+            value={switchValue} />
         </View>
-    );
+      </View>
+      <View style={styles.Row}>
+        <Text style={styles.label}>People allowed:</Text>
+        <TextInput
+          style={styles.formControl}
+          onChangeText={amountOfPeople => setAmountOfPeople(amountOfPeople)}
+          defaultValue={amountOfPeople}
+          keyboardType="numeric"
+        />
+      </View>
+      <Button color={Colors.primaryColor} title='apply the changes' onPress={() => handleApply()} />
+    </View >
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
-   // flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'row',
+    padding: 30,
+  },
+  form:{
+    margin:20,
   },
   formControl: {
-    padding: 10,
-    width: '65%',
+    width: 70,
     borderColor: 'black',
     borderBottomColor: 'black',
     borderBottomWidth: 1,
-    paddingTop: 23,
   },
+  Row: {
+    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: "space-between",
+    margin: 20,
+  },
+  label: {
+    marginVertical: 8,
+    fontWeight: 'bold',
+    fontSize: 18,
+  }
 });
 
 export default AdminChangesScreen

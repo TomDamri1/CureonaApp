@@ -4,10 +4,11 @@ import { FlatList } from 'react-native-gesture-handler';
 import SingleHour from './SingleHour'
 
 const MakeAppointment = props => {
+    console.log("MA : " ,props.schedule.queue[props.selectedDay.toLowerCase()] )
     return (
         <View style={styles.container}>
             <FlatList
-                data={props.item.hours}
+                data={props.schedule.queue[props.selectedDay.toLowerCase()]}
                 renderItem={({ item, index }) =>
                     <SingleHour
                         time={item}
