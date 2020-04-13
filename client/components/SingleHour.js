@@ -14,7 +14,7 @@ const SingleHour = props => {
               })
               console.log("my msg : " , myMSG);
             props.navigation.navigate({routeName: "Loading"});
-            const response = await fetch(Urls.routes.login, {
+            const response = await fetch(Urls.routes.makeAnAppointment, {
                 method: 'POST',
                 headers: {
                   Accept: 'application/json',
@@ -31,8 +31,8 @@ const SingleHour = props => {
               const resData = await response.json();
               console.log(resData);
               props.navigation.pop();
-              if ( resData.state === "sucsses") {
-                Alert.alert("Sucsses!" ,`you are now registerd to ${hour}. please dont be late. \nyour code is :12345`);
+              if ( resData.state.toLowerCase() === "success") {
+                Alert.alert("Success!" ,`you are now registerd to ${hour}. please dont be late. \nyour code is :${resData.key}`);
               }
               else {
                 Alert.alert("Failed", "somthing went wrong");
