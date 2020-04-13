@@ -2,21 +2,45 @@ import React from 'react'
 import { View, Text, StyleSheet, Alert } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Colors from '../constants/Colors';
-
-const registerToHour = (hour) => {
-    const checkTheHourWithTheServer = true ; // for now its true.
-    if(checkTheHourWithTheServer === true) {
-        //here notify the server for this user registration to the hour
-        //push navigtaion - loading
-        //pop navigation
-        const code = "12345"
-        Alert.alert("Sucsses!" ,`you are now registerd to ${hour}. please dont be late. \nyour code is :${code}`  )
-        //generate a code in the server, save the code in the server under the customer.
-    }
-}
-
+import Urls from '../constants/Urls';
 
 const SingleHour = props => {
+    const registerToHour = async (hour) => {
+            const myMSG = JSON.stringify({
+                Hour: props.time,
+                BusinessName: props.businessName,
+                Day: props.selectedDay,
+                username: props.username
+              })
+              console.log("my msg : " , myMSG);
+            props.navigation.navigate({routeName: "Loading"});
+            const response = await fetch(Urls.routes.login, {
+                method: 'POST',
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  Hour: props.time,
+                  BusinessName: props.businessName, // in the end will be cid
+                  Day: props.selectedDay,
+                  username: props.username
+                }),
+              });
+          
+              const resData = await response.json();
+              console.log(resData);
+              props.navigation.pop();
+              if ( resData.state === "sucsses") {
+                Alert.alert("Sucsses!" ,`you are now registerd to ${hour}. please dont be late. \nyour code is :12345`);
+              }
+              else {
+                Alert.alert("Failed", "somthing went wrong");
+              }
+            
+            //generate a code in the server, save the code in the server under the customer.
+    }
+
     return (
         <TouchableOpacity onPress={()=>registerToHour(props.time)}>
             <View style={styles.container}>

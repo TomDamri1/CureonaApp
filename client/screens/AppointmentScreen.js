@@ -1,17 +1,28 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react'
+import { View } from 'react-native';
 import Title from '../components/Title'
 import MakeAppointment from '../components/MakeAppointment'
+import DayPicker from '../components/DayPicker';
+import Time from '../constants/Time';
 
 const AppointmentScreen = props => {
-    return(
+    const date = new Date();
+    const [selectedDayValue, setSelectedDayValue] = useState(Time.days[date.getDay()]);
+    const username = props.navigation.getParam('username');
+    console.log(username);
+    return (
         <View>
-            <Title 
-                title={`${props.navigation.getParam('item').name}`} 
+            <Title
+                title={`${props.navigation.getParam('item').name}`}
                 subTitle="Make an appointment"
             />
-            
-            <MakeAppointment item={props.navigation.getParam('item')}/>
+            <DayPicker selectedDayValueState={[selectedDayValue, setSelectedDayValue]} />
+            <MakeAppointment
+                item={props.navigation.getParam('item')}
+                selectedDay={selectedDayValue}
+                navigation = {props.navigation}
+                username = {username}
+            />
         </View>
 
     )

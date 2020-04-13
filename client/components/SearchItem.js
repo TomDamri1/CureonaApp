@@ -5,23 +5,25 @@ import Colors from '../constants/Colors';
 import text from '../constants/text'
 
 
-const makeAnAppointment = (item, navigation) => {
-    navigation.setParams({ item: item });
+const makeAnAppointment = (item, navigation , username) => {
+    navigation.setParams({ item: item , username : username});
     navigation.navigate({
         routeName: "AppointmentScreen",
         params: {
             item: item,
+            username : username,
         }
     });
 }
 
-const adminChanges = (item, navigation) => {
-    navigation.setParams({ item: item });
+const adminChanges = (item, navigation,username) => {
+    navigation.setParams({item: item , username : username });
     navigation.navigate({
         routeName: "AdminChangesScreen",
         params: {
             item: item,
-            USERTYPE : navigation.getParam('USERTYPE')
+            USERTYPE : navigation.getParam('USERTYPE'),
+            username : username,
         }
     });
 
@@ -35,7 +37,7 @@ const decideWhatToDo = {
 const SearchItem = props => {
     return (
         <TouchableOpacity onPress={() =>
-            decideWhatToDo[props.pressAction](props.content, props.navigation)
+            decideWhatToDo[props.pressAction](props.content, props.navigation , props.username)
         }>
             <View style={styles.container}>
                 <Text style={styles.title}>

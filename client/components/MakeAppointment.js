@@ -9,7 +9,13 @@ const MakeAppointment = props => {
             <FlatList
                 data={props.item.hours}
                 renderItem={({ item, index }) =>
-                    <SingleHour time={item}/>
+                    <SingleHour
+                        time={item}
+                        navigation = {props.navigation}
+                        businessName = {props.item.name}
+                        selectedDay = {props.selectedDay}
+                        username = {props.username}
+                    />
                 }
                 keyExtractor={(item, index) => index.toString()}
                 style={styles.gap}

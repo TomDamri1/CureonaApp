@@ -39,6 +39,7 @@ const SearchList = props => {
         filterData();
     }, [searchInput])
 
+    console.log("searchlist : " , props.username)
     return (
 
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -63,6 +64,7 @@ const SearchList = props => {
                             pressAction={action}
                             content = {item}
                             navigation={props.navigation}
+                            username={props.username}
                         />}
                     keyExtractor={item => item.id}
                 />
