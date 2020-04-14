@@ -42,10 +42,10 @@ server root url : https://cureona.herokuapp.com/
  ```
 
 
-### updateding Settings for business  :
+### updating Settings for business  :
 #### url : https://cureona.herokuapp.com/businessSettings
 
-#### please NOTICE : not all the fields are mendatory! 
+#### please NOTICE : Not all fields are required! only company id is required. 
 #### that means that you can send an update only for open_hours\open\max_capacity
 #### or all together. 
 
