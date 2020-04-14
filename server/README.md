@@ -42,7 +42,7 @@ server root url : https://cureona.herokuapp.com/
  ```
 
 
-###updateding Settings for business  :
+### updateding Settings for business  :
 #### url : https://cureona.herokuapp.com/businessSettings
 
 #### please NOTICE : not all the fields are mendatory! 
