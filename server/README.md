@@ -42,13 +42,30 @@ server root url : https://cureona.herokuapp.com/
  ```
 
 
-### updateding Settings for business  :
+updateding Settings for business  :
 #### url : https://cureona.herokuapp.com/businessSettings
-#### please NOTICE : not all the fields are mendatory! that means that you can send an update only for open_hours\open\max_capacity
+
+#### please NOTICE : not all the fields are mendatory! 
+#### that means that you can send an update only for open_hours\open\max_capacity
 #### or all together. 
 
-#### return value : {'state': 'success', "changes"} of NO changes were made. 
-#### for every field that was changed the return value will be: { "max_capacity": "updated", "open": "updated",open_hours": "updated"}
+#### return value : 
+#### if NO changes were made:
+```
+{
+  "changes": "No chacnges",
+  "state": "success"
+}
+```
+
+#### for every field that was changed the return value will be: 
+```
+{
+  "max_capacity": "updated",
+  "open": "updated",
+  "open_hours": "updated"
+}
+```
 
 #### json example :
 ```
