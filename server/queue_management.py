@@ -67,6 +67,9 @@ class GetQueue(Resource):
         # check for legal business name
         if business is None:
             return jsonify({'state': 'failed, BusinessName is not register'})
+        # check if the business is open or closed
+        if not business["open"]:
+            return jsonify({'state': 'success, Business is closed'})
         queue_key = random_string(4)
         print(queue_key)
         json_doc = user_queue.find_one({"username": data['username']})
