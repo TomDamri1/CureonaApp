@@ -70,6 +70,11 @@ class GetQueue(Resource):
         # check if the business is open or closed
         if not business["open"]:
             return jsonify({'state': 'success, Business is closed'})
+        # check if in the given day and hor there are available queue
+        print("num of queue to this hour: " + str(int(len(business["queue"][data['Day']][data['Hour']]))))
+        print("max capacity: " + str(business["max_capacity"]))
+        if len(business["queue"][data['Day']][data['Hour']]) >= int(business["max_capacity"]):
+            return jsonify({'state': 'success, sorry the queue is full'})
         queue_key = random_string(4)
         print(queue_key)
         json_doc = user_queue.find_one({"username": data['username']})
