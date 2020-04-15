@@ -78,8 +78,13 @@ class GetQueue(Resource):
         queue_key = random_string(4)
         print(queue_key)
         json_doc = user_queue.find_one({"username": data['username']})
+        # add queue to customer
         if json_doc:
-            # add queue to customer
+            # check if the customer already have a queue to this day and hour to this business
+            prev_orders = json_doc["orders"]
+            for i in prev_orders:
+                if data['BusinessName'] == i[0] and schedule_date == i[1] and data['Hour'] == i[2]:
+                    return jsonify({'state': 'success, sorry you can not get two queue to the same hour'})
             order = [data['BusinessName'], schedule_date, queue_key]
             print(order)
             user_queue.update({'username': data['username']}, {"$push": {'orders': order}})
