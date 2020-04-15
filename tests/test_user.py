@@ -76,6 +76,16 @@ class TestUser(unittest.TestCase):
         response = requests.post(url, data=myobj)
         self.assertEqual(response.json(), {'state': 'success', 'type': 'admin'})
 
+    # ---------------------------------------------------------------------
+    # admin abillities checks
+    def test_Change_amount_of_people_in_a_business(self):
+        url = 'https://cureona.herokuapp.com/businessSettings'
+        myobj = {'company_id' : '1', 'max_capacity' : '100'}
+        response = requests.post(url, data=myobj)
+        self.assertEqual(response.json(), {"max_capacity": "updated"})
+        myobj = {'company_id' : '1', 'max_capacity' : '101'}
+        response = requests.post(url, data=myobj)
+
 
 if __name__ == '__main__':
     unittest.main()
