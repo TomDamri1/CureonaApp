@@ -3,16 +3,43 @@ import { Switch, StyleSheet, Text, View, Button, TextInput, Alert } from 'react-
 import Title from '../components/Title';
 import SearchList from '../components/SearchList';
 import Colors from '../constants/Colors';
+import Urls from '../constants/Urls'
 
 
 const AdminChangesScreen = props => {
   const item = props.navigation.getParam('item');
-  const [switchValue, setSwitchValue] = useState(false);
+  const [openOrClose, setOpenOrClose] = useState(false);
   const [amountOfPeople, setAmountOfPeople] = useState('50'); // shows the current amount - need to get from the server
 
-  const handleApply = () => {
+
+  const handleApply = async () => {
+    const body = JSON.stringify({
+      company_id : item.id,
+      open : openOrClose ? "True" : "False",
+      max_capacity : amountOfPeople
+    });
+    console.log(body)  ;
+    props.navigation.navigate({
+      routeName: "Loading"
+    })
+    const response = await fetch(Urls.routes.businessSettings, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          company_id : item.id,
+          open : openOrClose ? "True" : "False",
+          max_capacity : amountOfPeople
+        })
+      ,
+    });
+    const resData = await response.json();
+    console.log(resData);
+    props.navigation.pop();
     Alert.alert("Changes",
-      `You just commited changes to the business ${item.name}.\nThe business is now : ${switchValue?"open" : "close"}.\nThe new amount of people allowed is : ${amountOfPeople}.\n`)
+      `You just commited changes to the business ${item.name}.\nThe business is now : ${openOrClose?"open" : "close"}.\nThe new amount of people allowed is : ${amountOfPeople}.\n`)
   }
   return (
     <View style={styles.form}>
@@ -21,8 +48,8 @@ const AdminChangesScreen = props => {
         <View style={styles.Row}>
           <Text style={styles.label}>Close/Open</Text>
           <Switch
-            onValueChange={() => setSwitchValue(!switchValue)}
-            value={switchValue} />
+            onValueChange={() => setOpenOrClose(!openOrClose)}
+            value={openOrClose} />
         </View>
       </View>
       <View style={styles.Row}>
