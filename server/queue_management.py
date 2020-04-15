@@ -85,7 +85,7 @@ class GetQueue(Resource):
             for i in prev_orders:
                 if data['BusinessName'] == i[0] and schedule_date == i[1] and data['Hour'] == i[2]:
                     return jsonify({'state': 'success, sorry you can not get two queue to the same hour'})
-            order = [data['BusinessName'], schedule_date, queue_key]
+            order = [data['BusinessName'], schedule_date, data['Hour'], queue_key]
             print(order)
             user_queue.update({'username': data['username']}, {"$push": {'orders': order}})
             business_info.update({'business_name': data['BusinessName']},
@@ -97,7 +97,7 @@ class GetQueue(Resource):
         if not json_doc:
             return jsonify({'state': 'User does not exist'})
         # create the first order
-        orders = [[data['BusinessName'], schedule_date, queue_key]]
+        orders = [[data['BusinessName'], schedule_date, data['Hour'], queue_key]]
         # print(orders)
         userQueue = {"username": data['username'], "orders": orders}
         # print(userQueue)
