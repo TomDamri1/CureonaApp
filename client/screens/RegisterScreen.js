@@ -34,7 +34,7 @@ const RegisterScreen = props => {
   const [businessName, setBusinessName] = useState('');
   const [cid, setCid] = useState('');
   const [ownerName, setOwnerName] = useState('');
-  const [ownerLastName, setOwnerLastName] = useState('');
+  const [address, setAddress] = useState('');
   const [ownerId, setOwnerId] = useState('');
 
   const validatePassword = () => {
@@ -78,7 +78,16 @@ const RegisterScreen = props => {
         routeName: "Loading"
       })
 
-      const response = await fetch(Urls.routes.register, {
+      console.log(JSON.stringify({
+        username: username,
+        business_name: businessName,
+        address: address,
+        company_id: cid,
+        password: userPassword,
+        search_key:[businessName],
+      }));
+
+      const response = await fetch(!isBusinessOwner ? Urls.routes.register : Urls.routes.registerBusiness, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -93,11 +102,12 @@ const RegisterScreen = props => {
           :
           JSON.stringify({
             username: username,
-            password: userPassword,
-            type: text.type.businessOwner,
             business_name: businessName,
+            address: address,
             company_id: cid,
-            search_key:[],
+            password: userPassword,
+            search_key:[businessName],
+            
           })
         ,
       });
@@ -128,6 +138,9 @@ const RegisterScreen = props => {
       }
       else if (resData.state === Response.userExist) {
         Alert.alert(Response.userExist)
+      }
+      else if (resData.state === Response.companyIdWasNotFound) {
+        Alert.alert(Response.companyIdWasNotFound);
       }
 
     }
@@ -188,7 +201,7 @@ const RegisterScreen = props => {
               businessNameState={[businessName, setBusinessName]}
               cidState={[cid, setCid]}
               ownerNameState={[ownerName, setOwnerName]}
-              ownerLastNameState={[ownerLastName, setOwnerLastName]}
+              addressState={[address, setAddress]}
               ownerIdState={[ownerId, setOwnerId]}
             />
 

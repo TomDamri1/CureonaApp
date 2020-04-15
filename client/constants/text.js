@@ -9,7 +9,7 @@ export default {
     businessName : "Business Name",
     cid : "CID",
     ownerName :"Owner Name",
-    ownerLastName :"Owner Last Name",
+    businessAdress :"Business Address",
     ownerId :"Owner ID",
     placeholder: {
         username: "The username consists of A-Z, a-z letters",
@@ -18,7 +18,7 @@ export default {
         businessName:"Enter your business name",
         cid:"Enter your business's CID",
         ownerName:"Enter your first name",
-        ownerLastName:"Enter your last name",
+        businessAddress:"Enter business adress",
         ownerId:"Enter your ID",
     },
     alert: {

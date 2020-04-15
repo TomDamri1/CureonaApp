@@ -15,7 +15,7 @@ const BusinessOwnerRegistration = (props) => {
      const [businessName, setBusinessName] = props.businessNameState
      const [cid, setCid] = props.cidState
      const [ownerName, setOwnerName] = props.ownerNameState
-     const [ownerLastName, setOwnerLastName] = props.ownerLastNameState
+     const [address, setAddress] = props.addressState
      const [ownerId, setOwnerId] = props.ownerIdState
     if (!props.isBusinessOwner) {
         return <View />
@@ -63,12 +63,12 @@ const BusinessOwnerRegistration = (props) => {
                 />
             </View>
             <View style={styles.formControl}>
-                <Text style={styles.label}>{text.ownerLastName}</Text>
+                <Text style={styles.label}>{text.businessAdress}</Text>
                 <TextInput
-                    placeholder={text.placeholder.ownerLastName}
+                    placeholder={text.placeholder.businessAddress}
                     style={styles.input}
-                    value={ownerLastName}
-                    onChangeText={text => {setOwnerLastName(text) }}
+                    value={address}
+                    onChangeText={text => {setAddress(text) }}
                     returnKeyType="next"
                 />
             </View>

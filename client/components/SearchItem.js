@@ -9,7 +9,7 @@ import Urls from '../constants/Urls'
 const makeAnAppointment = async (item, navigation, username) => {
     console.log(item.id);
     console.log("mymsg : ", JSON.stringify({
-        company_id: "1230",
+        company_id: item.id,
     }));
     console.log("into : ", Urls.routes.avilableQueues)
 
@@ -22,27 +22,29 @@ const makeAnAppointment = async (item, navigation, username) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                company_id: "1230",
+                company_id: item.id,
             }),
         });
 
         const resData = await response.json();
         console.log(resData);
-        navigation.pop();
-        navigation.setParams({ item: item, username: username, schedule: resData,});
-        navigation.navigate({
-            routeName: "AppointmentScreen",
-            params: {
-                item: item,
-                username: username,
-                schedule: resData,
-            }
-        });
+        if (resData.state === "success") {
+            navigation.pop();
+            navigation.setParams({ item: item, username: username, schedule: resData, });
+            navigation.navigate({
+                routeName: "AppointmentScreen",
+                params: {
+                    item: item,
+                    username: username,
+                    schedule: resData,
+                }
+            });
+        }
     }
     catch{
         Alert.alert("somthing went wrong , try again");
     }
-    
+
 
 
 }
