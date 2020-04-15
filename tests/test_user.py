@@ -85,7 +85,13 @@ class TestUser(unittest.TestCase):
         self.assertEqual(response.json(), {"max_capacity": "updated"})
         myobj = {'company_id' : '1', 'max_capacity' : '101'}
         response = requests.post(url, data=myobj)
-
+        
+        
+    def test_close_open_business_admin(self):
+        url = 'https://cureona.herokuapp.com/businessSettings'
+        myobj = {'company_id': '1', 'open': 'True'}
+        response = requests.post(url, data=myobj)
+        self.assertEqual(response.json(), {'open': 'updated'})    
 
 if __name__ == '__main__':
     unittest.main()
