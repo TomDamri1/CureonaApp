@@ -57,13 +57,16 @@ class GetQueue(Resource):
     def post(self):
         data = GetQueue_parser.parse_args()
         print(data)
+        business = business_info.find_one({"business_name": data['BusinessName']})
         # check for legal day name
         if data['Day'] == "sunday" or data['Day'] == "monday" or data['Day'] == "tuesday" or data[
             'Day'] == "wednesday" or data['Day'] == "thursday" or data['Day'] == "friday" or data['Day'] == "saturday":
             schedule_date = calc_date(data['Day'])
         else:
             return jsonify({'state': 'failed, illegal day name'})
-
+        # check for legal business name
+        if business is None:
+            return jsonify({'state': 'failed, BusinessName is not register'})
         queue_key = random_string(4)
         print(queue_key)
         json_doc = user_queue.find_one({"username": data['username']})
