@@ -8,22 +8,24 @@ import hashlib
 new_col = new_db["login"]
 
 Login_parser = reqparse.RequestParser()
-Login_parser.add_argument('username')
-Login_parser.add_argument('password')
+Login_parser.add_argument('username', required=True, help="username cannot be blank!")
+Login_parser.add_argument('password', required=True, help="password cannot be blank!")
 
 
 class Login(Resource):
     def post(self):
         data = Login_parser.parse_args()
         json_doc = new_col.find_one({"username": data['username']})
-        print(json_doc)
-        sha_encrypt = hashlib.sha256(data.password.encode()).hexdigest()
-        print(sha_encrypt)
-        print(json_doc['password'])
-        if sha_encrypt == json_doc['password']:
-            return jsonify({'state': 'success', 'type': json_doc['type']})
-        else:
-            return jsonify({'state': 'failed'})
+        if json_doc:
+            print(json_doc)
+            sha_encrypt = hashlib.sha256(data.password.encode()).hexdigest()
+            print(sha_encrypt)
+            print(json_doc['password'])
+            if sha_encrypt == json_doc['password']:
+                return jsonify({'state': 'success', 'type': json_doc['type']})
+            else:
+                return jsonify({'state': 'failed'})
+        return jsonify({'state': 'failed'})
 
 
 Registration_parser = reqparse.RequestParser()
@@ -64,7 +66,6 @@ RegisterBuisness_parser.add_argument('company_id', required=True, help="Company 
 RegisterBuisness_parser.add_argument('search_key', required=True, help="search_key cannot be blank!")
 
 
-
 class RegisterBusiness(Resource):
 
     def post(self):
@@ -75,7 +76,6 @@ class RegisterBusiness(Resource):
         CID = business_info.find_one({"company_id": data['company_id']})
         # if user with the same user name and CID is not exist, create new user.
         if not json_doc and not CID:
-
             login_dict, business_info_dict = {}, {}
 
             login_dict['username'] = data['username']
@@ -101,3 +101,15 @@ class RegisterBusiness(Resource):
             return jsonify({'state': 'success'})
         # if user with the same user name is exist, return to server that: 'user name already exist'.
         return jsonify({'state': 'user name or cid already exist'})
+
+
+def delete_user(username):
+    json_doc = new_col.find_one({"username": username})
+    if json_doc:
+        if json_doc["type"] == "customer":
+            new_col.delete_one({"username": username})
+        elif json_doc["type"] == "business_owner":
+            new_col.delete_one({"username": username})
+            business_info.delete_one({"username": username})
+        return "deleted"
+    return "username is not exist"
