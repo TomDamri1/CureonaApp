@@ -69,7 +69,7 @@ class RegisterBusiness(Resource):
 
     def post(self):
         data = RegisterBuisness_parser.parse_args()
-
+        print(data)
         # search user with the same user name.
         json_doc = new_col.find_one({"username": data['username']})
         CID = business_info.find_one({"company_id": data['company_id']})
