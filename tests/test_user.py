@@ -2,6 +2,8 @@ import unittest
 
 import requests
 
+from server.user import delete_user
+
 
 class TestUser(unittest.TestCase):
     # register with user name that already exist
@@ -13,9 +15,9 @@ class TestUser(unittest.TestCase):
 
     def test_Login_success(self):
         url = 'https://cureona.herokuapp.com/Login'
-        myobj = {'username': 'c', 'password': '123456'}
+        myobj = {'username': 'c_test', 'password': '123'}
         response = requests.post(url, data=myobj)
-        self.assertEqual(response.json(), {'state': 'success', 'type': 'admin'})
+        self.assertEqual(response.json(), {'state': 'success', 'type': 'customer'})
 
     def testLoginFailedWrongPassword(self):
         url = 'https://cureona.herokuapp.com/Login'
@@ -49,12 +51,13 @@ class TestUser(unittest.TestCase):
         response = requests.post(url, data=myobj)
         self.assertEqual(response.json(), {'state': 'success', 'type': 'business_owner'})
 
-    def test_Registration_business_owner(self):
+    def test_Registration_business_owner_already_exist(self):
         url = 'https://cureona.herokuapp.com/RegisterBusiness'
-        myobj = {'username': 'bo', 'password': '987', 'type':
-            'business_owner', 'BusinessName': 'shufersal', 'CompanyId': '15951'}
+        myobj = {"username": "test", "password": "123", "business_name": "IKEA", "address": "balfor 24/1",
+                 "company_id": "123", "search_key": ["Furniture"]}
         response = requests.post(url, data=myobj)
-        self.assertEqual(response.json(), {'state': 'user name or cid already exist'})
+        except_result = {"state": "user name or cid already exist"}
+        self.assertEqual(response.json(), except_result)
 
     # ---------------------------------------------------------------------
     # admin login checks
@@ -77,21 +80,229 @@ class TestUser(unittest.TestCase):
         self.assertEqual(response.json(), {'state': 'success', 'type': 'admin'})
 
     # ---------------------------------------------------------------------
-    # admin abillities checks
+    # admin abilities checks
     def test_Change_amount_of_people_in_a_business(self):
         url = 'https://cureona.herokuapp.com/businessSettings'
-        myobj = {'company_id' : '1', 'max_capacity' : '100'}
+        myobj = {'company_id': '1', 'max_capacity': '100'}
         response = requests.post(url, data=myobj)
         self.assertEqual(response.json(), {"max_capacity": "updated"})
-        myobj = {'company_id' : '1', 'max_capacity' : '101'}
+        myobj = {'company_id': '1', 'max_capacity': '101'}
         response = requests.post(url, data=myobj)
-        
-        
+
     def test_close_open_business_admin(self):
         url = 'https://cureona.herokuapp.com/businessSettings'
         myobj = {'company_id': '1', 'open': 'True'}
         response = requests.post(url, data=myobj)
-        self.assertEqual(response.json(), {'open': 'updated'})    
+        self.assertEqual(response.json(), {'open': 'updated'})
+
+    # ---------------------------------------------------------------------
+    # gets a queue checks
+    def test_gets_available_queue_for_empty_queue(self):
+        delete_user("test12345")
+        url = 'https://cureona.herokuapp.com/RegisterBusiness'
+        myobj = {"username": "test12345", "password": "123", "business_name": "IKEA", "address": "balfor 24/1",
+                 "company_id": "a1s2d3asd", "search_key": ["Furniture"]}
+        requests.post(url, data=myobj)
+        url = 'https://cureona.herokuapp.com/AvailableQueues'
+        myobj = {"company_id": "a1s2d3asd"}
+        response = requests.post(url, data=myobj)
+        except_result = {'queue': {'friday': ['08:00-09:00',
+                                              '09:00-10:00',
+                                              '10:00-11:00',
+                                              '11:00-12:00',
+                                              '12:00-13:00',
+                                              '13:00-14:00',
+                                              '14:00-15:00',
+                                              '15:00-16:00',
+                                              '16:00-17:00',
+                                              '17:00-18:00',
+                                              '18:00-19:00',
+                                              '19:00-20:00',
+                                              '20:00-21:00',
+                                              '21:00-22:00',
+                                              '22:00-23:00',
+                                              '23:00-00:00',
+                                              '00:00-01:00',
+                                              '01:00-02:00',
+                                              '02:00-03:00',
+                                              '03:00-04:00',
+                                              '04:00-05:00',
+                                              '05:00-06:00',
+                                              '06:00-07:00',
+                                              '07:00-08:00'],
+                                   'monday': ['08:00-09:00',
+                                              '09:00-10:00',
+                                              '10:00-11:00',
+                                              '11:00-12:00',
+                                              '12:00-13:00',
+                                              '13:00-14:00',
+                                              '14:00-15:00',
+                                              '15:00-16:00',
+                                              '16:00-17:00',
+                                              '17:00-18:00',
+                                              '18:00-19:00',
+                                              '19:00-20:00',
+                                              '20:00-21:00',
+                                              '21:00-22:00',
+                                              '22:00-23:00',
+                                              '23:00-00:00',
+                                              '00:00-01:00',
+                                              '01:00-02:00',
+                                              '02:00-03:00',
+                                              '03:00-04:00',
+                                              '04:00-05:00',
+                                              '05:00-06:00',
+                                              '06:00-07:00',
+                                              '07:00-08:00'],
+                                   'saturday': ['08:00-09:00',
+                                                '09:00-10:00',
+                                                '10:00-11:00',
+                                                '11:00-12:00',
+                                                '12:00-13:00',
+                                                '13:00-14:00',
+                                                '14:00-15:00',
+                                                '15:00-16:00',
+                                                '16:00-17:00',
+                                                '17:00-18:00',
+                                                '18:00-19:00',
+                                                '19:00-20:00',
+                                                '20:00-21:00',
+                                                '21:00-22:00',
+                                                '22:00-23:00',
+                                                '23:00-00:00',
+                                                '00:00-01:00',
+                                                '01:00-02:00',
+                                                '02:00-03:00',
+                                                '03:00-04:00',
+                                                '04:00-05:00',
+                                                '05:00-06:00',
+                                                '06:00-07:00',
+                                                '07:00-08:00'],
+                                   'sunday': ['08:00-09:00',
+                                              '09:00-10:00',
+                                              '10:00-11:00',
+                                              '11:00-12:00',
+                                              '12:00-13:00',
+                                              '13:00-14:00',
+                                              '14:00-15:00',
+                                              '15:00-16:00',
+                                              '16:00-17:00',
+                                              '17:00-18:00',
+                                              '18:00-19:00',
+                                              '19:00-20:00',
+                                              '20:00-21:00',
+                                              '21:00-22:00',
+                                              '22:00-23:00',
+                                              '23:00-00:00',
+                                              '00:00-01:00',
+                                              '01:00-02:00',
+                                              '02:00-03:00',
+                                              '03:00-04:00',
+                                              '04:00-05:00',
+                                              '05:00-06:00',
+                                              '06:00-07:00',
+                                              '07:00-08:00'],
+                                   'thursday': ['08:00-09:00',
+                                                '09:00-10:00',
+                                                '10:00-11:00',
+                                                '11:00-12:00',
+                                                '12:00-13:00',
+                                                '13:00-14:00',
+                                                '14:00-15:00',
+                                                '15:00-16:00',
+                                                '16:00-17:00',
+                                                '17:00-18:00',
+                                                '18:00-19:00',
+                                                '19:00-20:00',
+                                                '20:00-21:00',
+                                                '21:00-22:00',
+                                                '22:00-23:00',
+                                                '23:00-00:00',
+                                                '00:00-01:00',
+                                                '01:00-02:00',
+                                                '02:00-03:00',
+                                                '03:00-04:00',
+                                                '04:00-05:00',
+                                                '05:00-06:00',
+                                                '06:00-07:00',
+                                                '07:00-08:00'],
+                                   'tuesday': ['08:00-09:00',
+                                               '09:00-10:00',
+                                               '10:00-11:00',
+                                               '11:00-12:00',
+                                               '12:00-13:00',
+                                               '13:00-14:00',
+                                               '14:00-15:00',
+                                               '15:00-16:00',
+                                               '16:00-17:00',
+                                               '17:00-18:00',
+                                               '18:00-19:00',
+                                               '19:00-20:00',
+                                               '20:00-21:00',
+                                               '21:00-22:00',
+                                               '22:00-23:00',
+                                               '23:00-00:00',
+                                               '00:00-01:00',
+                                               '01:00-02:00',
+                                               '02:00-03:00',
+                                               '03:00-04:00',
+                                               '04:00-05:00',
+                                               '05:00-06:00',
+                                               '06:00-07:00',
+                                               '07:00-08:00'],
+                                   'wednesday': ['08:00-09:00',
+                                                 '09:00-10:00',
+                                                 '10:00-11:00',
+                                                 '11:00-12:00',
+                                                 '12:00-13:00',
+                                                 '13:00-14:00',
+                                                 '14:00-15:00',
+                                                 '15:00-16:00',
+                                                 '16:00-17:00',
+                                                 '17:00-18:00',
+                                                 '18:00-19:00',
+                                                 '19:00-20:00',
+                                                 '20:00-21:00',
+                                                 '21:00-22:00',
+                                                 '22:00-23:00',
+                                                 '23:00-00:00',
+                                                 '00:00-01:00',
+                                                 '01:00-02:00',
+                                                 '02:00-03:00',
+                                                 '03:00-04:00',
+                                                 '04:00-05:00',
+                                                 '05:00-06:00',
+                                                 '06:00-07:00',
+                                                 '07:00-08:00']},
+                         'state': 'success'}
+        delete_user("test12345")
+        self.assertEqual(response.json(), except_result)
+        # ---------------------------------------------------------------------
+        # gets a queue checks
+
+    def test_get_two_queue_to_same_place_at_same_time(self):
+        url = 'https://cureona.herokuapp.com/businessSettings'
+        myobj = {'company_id': '123', 'open': 'True'}
+        requests.post(url, data=myobj)
+        url = 'https://cureona.herokuapp.com/GetQueue'
+        myobj = {"username": "c_test", "BusinessName": "IKEA", "Day": "wednesday", "Hour": "15:00-16:00"}
+        requests.post(url, data=myobj)
+        response = requests.post(url, data=myobj)
+        except_result = {"state": "success, sorry you can not get two queue to the same hour"}
+        self.assertEqual(response.json(), except_result)
+
+    def test_get_queue_to_closed_business(self):
+        url = 'https://cureona.herokuapp.com/businessSettings'
+        myobj = {'company_id': '123', 'open': 'False'}
+        requests.post(url, data=myobj)
+        url = 'https://cureona.herokuapp.com/GetQueue'
+        myobj = {"username": "c_test", "BusinessName": "IKEA", "Day": "wednesday", "Hour": "15:00-16:00"}
+        response = requests.post(url, data=myobj)
+        except_result = {"state": "success, Business is closed"}
+        myobj = {'company_id': '123', 'open': 'True'}
+        requests.post(url, data=myobj)
+        self.assertEqual(response.json(), except_result)
+
 
 if __name__ == '__main__':
     unittest.main()
