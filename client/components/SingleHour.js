@@ -23,7 +23,7 @@ const SingleHour = props => {
                 body: JSON.stringify({
                   Hour: props.time,
                   BusinessName: props.businessName, // in the end will be cid
-                  Day: props.selectedDay,
+                  Day: props.selectedDay.toLowerCase(),
                   username: props.username
                 }),
               });
