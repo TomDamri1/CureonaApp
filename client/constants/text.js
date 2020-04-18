@@ -24,6 +24,7 @@ export default {
     alert: {
         pleaseEnterValidUsernameAndPassword: "please enter valid username and password.",
         pleaseCheckYourUserNameAndPassword: "please check your username and password.",
+        checkConditions : "please check and fill the fields properly",
     },
     type: {
         customer: "customer",

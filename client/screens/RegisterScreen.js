@@ -62,17 +62,40 @@ const RegisterScreen = props => {
       return false;
     }
   }
+  const validateBusinessOwner = () => {
+    if (!isBusinessOwner) {
+      return true;
+    }
+    else {
+      let conditionCount = 0;
+      if (businessName.length > 0) conditionCount += 1;
+      if (cid.length > 0) conditionCount += 1;
+      if (ownerId.length > 0 ) conditionCount += 1;
+      if (ownerName.length > 0 ) conditionCount += 1;
+      if (address.length > 0 ) conditionCount += 1;
+
+      if (conditionCount == 5) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+  }
+
+
 
   const handleRegister = async () => {
     const validatingPassword = validatePassword();
     const passwordLengthValidating = passwordLengthValidation();
     const validatingUsername = validateUsername();
+    const validatingBusinessOwner = validateBusinessOwner();
     console.log("===============================")
     console.log("validate password: ", validatingPassword);
     console.log("validate password length: ", passwordLengthValidating);
     console.log("validate username: ", validatingUsername);
 
-    if (validatingUsername && passwordLengthValidating && validatingPassword) {
+    if (validatingUsername && passwordLengthValidating && validatingPassword && validatingBusinessOwner) {
       console.log("we all good now send somthing to the server!")
       props.navigation.navigate({
         routeName: "Loading"
@@ -84,7 +107,7 @@ const RegisterScreen = props => {
         address: address,
         company_id: cid,
         password: userPassword,
-        search_key:[businessName],
+        search_key: [businessName],
       }));
 
       const response = await fetch(!isBusinessOwner ? Urls.routes.register : Urls.routes.registerBusiness, {
@@ -106,8 +129,8 @@ const RegisterScreen = props => {
             address: address,
             company_id: cid,
             password: userPassword,
-            search_key:[businessName],
-            
+            search_key: [businessName],
+
           })
         ,
       });
@@ -131,7 +154,7 @@ const RegisterScreen = props => {
             routeName: "BusinessOwnerScreen",
             params: {
               username: username,
-              businessName : businessName,
+              businessName: businessName,
             }
           })
         }
@@ -145,7 +168,7 @@ const RegisterScreen = props => {
 
     }
     else {
-      Alert.alert(text.alert.pleaseEnterValidUsernameAndPassword)
+      Alert.alert(text.alert.checkConditions)
     }
   }
 
