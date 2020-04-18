@@ -28,8 +28,8 @@ const makeAnAppointment = async (item, navigation, username) => {
 
         const resData = await response.json();
         console.log(resData);
+        navigation.pop();
         if (resData.state === "success") {
-            navigation.pop();
             navigation.setParams({ item: item, username: username, schedule: resData, });
             navigation.navigate({
                 routeName: "AppointmentScreen",
