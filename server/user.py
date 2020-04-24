@@ -103,10 +103,10 @@ class RegisterBusiness(Resource):
         # if user with the same user name is exist, return to server that: 'user name already exist'.
         return jsonify({'state': 'user name or cid already exist'})
 
+
 RegisterWorker_parser = reqparse.RequestParser()
 RegisterWorker_parser.add_argument('password', required=True, help="password cannot be blank!")
 RegisterWorker_parser.add_argument('company_id', required=True, help="Company id cannot be blank!")
-
 
 letters = string.ascii_lowercase
 
@@ -115,6 +115,7 @@ def random_string(stringLength=4):
     """Generate a random string of fixed length """
     return ''.join(random.choice(letters) for i in range(stringLength))
 
+
 class RegisterWorker(Resource):
 
     def post(self):
@@ -122,37 +123,20 @@ class RegisterWorker(Resource):
         print(data)
         username = random_string(6)
         # search user with the same user name.
-        json_doc = new_col.find_one({"username": data['username']})
-        CID = business_info.find_one({"company_id": data['company_id']})
-        # if user with the same user name and CID is not exist, create new user.
-        if not json_doc and not CID:
-            login_dict, business_info_dict = {}, {}
+        json_doc = new_col.find_one({"username": username})
+        # check if user with the same user name already exist.
+        while json_doc:
+            username = random_string(6)
+            # search user with the same user name.
+            json_doc = new_col.find_one({"username": username})
+        # if user with the same user name is not exist create new user.
 
-            login_dict['username'] = data['username']
-            login_dict['password'] = hashlib.sha256(data.password.encode()).hexdigest()
-            login_dict['type'] = 'business_owner'
+        login_dict = {'username': username, 'password': hashlib.sha256(data.password.encode()).hexdigest(),
+                      'company_id': data['company_id'], 'type': 'worker'}
 
-            business_info_dict['username'] = data['username']
-            business_info_dict['business_name'] = data['business_name']
-            business_info_dict['address'] = data['address']
-            business_info_dict['company_id'] = data['company_id']
-            business_info_dict['workers'] = []
-            business_info_dict['open'] = True
-            business_info_dict['search_key'] = data['search_key']
-            business_info_dict['open_hours'] = {'sunday': 'closed', 'monday': 'closed', 'tuesday': 'closed',
-                                                'wednesday': 'closed', 'thursday': 'closed', 'friday': 'closed',
-                                                'saturday': 'closed'}
-            business_info_dict['queue'] = my_calendar
-            business_info_dict['max_capacity'] = '10'
+        new_col.insert_one(login_dict)
 
-            new_col.insert_one(login_dict)
-            business_info.insert_one(business_info_dict)
-
-            return jsonify({'state': 'success'})
-        # if user with the same user name is exist, return to server that: 'user name already exist'.
-        return jsonify({'state': 'user name or cid already exist'})
-
-
+        return jsonify({'state': 'success'})
 
 
 def delete_user(username):
