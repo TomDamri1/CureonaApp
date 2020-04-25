@@ -4,6 +4,7 @@ import string
 import random
 from server.apps_calendar import *
 from server.mongo_connection import *
+from server.help_funcs import *
 import hashlib
 
 new_col = new_db["login"]
@@ -97,8 +98,10 @@ class RegisterBusiness(Resource):
             business_info_dict['max_capacity'] = '10'
 
             new_col.insert_one(login_dict)
-            business_info.insert_one(business_info_dict)
-
+            ###############################################
+            business_info.insert_one(business_info_dict) ## this function adds to the file the business name and address
+            ###############################################
+            add_business_to_txt_file(data['business_name'])
             return jsonify({'state': 'success'})
         # if user with the same user name is exist, return to server that: 'user name already exist'.
         return jsonify({'state': 'user name or cid already exist'})
