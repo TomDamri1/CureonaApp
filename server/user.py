@@ -72,7 +72,6 @@ class RegisterBusiness(Resource):
 
     def post(self):
         data = RegisterBuisness_parser.parse_args()
-        print(data)
         # search user with the same user name.
         json_doc = new_col.find_one({"username": data['username']})
         CID = business_info.find_one({"company_id": data['company_id']})
@@ -98,10 +97,16 @@ class RegisterBusiness(Resource):
             business_info_dict['max_capacity'] = '10'
 
             new_col.insert_one(login_dict)
+
+            business_info.insert_one(business_info_dict)
             ###############################################
-            business_info.insert_one(business_info_dict) ## this function adds to the file the business name and address
+            add_business_to_txt_file({'id': data['company_id'],
+                                              'name': data['business_name'],
+                                              'address': data['address'],
+                                              'keywords': data['search_key']
+                                              }
+                                     )
             ###############################################
-            add_business_to_txt_file(data['business_name'])
             return jsonify({'state': 'success'})
         # if user with the same user name is exist, return to server that: 'user name already exist'.
         return jsonify({'state': 'user name or cid already exist'})
