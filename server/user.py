@@ -7,8 +7,6 @@ from server.mongo_connection import *
 from server.help_funcs import *
 import hashlib
 
-
-
 new_col = new_db["login"]
 
 Login_parser = reqparse.RequestParser()
@@ -67,7 +65,8 @@ RegisterBuisness_parser.add_argument('password', required=True, help="password c
 RegisterBuisness_parser.add_argument('business_name', required=True, help="buisness name cannot be blank!")
 RegisterBuisness_parser.add_argument('address', required=True, help="address cannot be blank!")
 RegisterBuisness_parser.add_argument('company_id', required=True, help="Company id cannot be blank!")
-RegisterBuisness_parser.add_argument('search_key',type=dict, required=True, help="search key cannot be blank!")
+RegisterBuisness_parser.add_argument('search_key', type=dict, required=True, help="search key cannot be blank!")
+RegisterBuisness_parser.add_argument('max_capacity', required=False, help="max capacity in integer")
 
 
 class RegisterBusiness(Resource):
@@ -97,13 +96,13 @@ class RegisterBusiness(Resource):
                                                 'wednesday': 'closed', 'thursday': 'closed', 'friday': 'closed',
                                                 'saturday': 'closed'}
             business_info_dict['queue'] = my_calendar
-            business_info_dict['max_capacity'] = '10'
+            business_info_dict['max_capacity'] = data['max_capacity'] if data['max_capacity'] is not None else 10
             ###############################################
             tmp = {'id': data['company_id'],
-                                              'name': data['business_name'],
-                                              'address': data['address'],
-                                              'keywords': data['search_key']
-                                              }
+                   'name': data['business_name'],
+                   'address': data['address'],
+                   'keywords': data['search_key']
+                   }
             added_successfully = add_business_to_txt_file(tmp)
             add_business_to_js_file(tmp)
             ###############################################
