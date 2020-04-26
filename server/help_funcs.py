@@ -1,4 +1,5 @@
 import json
+import ast
 
 
 def add_business_to_txt_file(business_details):
@@ -8,9 +9,15 @@ def add_business_to_txt_file(business_details):
     f.close()
 
 
-def get_businesses():
+def get_businesses_with_json_file(lines):
 
-    return
+    lines.pop(0)
+    jsons = []
+    for line in lines:
+        dic = ast.literal_eval(line)
+        jsons.append(dic)
+
+    return jsons
 
 
 def add_business_to_js_file(json_to_be_file):
