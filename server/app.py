@@ -1,13 +1,12 @@
 # Using flask to make an api
 # import necessary libraries and functions
+from flask import Flask
 from flask_restful import Api
 
 from server.business_search import *
 from server.business_settings import *
-from server.user import *
 from server.queue_management import *
-from flask import Flask
-from server import  help_funcs
+from server.user import *
 
 # creating the flask app
 app = Flask(__name__)

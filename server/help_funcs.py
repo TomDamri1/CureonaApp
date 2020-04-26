@@ -2,11 +2,13 @@ import json
 import ast
 import shutil
 
+VERSION_OF_BUSINESSES_TEXT_FILE = 0
+
 
 def add_business_to_txt_file(business_details):
     try:
         f = open("../txt_files/businesses.txt", "a")  # a = append to the end of the file
-        f.write(str(business_details)+'\n')
+        f.write(str(business_details) + '\n')
     except IOError as e:
         return False
     finally:
@@ -17,9 +19,7 @@ def add_business_to_txt_file(business_details):
     return True
 
 
-
 def update_version_of_txt_file():
-
     global VERSION_OF_BUSINESSES_TEXT_FILE
     VERSION_OF_BUSINESSES_TEXT_FILE = VERSION_OF_BUSINESSES_TEXT_FILE + 1
 
@@ -52,9 +52,6 @@ def set_global_version_of_txt_file():
     version = f.readline()
     param, version = version.split(":", 1)
 
-    print(version)
-
-
     VERSION_OF_BUSINESSES_TEXT_FILE = (int(version))
 
 
@@ -65,3 +62,7 @@ def add_business_to_js_file(json_to_be_file):
     with open("../txt_files/businesses_data.js", 'a', encoding='utf8') as json_file:
         json.dump(',', json_file)
         json.dump(json_to_be_file, json_file, ensure_ascii=False, indent=4)
+
+
+def get_version():
+    return VERSION_OF_BUSINESSES_TEXT_FILE

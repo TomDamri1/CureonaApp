@@ -8,7 +8,6 @@ from server.help_funcs import *
 import hashlib
 
 
-VERSION_OF_BUSINESSES_TEXT_FILE = 0
 
 new_col = new_db["login"]
 
