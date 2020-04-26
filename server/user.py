@@ -65,13 +65,15 @@ RegisterBuisness_parser.add_argument('password', required=True, help="password c
 RegisterBuisness_parser.add_argument('business_name', required=True, help="buisness name cannot be blank!")
 RegisterBuisness_parser.add_argument('address', required=True, help="address cannot be blank!")
 RegisterBuisness_parser.add_argument('company_id', required=True, help="Company id cannot be blank!")
-RegisterBuisness_parser.add_argument('search_key', required=True, help="search_key cannot be blank!")
+RegisterBuisness_parser.add_argument('search_key',type=dict, required=True, help="search key cannot be blank!")
 
 
 class RegisterBusiness(Resource):
 
     def post(self):
         data = RegisterBuisness_parser.parse_args()
+        print(data)
+        print(data['search_key'])
         # search user with the same user name.
         json_doc = new_col.find_one({"username": data['username']})
         CID = business_info.find_one({"company_id": data['company_id']})
@@ -89,7 +91,7 @@ class RegisterBusiness(Resource):
             business_info_dict['company_id'] = data['company_id']
             business_info_dict['workers'] = []
             business_info_dict['open'] = True
-            business_info_dict['search_key'] = data['search_key']
+            business_info_dict['search_key'] = data['search_key']['keys']
             business_info_dict['open_hours'] = {'sunday': 'closed', 'monday': 'closed', 'tuesday': 'closed',
                                                 'wednesday': 'closed', 'thursday': 'closed', 'friday': 'closed',
                                                 'saturday': 'closed'}
@@ -100,12 +102,13 @@ class RegisterBusiness(Resource):
 
             business_info.insert_one(business_info_dict)
             ###############################################
-            add_business_to_txt_file({'id': data['company_id'],
+            tmp = {'id': data['company_id'],
                                               'name': data['business_name'],
                                               'address': data['address'],
                                               'keywords': data['search_key']
                                               }
-                                     )
+            add_business_to_txt_file(tmp)
+            add_business_to_js_file(tmp)
             ###############################################
             return jsonify({'state': 'success'})
         # if user with the same user name is exist, return to server that: 'user name already exist'.

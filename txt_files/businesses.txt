@@ -1,2 +1,6 @@
-{'id': '210', 'name': 'טל אלפי בעמ', 'address': 'יעקב חזן 31', 'keywords': 'shopping'}
-,
+
+{"id": '295804',"name": 'aaa', "address": 'b980bb', "keywords": {'keys': ['shopping', 'food', 'market']}}
+{"id": '2958404',"name": 'argeaa', "address": 'bbb', "keywords": {'keys': ['shopping', 'food', 'market']}}
+{"id": '29587563404',"name": 'aadhfa', "address": 'bb42b', "keywords": {'keys': ['shopping', 'food', 'market']}}
+{"id": '2977404',"name": 'aadsaa', "address": 'bb5665b', "keywords": {'keys': ['shopping', 'food', 'market']}}
+{"id": '1243',"name": 'aaafr', "address": 'bb678b', "keywords": {'keys': ['shopping', 'food', 'market']}}
