@@ -7,6 +7,9 @@ from server.mongo_connection import *
 from server.help_funcs import *
 import hashlib
 
+
+VERSION_OF_BUSINESSES_TEXT_FILE = 0
+
 new_col = new_db["login"]
 
 Login_parser = reqparse.RequestParser()
@@ -71,9 +74,8 @@ RegisterBuisness_parser.add_argument('search_key',type=dict, required=True, help
 class RegisterBusiness(Resource):
 
     def post(self):
+
         data = RegisterBuisness_parser.parse_args()
-        print(data)
-        print(data['search_key'])
         # search user with the same user name.
         json_doc = new_col.find_one({"username": data['username']})
         CID = business_info.find_one({"company_id": data['company_id']})
@@ -97,20 +99,24 @@ class RegisterBusiness(Resource):
                                                 'saturday': 'closed'}
             business_info_dict['queue'] = my_calendar
             business_info_dict['max_capacity'] = '10'
-
-            new_col.insert_one(login_dict)
-
-            business_info.insert_one(business_info_dict)
             ###############################################
             tmp = {'id': data['company_id'],
                                               'name': data['business_name'],
                                               'address': data['address'],
                                               'keywords': data['search_key']
                                               }
-            add_business_to_txt_file(tmp)
+            added_successfully = add_business_to_txt_file(tmp)
             add_business_to_js_file(tmp)
             ###############################################
-            return jsonify({'state': 'success'})
+
+            if added_successfully:
+                new_col.insert_one(login_dict)
+                business_info.insert_one(business_info_dict)
+                return jsonify({'state': 'success'})
+            else:
+                return jsonify({'fail': 'coudnt add business. probebly there was a problem adding the business to the '
+                                        'txt file'})
+
         # if user with the same user name is exist, return to server that: 'user name already exist'.
         return jsonify({'state': 'user name or cid already exist'})
 
