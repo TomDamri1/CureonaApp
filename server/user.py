@@ -104,7 +104,6 @@ class RegisterBusiness(Resource):
                    'keywords': data['search_key']
                    }
             added_successfully = add_business_to_txt_file(tmp)
-            add_business_to_js_file(tmp)
             ###############################################
 
             if added_successfully:

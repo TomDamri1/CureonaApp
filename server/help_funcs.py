@@ -54,15 +54,5 @@ def set_global_version_of_txt_file():
 
     VERSION_OF_BUSINESSES_TEXT_FILE = (int(version))
 
-
-def add_business_to_js_file(json_to_be_file):
-    # json_object = json.dumps(json_to_be_file, encoding='utf8')
-    # with open("../txt_files/businesses_data.js", "w") as outfile:
-    #     outfile.write(json_object)
-    with open("../txt_files/businesses_data.js", 'a', encoding='utf8') as json_file:
-        json.dump(',', json_file)
-        json.dump(json_to_be_file, json_file, ensure_ascii=False, indent=4)
-
-
 def get_version():
     return VERSION_OF_BUSINESSES_TEXT_FILE
