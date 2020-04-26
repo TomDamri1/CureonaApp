@@ -83,3 +83,66 @@ server root url : https://cureona.herokuapp.com/
   "max_capacity" : 150
 }
  ```
+
+
+
+
+### getting  list of  businesses  :
+
+#### url : https://cureona.herokuapp.com/getBusinesses
+
+#### there are to options to get the list of businesses : 
+> 1) sending a post request with no parameters - that will generate a JSON that contains all the current available businesses (see example below).
+> 2) sending a post request with the version's number. the URL's ending should be: "/getBusinesses?version=7" (7 is just an arbitrery integer- it can be any version number)
+this way , it will first check if the users own list of businesses (which is located in the users device) is updated. if it does , the following JSON will be returned :
+```
+{
+    "success": "data is up to date"
+}
+```
+
+example for a JSON to be returned : 
+```
+[
+  {
+    "address": "balfor 24/1",
+    "id": "123",
+    "keywords": {
+      "keys": [
+        "Furniture"
+      ]
+    },
+    "name": "IKEA"
+  },
+  {
+    "address": "pinhas hahotzev 3",
+    "id": "1",
+    "keywords": {
+      "keys": [
+        "shopping"
+      ]
+    },
+    "name": "shufersal"
+  },
+  {
+    "address": "BIG BEER SHEVA",
+    "id": "12",
+    "keywords": {
+      "keys": [
+        "shopping"
+      ]
+    },
+    "name": "OSHER-AD"
+  },
+  {
+    "address": "hasdera hashveet beer sheva",
+    "id": "1234",
+    "keywords": {
+      "keys": [
+        "food"
+      ]
+    },
+    "name": "tiv-ta'am"
+  }
+]
+```
