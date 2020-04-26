@@ -6,13 +6,14 @@ import shutil
 def add_business_to_txt_file(business_details):
     try:
         f = open("../txt_files/businesses.txt", "a")  # a = append to the end of the file
-        f.write(str(business_details))
+        f.write(str(business_details)+'\n')
     except IOError as e:
         return False
+    finally:
+        f.close()
 
     update_version_of_txt_file()
     f.close()
-
     return True
 
 

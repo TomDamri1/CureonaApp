@@ -196,4 +196,26 @@
             "market"
         ]
     }
+}","{
+    "id": "145354588955245555348",
+    "name": "טל אלפי חמוצים בעמ",
+    "address": "יעקב חזן 31",
+    "keywords": {
+        "keys": [
+            "shopping",
+            "food",
+            "market"
+        ]
+    }
+}","{
+    "id": "145354588945555348",
+    "name": "טל אלפי חמוצים בעמ",
+    "address": "יעקב חזן 31",
+    "keywords": {
+        "keys": [
+            "shopping",
+            "food",
+            "market"
+        ]
+    }
 }
