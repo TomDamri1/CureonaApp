@@ -127,8 +127,9 @@ class AvailableQueues(Resource):
             return False
 
         data = AvailableQueues_parser.parse_args()
-        # print(data)
+        print(data)
         json_doc = business_info.find_one({"company_id": data['company_id']})
+        print(json_doc)
         max_capacity = int(json_doc["max_capacity"])
         queue = json_doc["queue"]
         open_hours = json_doc["open_hours"]

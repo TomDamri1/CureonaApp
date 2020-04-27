@@ -1,0 +1,5 @@
+version :7
+{'id': '123', 'name': 'IKEA', 'address': 'balfor 24/1', 'keywords': {'keys': ['Furniture']}}
+{'id': '1', 'name': 'shufersal', 'address': 'pinhas hahotzev 3', 'keywords': {'keys': ['shopping']}}
+{'id': '12', 'name': 'OSHER-AD', 'address': 'BIG BEER SHEVA', 'keywords': {'keys': ['shopping']}}
+{'id': '1234', 'name': "tiv-ta'am", 'address': 'hasdera hashveet beer sheva', 'keywords': {'keys': ['food']}}

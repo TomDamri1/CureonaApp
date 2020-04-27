@@ -1,11 +1,12 @@
 # Using flask to make an api
 # import necessary libraries and functions
+from flask import Flask
 from flask_restful import Api
 
+from server.business_search import *
 from server.business_settings import *
-from server.user import *
 from server.queue_management import *
-from flask import Flask
+from server.user import *
 
 # creating the flask app
 app = Flask(__name__)
@@ -31,6 +32,9 @@ api.add_resource(AvailableQueues, '/AvailableQueues')
 api.add_resource(GetQueue, '/GetQueue')
 api.add_resource(EMPTY, '/')
 api.add_resource(updateSettings, '/businessSettings')
+api.add_resource(getBusinesses, '/getBusinesses')
 # driver function
+
 if __name__ == '__main__':
+    set_global_version_of_txt_file()
     app.run(debug=True)

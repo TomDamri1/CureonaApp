@@ -45,16 +45,17 @@ const LoginScreen = props => {
 
     const resData = await response.json();
     console.log(resData);
-    props.navigation.pop();
+    props.navigation.pop(); //pop out the loading screen from the stack 
     if (resData.state === Response.success) {
 
       switch (resData.type) {
 
         case text.type.customer:
           props.navigation.navigate({
-            routeName: "UserScreen",
+            routeName: "CustomerScreen",
             params: {
               username: username,
+              USERTYPE: text.type.customer
             }
           })
           break;
@@ -64,7 +65,8 @@ const LoginScreen = props => {
             routeName: "BusinessOwnerScreen",
             params: {
               username: username,
-              business: "fake Business!!!"
+              businessName: "fake Business!!!",
+              USERTYPE: text.type.businessOwner
             }
           })
           break;
@@ -74,6 +76,7 @@ const LoginScreen = props => {
             routeName: "AdminScreen",
             params: {
               username: username,
+              USERTYPE: text.type.admin
             }
           })
           break;
