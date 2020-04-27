@@ -119,6 +119,15 @@ class TestUser(unittest.TestCase):
         requests.post(url, data=myobj)
         self.assertEqual(response.json(), except_result)
 
+    # ---------------------------------------------------------------------
+
+    def get_list_of_businesses(self):
+        url = 'https://curona.herokuapp.com/getBusinesses'
+        requests.post(url)
+        response = requests.post(url)
+        self.assertNotEqual(response.json(), {})
+
+
 
 if __name__ == '__main__':
     unittest.main()
