@@ -1,10 +1,12 @@
+const MainURL = 'https://cureona.herokuapp.com/';
+
 export default {
     routes: {
-        login: 'https://cureona.herokuapp.com/Login',
-        register: 'https://cureona.herokuapp.com/Registration',
-        makeAnAppointment: 'https://cureona.herokuapp.com/GetQueue',
-        avilableQueues: 'https://cureona.herokuapp.com/AvailableQueues',
-        businessSettings: 'https://cureona.herokuapp.com/businessSettings',
-        registerBusiness: 'https://cureona.herokuapp.com/RegisterBusiness',
+        login: MainURL + 'Login',
+        register: MainURL + 'Registration',
+        makeAnAppointment: MainURL + 'GetQueue',
+        avilableQueues: MainURL + 'AvailableQueues',
+        businessSettings: MainURL + 'businessSettings',
+        registerBusiness: MainURL + 'RegisterBusiness',
     }
 }
