@@ -97,22 +97,10 @@ class RegisterBusiness(Resource):
                                                 'saturday': 'closed'}
             business_info_dict['queue'] = my_calendar
             business_info_dict['max_capacity'] = data['max_capacity'] if data['max_capacity'] is not None else 10
-            ###############################################
-            tmp = {'id': data['company_id'],
-                   'name': data['business_name'],
-                   'address': data['address'],
-                   'keywords': data['search_key']
-                   }
-            added_successfully = add_business_to_txt_file(tmp)
-            ###############################################
 
-            if added_successfully:
-                new_col.insert_one(login_dict)
-                business_info.insert_one(business_info_dict)
-                return jsonify({'state': 'success'})
-            else:
-                return jsonify({'fail': 'coudnt add business. probebly there was a problem adding the business to the '
-                                        'txt file'})
+            new_col.insert_one(login_dict)
+            business_info.insert_one(business_info_dict)
+            return jsonify({'state': 'success'})
 
         # if user with the same user name is exist, return to server that: 'user name already exist'.
         return jsonify({'state': 'user name or cid already exist'})
