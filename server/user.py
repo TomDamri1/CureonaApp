@@ -135,10 +135,11 @@ class RegisterWorker(Resource):
 
         login_dict = {'username': username, 'password': hashlib.sha256(data.password.encode()).hexdigest(),
                       'company_id': data['company_id'], 'type': 'worker'}
-
+        business_info.update({'company_id': data['company_id']},
+                             {"$push": {"workers": username}})
         new_col.insert_one(login_dict)
 
-        return jsonify({'state': 'success'})
+        return jsonify({'state': 'success', 'username': username, 'password': data.password})
 
 
 def delete_user(username):

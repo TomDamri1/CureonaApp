@@ -6,25 +6,25 @@ import requests
 class TestUser(unittest.TestCase):
     # register with user name that already exist
     def test_Registration(self):
-        url = 'https://cureona.herokuapp.com/Registration'
+        url = 'https://curona.herokuapp.com/Registration'
         myobj = {'username': 'tal', 'password': '123', 'type': 'customer'}
         response = requests.post(url, data=myobj)
         self.assertEqual(response.json(), {'state': 'user name already exist'})
 
     def test_Login_success(self):
-        url = 'https://cureona.herokuapp.com/Login'
+        url = 'https://curona.herokuapp.com/Login'
         myobj = {'username': 'c_test', 'password': '123'}
         response = requests.post(url, data=myobj)
         self.assertEqual(response.json(), {'state': 'success', 'type': 'customer'})
 
     def testLoginFailedWrongPassword(self):
-        url = 'https://cureona.herokuapp.com/Login'
+        url = 'https://curona.herokuapp.com/Login'
         myobj = {'username': 'c', 'password': '1234'}
         response = requests.post(url, data=myobj)
         self.assertEqual(response.json(), {'state': 'failed'})
 
     def test_Login_Failed_user_not_exist(self):
-        url = 'https://cureona.herokuapp.com/Login'
+        url = 'https://curona.herokuapp.com/Login'
         myobj = {'username': 'asdfasdf', 'password': '1234'}
         response = requests.post(url, data=myobj)
         self.assertEqual(response.json(), {'state': 'failed'})
@@ -32,27 +32,27 @@ class TestUser(unittest.TestCase):
     # ---------------------------------------------------------------------
     # business owner
     def test_Login_Failed_business_owner_not_exist(self):
-        url = 'https://cureona.herokuapp.com/Login'
+        url = 'https://curona.herokuapp.com/Login'
         myobj = {'username': 'asdfasdf', 'password': '1234'}
         response = requests.post(url, data=myobj)
         self.assertEqual(response.json(), {'state': 'failed'})
 
     def test_Login_Failed_business_owner_wrong_password(self):
-        url = 'https://cureona.herokuapp.com/Login'
+        url = 'https://curona.herokuapp.com/Login'
         myobj = {'username': 'bo', 'password': '12344'}
         response = requests.post(url, data=myobj)
         self.assertEqual(response.json(), {'state': 'failed'})
 
     def test_Login_success_business_owner(self):
-        url = 'https://cureona.herokuapp.com/Login'
-        myobj = {'username': 'bo', 'password': '123456'}
+        url = 'https://curona.herokuapp.com/Login'
+        myobj = {'username': 'test', 'password': '123'}
         response = requests.post(url, data=myobj)
         self.assertEqual(response.json(), {'state': 'success', 'type': 'business_owner'})
 
     def test_Registration_business_owner_already_exist(self):
-        url = 'https://cureona.herokuapp.com/RegisterBusiness'
-        myobj = {"username": "test", "password": "123", "business_name": "IKEA", "address": "balfor 24/1",
-                 "company_id": "123", "search_key": ["Furniture"]}
+        url = 'https://curona.herokuapp.com/RegisterBusiness'
+        myobj = {'username': "test111123123", 'password': "123123111123", 'business_name': "IKEA",
+                 'address': "balfor 24/1", 'company_id': "123", 'search_key': {"keys": ["Furniture"]}}
         response = requests.post(url, data=myobj)
         except_result = {"state": "user name or cid already exist"}
         self.assertEqual(response.json(), except_result)
@@ -60,19 +60,19 @@ class TestUser(unittest.TestCase):
     # ---------------------------------------------------------------------
     # admin login checks
     def test_Login_Failed_admin_not_exist(self):
-        url = 'https://cureona.herokuapp.com/Login'
+        url = 'https://curona.herokuapp.com/Login'
         myobj = {'username': 'asdfasdf', 'password': '1234'}
         response = requests.post(url, data=myobj)
         self.assertEqual(response.json(), {'state': 'failed'})
 
     def test_Login_Failed_admin_wrong_password(self):
-        url = 'https://cureona.herokuapp.com/Login'
+        url = 'https://curona.herokuapp.com/Login'
         myobj = {'username': 'admin', 'password': '12344'}
         response = requests.post(url, data=myobj)
         self.assertEqual(response.json(), {'state': 'failed'})
 
     def test_Login_success_admin(self):
-        url = 'https://cureona.herokuapp.com/Login'
+        url = 'https://curona.herokuapp.com/Login'
         myobj = {'username': 'admin', 'password': '123456'}
         response = requests.post(url, data=myobj)
         self.assertEqual(response.json(), {'state': 'success', 'type': 'admin'})
@@ -80,7 +80,7 @@ class TestUser(unittest.TestCase):
     # ---------------------------------------------------------------------
     # admin abilities checks
     def test_Change_amount_of_people_in_a_business(self):
-        url = 'https://cureona.herokuapp.com/businessSettings'
+        url = 'https://curona.herokuapp.com/businessSettings'
         myobj = {'company_id': '1', 'max_capacity': '100'}
         response = requests.post(url, data=myobj)
         self.assertEqual(response.json(), {"max_capacity": "updated"})
@@ -88,7 +88,7 @@ class TestUser(unittest.TestCase):
         response = requests.post(url, data=myobj)
 
     def test_close_open_business_admin(self):
-        url = 'https://cureona.herokuapp.com/businessSettings'
+        url = 'https://curona.herokuapp.com/businessSettings'
         myobj = {'company_id': '1', 'open': 'True'}
         response = requests.post(url, data=myobj)
         self.assertEqual(response.json(), {'open': 'updated'})
@@ -97,10 +97,10 @@ class TestUser(unittest.TestCase):
     # gets a queue checks
 
     def test_get_two_queue_to_same_place_at_same_time(self):
-        url = 'https://cureona.herokuapp.com/businessSettings'
+        url = 'https://curona.herokuapp.com/businessSettings'
         myobj = {'company_id': '123', 'open': 'True'}
         requests.post(url, data=myobj)
-        url = 'https://cureona.herokuapp.com/GetQueue'
+        url = 'https://curona.herokuapp.com/GetQueue'
         myobj = {"username": "c_test", "BusinessName": "IKEA", "Day": "wednesday", "Hour": "15:00-16:00"}
         requests.post(url, data=myobj)
         response = requests.post(url, data=myobj)
@@ -108,10 +108,10 @@ class TestUser(unittest.TestCase):
         self.assertEqual(response.json(), except_result)
 
     def test_get_queue_to_closed_business(self):
-        url = 'https://cureona.herokuapp.com/businessSettings'
+        url = 'https://curona.herokuapp.com/businessSettings'
         myobj = {'company_id': '123', 'open': 'False'}
         requests.post(url, data=myobj)
-        url = 'https://cureona.herokuapp.com/GetQueue'
+        url = 'https://curona.herokuapp.com/GetQueue'
         myobj = {"username": "c_test", "BusinessName": "IKEA", "Day": "wednesday", "Hour": "15:00-16:00"}
         response = requests.post(url, data=myobj)
         except_result = {"state": "success, Business is closed"}
