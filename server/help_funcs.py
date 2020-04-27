@@ -4,7 +4,7 @@ import shutil
 
 VERSION_OF_BUSINESSES_TEXT_FILE = 0
 
-route_for_txt_file  = "txt_files/businesses.txt"
+route_for_txt_file  = "businesses.txt"
 
 def add_business_to_txt_file(business_details):
     try:
