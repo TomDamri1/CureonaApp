@@ -151,7 +151,7 @@ class RegisterWorker(Resource):
                              {"$push": {"workers": username}})
         new_col.insert_one(login_dict)
 
-        return jsonify({'state': 'success'})
+        return jsonify({'state': 'success', 'username': username, 'password': data.password})
 
 
 def delete_user(username):
