@@ -1,4 +1,4 @@
-const MainURL = 'https://cureona.herokuapp.com/';
+const MainURL = 'https://curona.herokuapp.com/';
 
 export default {
     routes: {
@@ -8,5 +8,6 @@ export default {
         avilableQueues: MainURL + 'AvailableQueues',
         businessSettings: MainURL + 'businessSettings',
         registerBusiness: MainURL + 'RegisterBusiness',
+        getBusiness : MainURL + 'getBusinesses'
     }
 }

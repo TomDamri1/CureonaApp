@@ -12,11 +12,12 @@ import {
     ListView
 } from 'react-native';
 import SearchItem from './SearchItem';
-import DATA from '../data/dummydata';
+//import DATA from '../data/dummydata';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import text from '../constants/text';
 
 const SearchList = props => {
+    const DATA =  props.navigation.getParam('storeList')
     const action =
         props.navigation.getParam('USERTYPE') === text.type.admin ? 
         text.decisions.adminChanges
