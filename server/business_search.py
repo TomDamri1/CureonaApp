@@ -6,7 +6,6 @@ from server.user import VERSION_OF_BUSINESSES_TEXT_FILE
 getBusinesses_parser = reqparse.RequestParser()
 getBusinesses_parser.add_argument('version', type=int, required=False)
 
-
 class getBusinesses(Resource):
 
     def post(self):
@@ -16,4 +15,7 @@ class getBusinesses(Resource):
             return {"success": "data is up to date"}
 
         f = open("businesses.txt", "r")  # a = append to the end of the file
-        return jsonify(get_businesses_with_json_file(f.readlines()))
+
+        dict_to_be_jsonified =get_businesses_from_db()
+
+        return jsonify(dict_to_be_jsonified)

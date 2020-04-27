@@ -2,9 +2,13 @@ import json
 import ast
 import shutil
 
+from server.mongo_connection import *
+
+db = new_db["business_info"]
+
 VERSION_OF_BUSINESSES_TEXT_FILE = 0
 
-route_for_txt_file  = "businesses.txt"
+route_for_txt_file = "businesses.txt"
 
 def add_business_to_txt_file(business_details):
     try:
@@ -57,3 +61,18 @@ def set_global_version_of_txt_file():
 
 def get_version():
     return VERSION_OF_BUSINESSES_TEXT_FILE
+
+
+
+
+def get_businesses_from_db():
+
+    jsons = []
+    list_of_businesses = db.find({}, {'business_name' : 1, "address": 1, "search_key" : 1, 'company_id' : 1})
+    for document in list_of_businesses:
+        print(type(document))
+        del document['_id']
+        #dic = ast.literal_eval(line)
+        jsons.append(document)
+
+    return jsons

@@ -36,5 +36,4 @@ api.add_resource(getBusinesses, '/getBusinesses')
 # driver function
 
 if __name__ == '__main__':
-    set_global_version_of_txt_file()
     app.run(debug=True)
