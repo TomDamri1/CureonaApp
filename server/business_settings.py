@@ -83,6 +83,10 @@ def update_hours_and_inform_costumers(cid, new_opening_hours, costumers_affected
     # to inform the costumers
 
 
+    # first we will built the new hours list
+    for day in current_opening_hours:
+        if day not in new_opening_hours:
+            new_opening_hours[day] = current_opening_hours[day]
 
 
 
