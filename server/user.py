@@ -92,10 +92,21 @@ class RegisterBusiness(Resource):
             business_info_dict['workers'] = []
             business_info_dict['open'] = True
             business_info_dict['search_key'] = data['search_key']['keys']
-            business_info_dict['open_hours'] = {'sunday': 'closed', 'monday': 'closed', 'tuesday': 'closed',
-                                                'wednesday': 'closed', 'thursday': 'closed', 'friday': 'closed',
-                                                'saturday': 'closed'}
-            business_info_dict['queue'] = my_calendar
+
+            if business_info_dict is None:
+                business_info_dict['open_hours'] = all_closed
+                business_info_dict['queue'] = my_calendar
+
+            else:
+                business_info_dict['open_hours'] = data['open_hours']
+                business_info_dict['queue'] = {}
+                modifyWorkingHoursForDays(business_info_dict['queue'], data['open_hours'])
+
+            # business_info_dict['open_hours'] = {'sunday': 'closed', 'monday': 'closed', 'tuesday': 'closed',
+            #                                     'wednesday': 'closed', 'thursday': 'closed', 'friday': 'closed',
+            #                                     'saturday': 'closed'}
+            # business_info_dict['queue'] = my_calendar
+
             business_info_dict['max_capacity'] = data['max_capacity'] if data['max_capacity'] is not None else 10
 
             new_col.insert_one(login_dict)

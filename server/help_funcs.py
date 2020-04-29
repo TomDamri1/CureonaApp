@@ -6,6 +6,8 @@ from server.mongo_connection import *
 
 db = new_db["business_info"]
 
+business_settings = db
+
 
 def get_businesses_from_db():
     jsons = []
@@ -15,3 +17,7 @@ def get_businesses_from_db():
         jsons.append(document)
 
     return jsons
+
+
+################################################################################################
+# from here till the next '#' line- those are all help functions for the update settings

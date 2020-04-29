@@ -10,3 +10,9 @@ my_calendar = {'sunday': hours,
                'friday': hours,
                'saturday': hours
                }
+
+
+all_closed = {'sunday': 'closed', 'monday': 'closed', 'tuesday': 'closed',
+              'wednesday': 'closed', 'thursday': 'closed', 'friday': 'closed',
+              'saturday': 'closed'}
+
