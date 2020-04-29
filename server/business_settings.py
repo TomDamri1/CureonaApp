@@ -31,3 +31,30 @@ class updateSettings(Resource):
     def post(self):
         data = updateSettings_parser.parse_args()
         json_doc = business_settings.find_one({"company_id": data['company_id']})
+        # if the business owner accidentally entered the 'change_settings' option from the menu - we could notice that
+        # by getting an empty json from the front-end
+        if json_doc:
+            cid = data['company_id']
+            costumers_affected, ret = {}, {}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
