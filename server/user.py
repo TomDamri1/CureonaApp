@@ -112,7 +112,7 @@ RegisterWorker_parser.add_argument('company_id', required=True, help="Company id
 
 letters = string.ascii_lowercase
 
-
+{'password'}
 def random_string(stringLength=4):
     """Generate a random string of fixed length """
     return ''.join(random.choice(letters) for i in range(stringLength))
