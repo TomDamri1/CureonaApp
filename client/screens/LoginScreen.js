@@ -81,6 +81,16 @@ const LoginScreen = props => {
           })
           break;
 
+        case text.type.worker:
+          props.navigation.navigate({
+            routeName: "WorkerScreen",
+            params: {
+              username: username,
+              USERTYPE: text.type.worker
+            }
+          })
+          break;
+
         default:
           Alert.alert(text.alert.pleaseCheckYourUserNameAndPassword)
       }
