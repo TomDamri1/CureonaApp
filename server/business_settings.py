@@ -22,6 +22,12 @@ def updateOpen(cid, business_open):
                              {"$set": {"open": business_open}})
 
 
+def updateMaxCapacity(cid, maxCapacity):
+    business_settings.update({'company_id': cid},
+                             {"$set": {"max_capacity": maxCapacity}})
+
+
+
 class updateSettings(Resource):
 
     # this class wil receive a JSON and will check what are the things that the business owner woukd like to change
