@@ -44,7 +44,14 @@ class updateSettings(Resource):
             else:
                 ret["open_hours"] = "no changes"
 
-
+            # if the user chose to change the 'open/closed' business status for the business
+            if data['open'] is not None:
+                if json_doc['open'] == True and data['open'] != 'True' or \
+                        json_doc['open'] == False and data['open'] != 'False':
+                    updateOpen(cid, True if data['open'] == "True" else False)
+                    ret["open"] = "updated"
+                else:
+                    ret["open"] = "no changes"
 
 
 
