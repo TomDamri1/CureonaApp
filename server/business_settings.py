@@ -54,3 +54,32 @@ class updateSettings(Resource):
                     ret["open"] = "updated"
                 else:
                     ret["open"] = "no changes"
+
+            # if the user chose to change the 'max capacity' amount for the business
+            if data['max_capacity'] is not None and data['max_capacity'] != json_doc['max_capacity']:
+                ret["max_capacity"] = "updated"
+                updateMaxCapacity(cid, data['max_capacity'])
+            else:
+                ret["max_capacity"] = "no changes"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
