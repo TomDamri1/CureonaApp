@@ -68,6 +68,11 @@ class updateSettings(Resource):
             else:
                 ret["max_capacity"] = "no changes"
 
+            # if no changes were made then we will return a message that indicates that no changes were made
+            return jsonify(ret)
+
+        return jsonify({'state': 'company id was not found'})
+
 
 
 
