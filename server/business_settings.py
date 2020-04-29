@@ -76,6 +76,12 @@ class updateSettings(Resource):
 
 
 
+def update_hours_and_inform_costumers(cid, new_opening_hours, costumers_affected):
+    # we no get the old opening hours
+    current_opening_hours = get_the_current_opening_hours(cid)
+    current_opening_hours_queue = get_the_current_queue(cid)  # we will need the queue for later- when we will need
+    # to inform the costumers
+
 
 
 
