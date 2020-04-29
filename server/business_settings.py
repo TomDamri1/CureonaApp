@@ -89,7 +89,18 @@ def update_hours_and_inform_costumers(cid, new_opening_hours, costumers_affected
             new_opening_hours[day] = current_opening_hours[day]
 
 
+ # At this point , the new opening hours are now updated and merged with the old hours
 
+    new_opening_hours_queue = {}
+    # now we will create the queue
+    for day in new_opening_hours:
+        if new_opening_hours[day] != 'closed':
+            tmp_queue = {}
+            for time_interval in new_opening_hours[day]:
+                tmp_queue = add_new_days_hours(time_interval, tmp_queue)
+            new_opening_hours_queue[day] = tmp_queue
+        else:
+            new_opening_hours_queue[day] = "closed"
 
 
 
