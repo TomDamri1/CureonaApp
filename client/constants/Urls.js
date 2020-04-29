@@ -6,5 +6,6 @@ export default {
         avilableQueues: 'https://cureona.herokuapp.com/AvailableQueues',
         businessSettings: 'https://cureona.herokuapp.com/businessSettings',
         registerBusiness: 'https://cureona.herokuapp.com/RegisterBusiness',
+        registerWorker: 'https://cureona.herokuapp.com/RegistrationWorker',
     }
 }
