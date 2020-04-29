@@ -15,3 +15,19 @@ updateSettings_parser.add_argument('company_id', required=True, help="company id
 updateSettings_parser.add_argument('open', required=False)
 updateSettings_parser.add_argument('open_hours', type=dict, required=False)
 updateSettings_parser.add_argument('max_capacity', type=int, required=False)
+
+
+
+
+
+class updateSettings(Resource):
+
+    # this class wil receive a JSON and will check what are the things that the business owner woukd like to change
+    # a business owner can change one/few/all)of the following :
+    # business max_capacity - the maximum amount of costumer that are allowed to be inside the business at once
+    # business open - if the business is opened or not
+    # business open hours -  this is the most complicated business change - because we need to see if there are any
+    # costumers tha are affected by this change - if if they are affected we will need to let them know
+    def post(self):
+        data = updateSettings_parser.parse_args()
+        json_doc = business_settings.find_one({"company_id": data['company_id']})
