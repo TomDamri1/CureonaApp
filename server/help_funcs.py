@@ -21,3 +21,9 @@ def get_businesses_from_db():
 
 ################################################################################################
 # from here till the next '#' line- those are all help functions for the update settings
+
+
+def get_the_current_opening_hours(cid):
+    current_opening_hours = business_settings.find({'company_id': cid}, {'open_hours': 1})
+    my_tmp_dict = (list(current_opening_hours))[0]
+    return my_tmp_dict['open_hours']
