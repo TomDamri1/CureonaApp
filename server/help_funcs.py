@@ -34,3 +34,15 @@ def get_the_current_queue(cid):
     current_queue = business_settings.find({'company_id': cid}, {'queue': 1})
     my_tmp_dict = (list(current_queue))[0]
     return my_tmp_dict['queue']
+
+
+
+def add_new_days_hours(times, modified_hours={}):
+    try:
+        hour_start_time, minute_start_time, hour_end_time, minute_end_time = get_hours_and_minutes_as_int(times)
+
+    except TypeError:
+        print("values entered incorrectly, the correct format has to be : HH:MM-HH:MM")
+
+    time_intervals = calc_time_intervals(hour_start_time, hour_end_time, minute_start_time, minute_end_time)
+    minutes = minute_start_time
