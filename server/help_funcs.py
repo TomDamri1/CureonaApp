@@ -27,3 +27,10 @@ def get_the_current_opening_hours(cid):
     current_opening_hours = business_settings.find({'company_id': cid}, {'open_hours': 1})
     my_tmp_dict = (list(current_opening_hours))[0]
     return my_tmp_dict['open_hours']
+
+
+
+def get_the_current_queue(cid):
+    current_queue = business_settings.find({'company_id': cid}, {'queue': 1})
+    my_tmp_dict = (list(current_queue))[0]
+    return my_tmp_dict['queue']
