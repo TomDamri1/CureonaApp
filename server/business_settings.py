@@ -17,7 +17,9 @@ updateSettings_parser.add_argument('open_hours', type=dict, required=False)
 updateSettings_parser.add_argument('max_capacity', type=int, required=False)
 
 
-
+def updateOpen(cid, business_open):
+    business_settings.update({'company_id': cid},
+                             {"$set": {"open": business_open}})
 
 
 class updateSettings(Resource):
@@ -36,7 +38,7 @@ class updateSettings(Resource):
         if json_doc:
             cid = data['company_id']
             costumers_affected, ret = {}, {}
-   # if the user chose to change the opening hours for the business
+            # if the user chose to change the opening hours for the business
             if data['open_hours'] is not None and data['open_hours'] != json_doc['open_hours']:
                 update_hours_and_inform_costumers(cid, data['open_hours'], costumers_affected)
                 ret["open_hours"] = "updated"
@@ -52,19 +54,3 @@ class updateSettings(Resource):
                     ret["open"] = "updated"
                 else:
                     ret["open"] = "no changes"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
