@@ -28,7 +28,8 @@ export default {
     type: {
         customer: "customer",
         businessOwner: "business_owner",
-        admin: "admin"
+        admin: "admin",
+        worker: "worker",
     },
     screenHeaders : {
         search : "Search"
