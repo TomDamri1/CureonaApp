@@ -36,10 +36,13 @@ class updateSettings(Resource):
         if json_doc:
             cid = data['company_id']
             costumers_affected, ret = {}, {}
-
-
-
-
+   # if the user chose to change the opening hours for the business
+            if data['open_hours'] is not None and data['open_hours'] != json_doc['open_hours']:
+                update_hours_and_inform_costumers(cid, data['open_hours'], costumers_affected)
+                ret["open_hours"] = "updated"
+                ret['affected_costumers'] = 'no effect' if not costumers_affected else costumers_affected
+            else:
+                ret["open_hours"] = "no changes"
 
 
 
