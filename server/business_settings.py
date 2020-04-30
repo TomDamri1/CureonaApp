@@ -109,6 +109,13 @@ def update_hours_and_inform_costumers(cid, new_opening_hours, costumers_affected
     for day in ["sunday", "monday", "tuesday", "wednsday", "thursday", "friday", "saturday"]:
         if current_opening_hours[day] != new_opening_hours[day]:
 
+            # closing an open day might lead to many people appointments to be cancelled so we will check if the
+            # current day wasn't close , and if we closed it we will need to inform the costumers
+            if current_opening_hours[day] != "closed" and new_opening_hours[day] == "closed":
+                tmp_queue = create_list_of_affected_costumers(current_opening_hours_queue[day])
+                if len(tmp_queue) != 0:
+                    costumers_affected[day] = tmp_queue
+                continue  # continue because the two variables will enter the next if as well so we need to skip it
 
 
 
