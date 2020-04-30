@@ -37,6 +37,9 @@ def get_the_current_queue(cid):
     return my_tmp_dict['queue']
 
 
+def get_hours_and_minutes_as_int(times):
+    return [int(times[0:2]), int(times[3:5]), int(times[6:8]), int(times[9:11])]
+
 
 def add_new_days_hours(times, modified_hours={}):
     try:
