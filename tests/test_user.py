@@ -112,7 +112,7 @@ class TestUser(unittest.TestCase):
         myobj = {'company_id': '123', 'open': 'True'}
         requests.post(url, data=myobj)
         url = 'https://curona.herokuapp.com/GetQueue'
-        myobj = {"username": "c_test", "BusinessName": "IKEA", "Day": "wednesday", "Hour": "15:00-16:00"}
+        myobj = {"username": "c_test", 'company_id': '123', "BusinessName": "IKEA", "Day": "wednesday", "Hour": "15:00"}
         requests.post(url, data=myobj)
         response = requests.post(url, data=myobj)
         except_result = {"state": "success, sorry you can not get two queue to the same hour"}
@@ -123,7 +123,8 @@ class TestUser(unittest.TestCase):
         myobj = {'company_id': '123', 'open': 'False'}
         requests.post(url, data=myobj)
         url = 'https://curona.herokuapp.com/GetQueue'
-        myobj = {"username": "c_test", "BusinessName": "IKEA", "Day": "wednesday", "Hour": "15:00-16:00"}
+        myobj = {"username": "c_test", 'company_id': '123', "BusinessName": "IKEA", "Day": "wednesday",
+                 "Hour": "15:00-16:00"}
         response = requests.post(url, data=myobj)
         except_result = {"state": "success, Business is closed"}
         myobj = {'company_id': '123', 'open': 'True'}
@@ -132,13 +133,19 @@ class TestUser(unittest.TestCase):
 
     # ---------------------------------------------------------------------
 
-    def get_list_of_businesses(self):
+    def test_get_list_of_businesses(self):
         url = 'https://curona.herokuapp.com/getBusinesses'
         requests.post(url)
         response = requests.post(url)
         self.assertNotEqual(response.json(), {})
-
-
+    # ---------------------------------------------------------------------
+    # my queue
+    def test_get_my_queue(self):
+        url = 'https://curona.herokuapp.com/GetMyQueue'
+        myobj = {"username": "IsNotExist"}
+        response = requests.post(url, data=myobj)
+        except_result = list()
+        self.assertNotEqual(response, except_result)
 
 if __name__ == '__main__':
     unittest.main()

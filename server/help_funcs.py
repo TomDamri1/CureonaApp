@@ -100,3 +100,4 @@ def create_list_of_affected_costumers(current_queue, new_queue={}):
                 tmp_dict[appointment] = current_queue[appointment]
 
     return tmp_dict
+
