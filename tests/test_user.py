@@ -92,17 +92,24 @@ class TestUser(unittest.TestCase):
     # admin abilities checks
     def test_Change_amount_of_people_in_a_business(self):
         url = 'https://curona.herokuapp.com/businessSettings'
-        myobj = {'company_id': '1', 'max_capacity': '100'}
+        myobj = {'company_id': '1', 'max_capacity': 100}
         response = requests.post(url, data=myobj)
-        self.assertEqual(response.json(), {"max_capacity": "updated"})
-        myobj = {'company_id': '1', 'max_capacity': '101'}
-        response = requests.post(url, data=myobj)
+        expect_result = {
+            "max_capacity": "no changes",
+            "open_hours": "no changes"
+        }
+        self.assertEqual(response.json(), expect_result)
 
     def test_close_open_business_admin(self):
         url = 'https://curona.herokuapp.com/businessSettings'
         myobj = {'company_id': '1', 'open': 'True'}
         response = requests.post(url, data=myobj)
-        self.assertEqual(response.json(), {'open': 'updated'})
+        expect_result = {
+                        "max_capacity": "no changes",
+                        "open": "no changes",
+                        "open_hours": "no changes"
+                    }
+        self.assertEqual(response.json(), expect_result)
 
     # ---------------------------------------------------------------------
     # gets a queue checks
@@ -138,6 +145,18 @@ class TestUser(unittest.TestCase):
         response = requests.post(url)
         self.assertNotEqual(response.json(), {})
 
+    # ---------------------------------------------------------------------
+
+    def update_settings_for_business(self):
+        url = 'https://curona.herokuapp.com/businessSettings'
+        myobj = {"company_id": "123", "open_hours": {"tuesday": ["08:30-16:30", "19:30-22:30"]}}
+        response = requests.post(url, myobj)
+        except_result={
+                            "affected_costumers": "no effect",
+                            "max_capacity": "no changes",
+                            "open_hours": "updated"
+                        }
+        self.assertEqual(response.json(), except_result)
 
 
 if __name__ == '__main__':
