@@ -24,19 +24,19 @@ def random_string(stringLength=4):
     return ''.join(random.choice(letters) for i in range(stringLength))
 
 
-def calc_date(Date):
+def calc_date(Day):
     """calc date from day """
-    if Date == "sunday":
+    if Day == "sunday":
         queue_day = 6
-    elif Date == "monday":
+    elif Day == "monday":
         queue_day = 0
-    elif Date == "tuesday":
+    elif Day == "tuesday":
         queue_day = 1
-    elif Date == "wednesday":
+    elif Day == "wednesday":
         queue_day = 2
-    elif Date == "thursday":
+    elif Day == "thursday":
         queue_day = 3
-    elif Date == "friday":
+    elif Day == "friday":
         queue_day = 4
     else:
         queue_day = 5
