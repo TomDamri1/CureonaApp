@@ -105,10 +105,10 @@ class TestUser(unittest.TestCase):
         myobj = {'company_id': '1', 'open': 'True'}
         response = requests.post(url, data=myobj)
         expect_result = {
-                        "max_capacity": "no changes",
-                        "open": "no changes",
-                        "open_hours": "no changes"
-                    }
+            "max_capacity": "no changes",
+            "open": "no changes",
+            "open_hours": "no changes"
+        }
         self.assertEqual(response.json(), expect_result)
 
     # ---------------------------------------------------------------------
@@ -139,7 +139,7 @@ class TestUser(unittest.TestCase):
 
     # ---------------------------------------------------------------------
 
-    def get_list_of_businesses(self):
+    def test_get_list_of_businesses(self):
         url = 'https://curona.herokuapp.com/getBusinesses'
         requests.post(url)
         response = requests.post(url)
@@ -147,14 +147,12 @@ class TestUser(unittest.TestCase):
 
     # ---------------------------------------------------------------------
 
-    def update_settings_for_business(self):
+    def test_update_settings_for_business(self):
         url = 'https://curona.herokuapp.com/businessSettings'
-        myobj = {"company_id": "123", "open_hours": {"tuesday": ["08:30-16:30", "19:30-22:30"]}}
-        response = requests.post(url, myobj)
-        except_result={
-                            "affected_costumers": "no effect",
-                            "max_capacity": "no changes",
-                            "open_hours": "updated"
+        myobj = {"company_id": "9595959595959595"}
+        response = requests.post(url, data=myobj)
+        except_result = {
+                            "state": "company id was not found"
                         }
         self.assertEqual(response.json(), except_result)
 
