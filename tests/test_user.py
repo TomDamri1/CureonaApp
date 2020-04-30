@@ -47,7 +47,7 @@ class TestUser(unittest.TestCase):
         url = 'https://curona.herokuapp.com/Login'
         myobj = {'username': 'test', 'password': '123'}
         response = requests.post(url, data=myobj)
-        self.assertEqual(response.json(), {'state': 'success', 'type': 'business_owner'})
+        self.assertEqual(response.json(), {'state': 'success', "company_id": "123", 'type': 'business_owner'})
 
     def test_Registration_business_owner_already_exist(self):
         url = 'https://curona.herokuapp.com/RegisterBusiness'
@@ -119,7 +119,7 @@ class TestUser(unittest.TestCase):
         myobj = {'company_id': '123', 'open': 'True'}
         requests.post(url, data=myobj)
         url = 'https://curona.herokuapp.com/GetQueue'
-        myobj = {"username": "c_test", "BusinessName": "IKEA", "Day": "wednesday", "Hour": "15:00-16:00"}
+        myobj = {"username": "c_test", 'company_id': '123', "BusinessName": "IKEA", "Day": "wednesday", "Hour": "15:00"}
         requests.post(url, data=myobj)
         response = requests.post(url, data=myobj)
         except_result = {"state": "success, sorry you can not get two queue to the same hour"}
@@ -130,7 +130,7 @@ class TestUser(unittest.TestCase):
         myobj = {'company_id': '123', 'open': 'False'}
         requests.post(url, data=myobj)
         url = 'https://curona.herokuapp.com/GetQueue'
-        myobj = {"username": "c_test", "BusinessName": "IKEA", "Day": "wednesday", "Hour": "15:00-16:00"}
+        myobj = {"username": "c_test", 'company_id': '123', "BusinessName": "IKEA", "Day": "wednesday", "Hour": "15:00-16:00"}
         response = requests.post(url, data=myobj)
         except_result = {"state": "success, Business is closed"}
         myobj = {'company_id': '123', 'open': 'True'}
@@ -156,6 +156,14 @@ class TestUser(unittest.TestCase):
                         }
         self.assertEqual(response.json(), except_result)
 
+    # ---------------------------------------------------------------------
+    # my queue
+    def test_get_my_queue(self):
+        url = 'https://curona.herokuapp.com/GetMyQueue'
+        myobj = {"username": "IsNotExist"}
+        response = requests.post(url, data=myobj)
+        except_result = list()
+        self.assertNotEqual(response, except_result)
 
 if __name__ == '__main__':
     unittest.main()
