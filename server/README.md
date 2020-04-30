@@ -49,8 +49,10 @@ server root url : https://cureona.herokuapp.com/
 #### that means that you can send an update only for open_hours\open\max_capacity
 #### or all together. 
 
-#### ALSO : the JSON that will be returned will contain the list of costumers that were affected by the changes. for example, if 
-#### a costumer had an apponintment for some hour, and then the buisiness owner decided to "shrink" the opening hours, so we will let #### him know that there are a costumers that were affected by this action. <u>more detailed:</u> lets assume that some business had an opening #### hour for tuesday like so : ["08:00-16:30","17:30-22:00"] and the costumer "tal" had an appointment for 16:15, then that buisness #### owner decided to change the opening hours to tuesday : ["08:00-15:30","17:30-22:00"] , then the JSON that will be return will let #### him know that there are costumers that were affected by this change.
+#### ALSO : the JSON that will be returned will contain the list of costumers that were affected by the changes. 
+for example, if a costumer had an apponintment for some hour, and then the buisiness owner decided to "shrink" the opening hours, so we will let  him know that there are a costumers that were affected by this action. 
+#### more detailed:
+lets assume that some business had an opening  hour for tuesday like so : ["08:00-16:30","17:30-22:00"] and the costumer "tal" had an appointment for 16:15, then that buisness  owner decided to change the opening hours to tuesday : ["08:00-15:30","17:30-22:00"] , then the JSON that will be return will let him know that there are costumers that were affected by this change.
 
 #### return value : 
 #### if NO changes were made:
