@@ -1,11 +1,11 @@
 export default {
     routes: {
-        login: 'https://cureona.herokuapp.com/Login',
-        register: 'https://cureona.herokuapp.com/Registration',
-        makeAnAppointment: 'https://cureona.herokuapp.com/GetQueue',
-        avilableQueues: 'https://cureona.herokuapp.com/AvailableQueues',
-        businessSettings: 'https://cureona.herokuapp.com/businessSettings',
-        registerBusiness: 'https://cureona.herokuapp.com/RegisterBusiness',
-        registerWorker: 'https://cureona.herokuapp.com/RegistrationWorker',
+        login: 'https://curona.herokuapp.com/Login',
+        register: 'https://curona.herokuapp.com/Registration',
+        makeAnAppointment: 'https://curona.herokuapp.com/GetQueue',
+        avilableQueues: 'https://curona.herokuapp.com/AvailableQueues',
+        businessSettings: 'https://curona.herokuapp.com/businessSettings',
+        registerBusiness: 'https://curona.herokuapp.com/RegisterBusiness',
+        registerWorker: 'https://curona.herokuapp.com/RegistrationWorker',
     }
 }
