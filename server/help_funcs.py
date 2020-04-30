@@ -24,11 +24,11 @@ def get_businesses_from_db():
 
 MINUTES_INTERVALS = 15
 
+
 def get_the_current_opening_hours(cid):
     current_opening_hours = business_settings.find({'company_id': cid}, {'open_hours': 1})
     my_tmp_dict = (list(current_opening_hours))[0]
     return my_tmp_dict['open_hours']
-
 
 
 def get_the_current_queue(cid):
@@ -46,6 +46,7 @@ def create_hours_string(hour_start_time, minutes):
     hour_start = '0' + str(hour_start_time) if hour_start_time < 10 else str(hour_start_time)
 
     return hour_start + ':' + minutesStr
+
 
 def add_new_days_hours(times, modified_hours={}):
     try:
@@ -70,7 +71,6 @@ def add_new_days_hours(times, modified_hours={}):
     return modified_hours
 
 
-
 def calc_time_intervals(hour_start_time, hour_end_time, minute_start_time, minute_end_time):
     total_time = 0
     if hour_end_time < hour_start_time:
@@ -87,3 +87,16 @@ def calc_time_intervals(hour_start_time, hour_end_time, minute_start_time, minut
         total_time = total_time + abs(minute_start_time - minute_end_time)
 
     return total_time
+
+
+def create_list_of_affected_costumers(current_queue, new_queue={}):
+    tmp_dict = {}
+
+    for appointment in current_queue:
+
+        if appointment not in new_queue:
+
+            if len(current_queue[appointment]) != 0:
+                tmp_dict[appointment] = current_queue[appointment]
+
+    return tmp_dict
