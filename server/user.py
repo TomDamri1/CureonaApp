@@ -72,7 +72,6 @@ RegisterBuisness_parser.add_argument('max_capacity', required=False, help="max c
 class RegisterBusiness(Resource):
 
     def post(self):
-
         data = RegisterBuisness_parser.parse_args()
         # search user with the same user name.
         json_doc = new_col.find_one({"username": data['username']})
@@ -112,7 +111,7 @@ RegisterWorker_parser.add_argument('company_id', required=True, help="Company id
 
 letters = string.ascii_lowercase
 
-{'password'}
+
 def random_string(stringLength=4):
     """Generate a random string of fixed length """
     return ''.join(random.choice(letters) for i in range(stringLength))
