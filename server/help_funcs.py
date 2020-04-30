@@ -25,6 +25,16 @@ def get_businesses_from_db():
 MINUTES_INTERVALS = 15
 
 
+def modifyWorkingHoursForDays(queue, opened_hours):
+    for k, v in opened_hours.items():
+        modified_hours = {}
+        if v != 'closed':
+            for times in v:
+                queue[k] = add_new_days_hours(times, modified_hours)
+        else:
+            queue[k] = v  # v means "closed"
+
+
 def get_the_current_opening_hours(cid):
     current_opening_hours = business_settings.find({'company_id': cid}, {'open_hours': 1})
     my_tmp_dict = (list(current_opening_hours))[0]
