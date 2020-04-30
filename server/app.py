@@ -6,6 +6,7 @@ from flask_restful import Api
 from server.business_search import *
 from server.business_settings import *
 from server.queue_management import *
+from server.MyQueue import *
 from server.user import *
 
 # creating the flask app
