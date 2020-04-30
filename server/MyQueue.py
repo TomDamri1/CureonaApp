@@ -1,8 +1,9 @@
+import datetime
+
 from flask import jsonify
 from flask_restful import reqparse, Resource
+
 from server.help_funcs import *
-import datetime
-from datetime import datetime
 
 my_queue = new_db["user_queue"]
 
@@ -19,12 +20,14 @@ class GetMyQueue(Resource):
         if not orders:
             empty = list()
             return jsonify(empty)
-
+        print(orders)
         future_queue = list()
-        current_date = datetime.date.today()
-
+        current_date = datetime.datetime.today()
+        print(current_date)
         for order in orders:
-            order_date = datetime.strptime(order[1], '%d-/%m-/%y')
+            #print(order[1])
+            order_date = datetime.datetime.strptime(order[1], '%d-%m-%Y')
+            #print(order_date)
             if order_date > current_date:
                 future_queue.append(order)
 
