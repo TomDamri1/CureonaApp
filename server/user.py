@@ -69,6 +69,7 @@ RegisterBuisness_parser.add_argument('address', required=True, help="address can
 RegisterBuisness_parser.add_argument('company_id', required=True, help="Company id cannot be blank!")
 RegisterBuisness_parser.add_argument('search_key', type=dict, required=True, help="search key cannot be blank!")
 RegisterBuisness_parser.add_argument('max_capacity', required=False, help="max capacity in integer")
+RegisterBuisness_parser.add_argument('open_hours', type=dict, required=False, help="search_key cannot be blank!")
 
 
 class RegisterBusiness(Resource):
@@ -99,6 +100,7 @@ class RegisterBusiness(Resource):
                 business_info_dict['queue'] = my_calendar
 
             else:
+                print(business_info_dict)
                 business_info_dict['open_hours'] = data['open_hours']
                 business_info_dict['queue'] = {}
                 modifyWorkingHoursForDays(business_info_dict['queue'], data['open_hours'])
