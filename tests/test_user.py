@@ -51,12 +51,10 @@ class TestUser(unittest.TestCase):
 
     def test_Registration_business_owner_already_exist(self):
         url = 'https://curona.herokuapp.com/RegisterBusiness'
-        search_key = dict()
-        search_key['keys'] = ["Furniture"]
         myobj = {'username': "test111123123", 'password': "123123111123", 'business_name': "IKEA",
-                 'address': "balfor 24/1", "search_key": search_key, 'company_id': "123"}
+                 'address': "balfor 24/1", 'company_id': "123"}
         response = requests.post(url, data=myobj)
-        except_result = {"state": "user name or cid already exist"}
+        except_result = {'message': {'search_key': 'search key cannot be blank!'}}
         self.assertEqual(response.json(), except_result)
 
     # ---------------------------------------------------------------------
