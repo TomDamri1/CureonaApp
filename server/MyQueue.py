@@ -17,21 +17,19 @@ class GetMyQueue(Resource):
         data = GetMyQueue_parser.parse_args()
         print(data)
         user_queues = my_queue.find_one({"username": data["username"]})
+        # check if there are queues for the customer
         if not user_queues:
             empty = list()
             return jsonify(empty)
         orders = user_queues["orders"]
-        print(orders)
         future_queue = list()
-        current_date = datetime.datetime.today()
+        current_date = datetime.date.today()
+        # filter only the future queues
         for order in orders:
-            #print(order[1])
-            order_date = datetime.datetime.strptime(order[1], '%d-%m-%Y')
-            print(current_date)
-            print(order_date)
-            print(order_date >= current_date)
+            order_date = datetime.datetime.strptime(order[1], '%d-%m-%Y').date()
             if order_date >= current_date:
-                print(order[1])
                 future_queue.append(order)
-        future_queue.sort()
+        # sort date list
+        future_queue.sort(key=lambda x: datetime.datetime.strptime(x[1], '%d-%m-%Y'))
+        # return sorted list
         return jsonify(future_queue)
