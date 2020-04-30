@@ -100,7 +100,7 @@ def update_hours_and_inform_costumers(cid, new_opening_hours, costumers_affected
     # at this point we have a working new queue, now we need to let the people who are affected by the new
     # opening hours that their appointments have been canceled
 
-    for day in ["sunday", "monday", "tuesday", "wednsday", "thursday", "friday", "saturday"]:
+    for day in ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]:
         if current_opening_hours[day] != new_opening_hours[day]:
 
             # closing an open day might lead to many people appointments to be cancelled so we will check if the
