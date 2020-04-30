@@ -41,6 +41,12 @@ def get_hours_and_minutes_as_int(times):
     return [int(times[0:2]), int(times[3:5]), int(times[6:8]), int(times[9:11])]
 
 
+def create_hours_string(hour_start_time, minutes):
+    minutesStr = str(minutes) if minutes != 0 else '00'
+    hour_start = '0' + str(hour_start_time) if hour_start_time < 10 else str(hour_start_time)
+
+    return hour_start + ':' + minutesStr
+
 def add_new_days_hours(times, modified_hours={}):
     try:
         hour_start_time, minute_start_time, hour_end_time, minute_end_time = get_hours_and_minutes_as_int(times)
