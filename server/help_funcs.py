@@ -48,6 +48,18 @@ def add_new_days_hours(times, modified_hours={}):
     time_intervals = calc_time_intervals(hour_start_time, hour_end_time, minute_start_time, minute_end_time)
     minutes = minute_start_time
 
+    while time_intervals > 0:
+
+        strToAppend = create_hours_string(hour_start_time, minutes % 60)
+        minutes = minutes + MINUTES_INTERVALS
+        if minutes == 60:
+            hour_start_time = (hour_start_time + 1) % 24
+            minutes = 0
+
+        modified_hours[strToAppend] = []
+        time_intervals -= MINUTES_INTERVALS
+    return modified_hours
+
 
 
 def calc_time_intervals(hour_start_time, hour_end_time, minute_start_time, minute_end_time):
