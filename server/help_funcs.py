@@ -47,3 +47,22 @@ def add_new_days_hours(times, modified_hours={}):
 
     time_intervals = calc_time_intervals(hour_start_time, hour_end_time, minute_start_time, minute_end_time)
     minutes = minute_start_time
+
+
+
+def calc_time_intervals(hour_start_time, hour_end_time, minute_start_time, minute_end_time):
+    total_time = 0
+    if hour_end_time < hour_start_time:
+        if hour_end_time == 0:
+            total_time = (24 - hour_start_time) * 60
+        else:
+            total_time = (24 - hour_start_time + hour_end_time) * 60
+    else:
+        total_time = (hour_end_time - hour_start_time) * 60
+
+    if minute_start_time > minute_end_time:
+        total_time = total_time - abs(minute_start_time - minute_end_time)
+    elif minute_start_time < minute_end_time:
+        total_time = total_time + abs(minute_start_time - minute_end_time)
+
+    return total_time
