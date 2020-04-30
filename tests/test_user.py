@@ -149,7 +149,7 @@ class TestUser(unittest.TestCase):
 
     def test_update_settings_for_business(self):
         url = 'https://curona.herokuapp.com/businessSettings'
-        myobj = {"company_id": "9595959595959595"}
+        myobj = {"company_id": "IsNotExist"}
         response = requests.post(url, data=myobj)
         except_result = {
                             "state": "company id was not found"
