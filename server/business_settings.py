@@ -27,7 +27,6 @@ def updateMaxCapacity(cid, maxCapacity):
                              {"$set": {"max_capacity": maxCapacity}})
 
 
-
 class updateSettings(Resource):
 
     # this class wil receive a JSON and will check what are the things that the business owner woukd like to change
@@ -74,22 +73,18 @@ class updateSettings(Resource):
         return jsonify({'state': 'company id was not found'})
 
 
-
-
 def update_hours_and_inform_costumers(cid, new_opening_hours, costumers_affected):
     # we no get the old opening hours
     current_opening_hours = get_the_current_opening_hours(cid)
     current_opening_hours_queue = get_the_current_queue(cid)  # we will need the queue for later- when we will need
     # to inform the costumers
 
-
     # first we will built the new hours list
     for day in current_opening_hours:
         if day not in new_opening_hours:
             new_opening_hours[day] = current_opening_hours[day]
 
-
- # At this point , the new opening hours are now updated and merged with the old hours
+    # At this point , the new opening hours are now updated and merged with the old hours
 
     new_opening_hours_queue = {}
     # now we will create the queue
@@ -101,7 +96,6 @@ def update_hours_and_inform_costumers(cid, new_opening_hours, costumers_affected
             new_opening_hours_queue[day] = tmp_queue
         else:
             new_opening_hours_queue[day] = "closed"
-
 
     # at this point we have a working new queue, now we need to let the people who are affected by the new
     # opening hours that their appointments have been canceled
@@ -117,15 +111,5 @@ def update_hours_and_inform_costumers(cid, new_opening_hours, costumers_affected
                     costumers_affected[day] = tmp_queue
                 continue  # continue because the two variables will enter the next if as well so we need to skip it
 
-
             if current_opening_hours[day] == "closed" and new_opening_hours[day] != "closed":
                 continue
-
-
-
-
-
-
-
-
-
