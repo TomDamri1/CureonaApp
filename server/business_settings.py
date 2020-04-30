@@ -118,6 +118,8 @@ def update_hours_and_inform_costumers(cid, new_opening_hours, costumers_affected
                 continue  # continue because the two variables will enter the next if as well so we need to skip it
 
 
+            if current_opening_hours[day] == "closed" and new_opening_hours[day] != "closed":
+                continue
 
 
 
