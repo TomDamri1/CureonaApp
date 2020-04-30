@@ -15,20 +15,23 @@ class GetMyQueue(Resource):
 
     def post(self):
         data = GetMyQueue_parser.parse_args()
-        #print(data)
-        orders = my_queue.find_one({"username": data["username"]})["orders"]
-        if not orders:
+        print(data)
+        user_queues = my_queue.find_one({"username": data["username"]})
+        if not user_queues:
             empty = list()
             return jsonify(empty)
-        #print(orders)
+        orders = user_queues["orders"]
+        print(orders)
         future_queue = list()
         current_date = datetime.datetime.today()
-        #print(current_date)
         for order in orders:
             #print(order[1])
             order_date = datetime.datetime.strptime(order[1], '%d-%m-%Y')
-            #print(order_date)
-            if order_date > current_date:
+            print(current_date)
+            print(order_date)
+            print(order_date >= current_date)
+            if order_date >= current_date:
+                print(order[1])
                 future_queue.append(order)
-
+        future_queue.sort()
         return jsonify(future_queue)

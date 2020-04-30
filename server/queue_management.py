@@ -13,6 +13,7 @@ login = new_db["login"]
 GetQueue_parser = reqparse.RequestParser()
 GetQueue_parser.add_argument('username', required=True, help="username name cannot be blank!")
 GetQueue_parser.add_argument('BusinessName', required=True, help="business name cannot be blank!")
+GetQueue_parser.add_argument('company_id', required=True, help="business name cannot be blank!")
 GetQueue_parser.add_argument('Day', required=True, help="Date cannot be blank!")
 GetQueue_parser.add_argument('Hour', required=True, help="Date cannot be blank!")
 
@@ -57,7 +58,7 @@ class GetQueue(Resource):
     def post(self):
         data = GetQueue_parser.parse_args()
         print(data)
-        business = business_info.find_one({"business_name": data['BusinessName']})
+        business = business_info.find_one({"company_id": data['company_id']})
         # check for legal day name
         if data['Day'] == "sunday" or data['Day'] == "monday" or data['Day'] == "tuesday" or data[
             'Day'] == "wednesday" or data['Day'] == "thursday" or data['Day'] == "friday" or data['Day'] == "saturday":
