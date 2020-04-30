@@ -8,6 +8,7 @@ from server.help_funcs import *
 import hashlib
 
 new_col = new_db["login"]
+business_info = new_db["business_info"]
 
 Login_parser = reqparse.RequestParser()
 Login_parser.add_argument('username', required=True, help="username cannot be blank!")
@@ -24,6 +25,9 @@ class Login(Resource):
             print(sha_encrypt)
             print(json_doc['password'])
             if sha_encrypt == json_doc['password']:
+                if json_doc['type'] == "business_owner":
+                    my_business_info = business_info.find_one({"username": data['username']})
+                    return jsonify({'state': 'success', 'type': json_doc['type'], 'company_id': my_business_info['company_id']})
                 return jsonify({'state': 'success', 'type': json_doc['type']})
             else:
                 return jsonify({'state': 'failed'})
@@ -56,8 +60,6 @@ class Registration(Resource):
         # if user with the same user name is exist, return to server that: 'user name already exist'.
         return jsonify({'state': 'user name already exist'})
 
-
-business_info = new_db["business_info"]
 
 RegisterBuisness_parser = reqparse.RequestParser()
 RegisterBuisness_parser.add_argument('username', required=True, help="user_name cannot be blank!")
