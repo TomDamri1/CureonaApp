@@ -119,3 +119,12 @@ def update_hours_and_inform_costumers(cid, new_opening_hours, costumers_affected
                                                               new_opening_hours_queue[day])
                 if len(tmp_queue) != 0:
                     costumers_affected[day] = tmp_queue
+
+
+
+    business_settings.update({'company_id': cid},
+                             {"$set": {"queue": new_opening_hours_queue,
+                                       "open_hours": new_opening_hours
+                                       }
+                              }
+                             )
