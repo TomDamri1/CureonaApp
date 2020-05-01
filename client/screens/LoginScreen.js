@@ -66,7 +66,8 @@ const LoginScreen = props => {
             params: {
               username: username,
               businessName: "fake Business!!!",
-              USERTYPE: text.type.businessOwner
+              USERTYPE: text.type.businessOwner,
+              company_id: resData.company_id
             }
           })
           break;
