@@ -70,12 +70,12 @@ class GetQueue(Resource):
             return jsonify({'state': 'failed, BusinessName is not register'})
         # check if the business is open or closed
         if not business["open"]:
-            return jsonify({'state': 'success, Business is closed'})
+            return jsonify({'state': 'failed, Business is closed'})
         # check if in the given day and hor there are available queue
         print("num of queue to this hour: " + str(int(len(business["queue"][data['Day']][data['Hour']]))))
         print("max capacity: " + str(business["max_capacity"]))
         if len(business["queue"][data['Day']][data['Hour']]) >= int(business["max_capacity"]):
-            return jsonify({'state': 'success, sorry the queue is full'})
+            return jsonify({'state': 'failed, sorry the queue is full'})
         queue_key = random_string(4)
         print(queue_key)
         json_doc = user_queue.find_one({"username": data['username']})
@@ -85,7 +85,7 @@ class GetQueue(Resource):
             prev_orders = json_doc["orders"]
             for i in prev_orders:
                 if data['BusinessName'] == i[0] and schedule_date == i[1] and data['Hour'] == i[2]:
-                    return jsonify({'state': 'success, sorry you can not get two queue to the same hour'})
+                    return jsonify({'state': 'failed, sorry you can not get two queue to the same hour'})
             order = [data['BusinessName'], schedule_date, data['Hour'], queue_key, business["address"]]
             print(order)
             user_queue.update({'username': data['username']}, {"$push": {'orders': order}})
@@ -158,65 +158,3 @@ class AvailableQueues(Resource):
                                      'friday': available_queues_friday,
                                      'saturday': available_queues_saturday}
         return jsonify({'state': 'success', 'queue': open_and_available_queues})
-
-
-"""
-        
-        available_queues_sunday = list(filter(filter_available, hours))
-        available_queues_monday = list(filter(filter_available, hours))
-        available_queues_tuesday = list(filter(filter_available, hours))
-        available_queues_wednesday = list(filter(filter_available, hours))
-        available_queues_thursday = list(filter(filter_available, hours))
-        available_queues_friday = list(filter(filter_available, hours))
-        available_queues_saturday = list(filter(filter_available, hours))
-        
-        open_and_available_queues = {'sunday': available_queues_sunday,
-                                     'monday': available_queues_monday,
-                                     'tuesday': available_queues_tuesday,
-                                     'wednesday': available_queues_wednesday,
-                                     'thursday': available_queues_thursday,
-                                     'friday': available_queues_friday,
-                                     'saturday': available_queues_saturday}
-        return jsonify({'state': 'success', 'queue': open_and_available_queues})
-        
-        
-        open_queues_sunday1 = open_hours['sunday'][:11]
-        open_queues_monday1 = open_hours['monday'][:11]
-        open_queues_tuesday1 = open_hours['tuesday'][:11]
-        open_queues_wednesday1 = open_hours['wednesday'][:11]
-        open_queues_thursday1 = open_hours['thursday'][:11]
-        open_queues_friday1 = open_hours['friday'][:11]
-        open_queues_saturday1 = open_hours['saturday'][:11]
-
-        open_queues_sunday2 = open_hours['sunday'][12:]
-        open_queues_monday2 = open_hours['monday'][12:]
-        open_queues_tuesday2 = open_hours['tuesday'][12:]
-        open_queues_wednesday2 = open_hours['wednesday'][12:]
-        open_queues_thursday2 = open_hours['thursday'][12:]
-        open_queues_friday2 = open_hours['friday'][12:]
-        open_queues_saturday2 = open_hours['saturday'][12:]
-
-        def filter_open_hours(hours):
-            if int(open_queues_sunday1[:2]) <= hours <= int(open_queues_sunday1[6:8]) \
-                    or int(open_queues_sunday2[:2]) <= hours <= int(open_queues_sunday2[6:8]):
-                return True
-            return False
-
-        open_and_available_queues_sunday = list(filter(filter_open_hours, available_queues_sunday))
-        open_and_available_queues_monday = list(filter(filter_open_hours, available_queues_monday))
-        open_and_available_queues_tuesday = list(filter(filter_open_hours, available_queues_tuesday))
-        open_and_available_queues_wednesday = list(filter(filter_open_hours, available_queues_wednesday))
-        open_and_available_queues_thursday = list(filter(filter_open_hours, available_queues_thursday))
-        open_and_available_queues_friday = list(filter(filter_open_hours, available_queues_friday))
-        open_and_available_queues_saturday = list(filter(filter_open_hours, available_queues_saturday))
-
-        open_and_available_queues = {'sunday': open_and_available_queues_sunday,
-                                     'monday': open_and_available_queues_monday,
-                                     'tuesday': open_and_available_queues_tuesday,
-                                     'wednesday': open_and_available_queues_wednesday,
-                                     'thursday': open_and_available_queues_thursday,
-                                     'friday': open_and_available_queues_friday,
-                                     'saturday': open_and_available_queues_saturday}
-
-        # print(available_queues)
-"""
