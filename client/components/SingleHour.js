@@ -24,10 +24,17 @@ const SingleHour = props => {
                   Hour: props.time,
                   BusinessName: props.businessName, // in the end will be cid
                   Day: props.selectedDay.toLowerCase(),
-                  username: props.username
+                  username: props.username,
+                  company_id : props.id
                 }),
               });
-          
+              console.log( JSON.stringify({
+                Hour: props.time,
+                BusinessName: props.businessName, // in the end will be cid
+                Day: props.selectedDay.toLowerCase(),
+                username: props.username,
+                company_id : props.id
+              }))
               const resData = await response.json();
               console.log(resData);
               props.navigation.pop();

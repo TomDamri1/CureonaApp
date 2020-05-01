@@ -16,6 +16,7 @@ const MakeAppointment = props => {
                         businessName = {props.item.name}
                         selectedDay = {props.selectedDay}
                         username = {props.username}
+                        id = {props.item.id}
                     />
                 }
                 keyExtractor={(item, index) => index.toString()}

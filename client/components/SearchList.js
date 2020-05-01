@@ -66,6 +66,7 @@ const SearchList = props => {
                             content = {item}
                             navigation={props.navigation}
                             username={props.username}
+                            id = {item.id}
                         />}
                     keyExtractor={item => item.id}
                 />

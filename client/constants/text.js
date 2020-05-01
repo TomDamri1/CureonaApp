@@ -32,7 +32,8 @@ export default {
         admin: "admin"
     },
     screenHeaders : {
-        search : "Search"
+        search : "Search",
+        myQueues : "My Queues",
     },
     decisions : {
         makeAnAppointment : "makeAnAppointment",
