@@ -67,6 +67,7 @@ RegisterBuisness_parser.add_argument('password', required=True, help="password c
 RegisterBuisness_parser.add_argument('business_name', required=True, help="buisness name cannot be blank!")
 RegisterBuisness_parser.add_argument('address', required=True, help="address cannot be blank!")
 RegisterBuisness_parser.add_argument('company_id', required=True, help="Company id cannot be blank!")
+RegisterBuisness_parser.add_argument('open_hours', type=dict, required=True, help="open hours cannot be blank!")
 RegisterBuisness_parser.add_argument('search_key', type=dict, required=True, help="search key cannot be blank!")
 RegisterBuisness_parser.add_argument('max_capacity', required=False, help="max capacity in integer")
 RegisterBuisness_parser.add_argument('open_hours', type=dict, required=False, help="search_key cannot be blank!")
@@ -76,6 +77,7 @@ class RegisterBusiness(Resource):
 
     def post(self):
         data = RegisterBuisness_parser.parse_args()
+        print(data)
         # search user with the same user name.
         json_doc = new_col.find_one({"username": data['username']})
         CID = business_info.find_one({"company_id": data['company_id']})
