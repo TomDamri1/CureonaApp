@@ -5,7 +5,6 @@ import Urls from  '../constants/Urls'
 
 const CustomerSerchScreen = props => {
     const username = props.navigation.getParam('username')
-    console.log("customer search screen : " , username )
     return (
         <SearchList navigation = {props.navigation} username={username}/>
     )

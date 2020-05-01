@@ -4,6 +4,12 @@ import Title from '../components/Title'
 import Urls from '../constants/Urls';
 //import getStoreList from "../data/getStoreList";
 
+const STORE_NAME = 0;
+const DATE = 1;
+const HOUR = 2;
+const CODE = 3;
+const ADDRESS = 4;
+
 const CustomerScreen = props => {
     const username = props.navigation.getParam('username');
     console.log(username)
@@ -20,7 +26,7 @@ const CustomerScreen = props => {
 
         const gottenStoreList = await response.json();
         var storeList = [];
-        await gottenStoreList.map( store => {
+        await gottenStoreList.map(store => {
             const newStore = {
                 id: store.company_id,
                 name: store.business_name,
@@ -43,13 +49,55 @@ const CustomerScreen = props => {
             }
         })
     }
+    const handleMyQueuesPress = async () => {
+        props.navigation.navigate({
+            routeName: "Loading"
+        })
+        const response = await fetch(Urls.routes.getMyQueue, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: username,
+            }),
+        });
+
+        const queues = await response.json();
+        var queuesList = [];
+        await queues.map(queue => {
+            const newQueue = {
+                id: queue[CODE],
+                code: queue[CODE],
+                businessName: queue[STORE_NAME],
+                address: queue[ADDRESS],
+                date: queue[DATE],
+                hour: queue[HOUR],
+            }
+            queuesList.push(newQueue);
+        })
+
+        console.log(queuesList);
+
+
+        props.navigation.pop(); //pop out the loading screen from the stack 
+        props.navigation.setParams({ username: username, queuesList: queuesList });
+        props.navigation.navigate({
+            routeName: "CustomerQueuesScreen",
+            params: {
+                username: username,
+                queuesList: queuesList,
+            }
+        })
+    }
 
     return (
         <View>
             <Title title="welcome!" subTitle={props.navigation.getParam('username')} />
             <Text>this is an initial-dummy user-screen </Text>
             <Button title="Search a Business" onPress={() => handleSearchABusinessPress()} />
-            <Button title="my queues" />
+            <Button title="my queues" onPress={() => handleMyQueuesPress()} />
 
         </View>
 

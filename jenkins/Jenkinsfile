@@ -45,6 +45,27 @@ pipeline {
             }
 
         }
+                stage('System - Test') {
+
+            agent {
+
+                docker {
+
+                    image 'qnib/pytest'
+
+                }
+
+            }
+            steps {
+                sh 'py.test --verbose --junit-xml test-reports/system_results.xml tests/test_system.py'
+            }
+            post {
+                always {
+                    junit 'test-reports/system_results.xml'
+                }
+            }
+
+        }
 
     }
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import text from '../constants/text';
 
 // import navigators:
 import { createAppContainer } from "react-navigation";
@@ -12,11 +13,14 @@ import BusinessOwnerScreen from "../screens/BusinessOwnerScreen";
 import AdminScreen from '../screens/AdminScreen';
 import LoadingScreen from '../screens/LoadingScreen';
 import CustomerSearchScreen from '../screens/CustomerSearchScreen'
-import text from '../constants/text';
 import AppointmentScreen from '../screens/AppointmentScreen';
 import AdminChangesScreen from '../screens/AdminChangesScreen';
+<<<<<<< HEAD
 import WorkerScreen from '../screens/WorkerScreen';
 import AddWorkerScreen from '../screens/AddWorkerScreen';
+=======
+import CustomerQueuesScreen from '../screens/CustomerQueuesScreen';
+>>>>>>> 678385523ae3744ba95453409176e37cf86551b5
 
 const LoginNavigator = createStackNavigator({
     Login: LoginScreen,

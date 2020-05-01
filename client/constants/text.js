@@ -25,6 +25,9 @@ export default {
         pleaseEnterValidUsernameAndPassword: "please enter valid username and password.",
         pleaseCheckYourUserNameAndPassword: "please check your username and password.",
         checkConditions : "please check and fill the fields properly",
+        cancelAppointment : "Cancel Appointment",
+        wouldYouLikeToCancelQueueToBusinessnameInDateAndHour : 
+            (businessName, date , hour) => `${businessName} \nin ${date}, ${hour}\nwould you like to cancel?`,
     },
     type: {
         customer: "customer",
@@ -33,7 +36,8 @@ export default {
         worker: "worker",
     },
     screenHeaders : {
-        search : "Search"
+        search : "Search",
+        myQueues : "My Queues",
     },
     decisions : {
         makeAnAppointment : "makeAnAppointment",
