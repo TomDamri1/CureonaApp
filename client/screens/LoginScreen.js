@@ -66,7 +66,8 @@ const LoginScreen = props => {
             params: {
               username: username,
               businessName: "fake Business!!!",
-              USERTYPE: text.type.businessOwner
+              USERTYPE: text.type.businessOwner,
+              company_id: resData.company_id
             }
           })
           break;
@@ -77,6 +78,16 @@ const LoginScreen = props => {
             params: {
               username: username,
               USERTYPE: text.type.admin
+            }
+          })
+          break;
+
+        case text.type.worker:
+          props.navigation.navigate({
+            routeName: "WorkerScreen",
+            params: {
+              username: username,
+              USERTYPE: text.type.worker
             }
           })
           break;

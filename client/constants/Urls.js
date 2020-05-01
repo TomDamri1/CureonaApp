@@ -8,6 +8,9 @@ export default {
         avilableQueues: MainURL + 'AvailableQueues',
         businessSettings: MainURL + 'businessSettings',
         registerBusiness: MainURL + 'RegisterBusiness',
-        getBusiness : MainURL + 'getBusinesses'
+        getBusiness : MainURL + 'getBusinesses',
+        getMyQueue : MainURL + 'GetMyQueue',
+        registerWorker: MainURL + 'RegistrationWorker'
     }
+
 }
