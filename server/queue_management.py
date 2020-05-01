@@ -120,6 +120,7 @@ class AvailableQueues(Resource):
                 if max_capacity - len(list_queue[day][hour]) > 0:
                     available_queues.append(hour)
             return available_queues
+
         def available_hours_at_day(day):
             available_queues = list()
             if isinstance(list_queue[day], str):
@@ -127,8 +128,15 @@ class AvailableQueues(Resource):
             else:
                 available_queues = available_hours(day)
             return available_queues
+
         data = AvailableQueues_parser.parse_args()
         json_doc = business_info.find_one({"company_id": data['company_id']})
+        if not json_doc:
+            return jsonify({'state': 'failed, company_id is not exist'})
+        if not json_doc["open"]:
+            return jsonify({'state': 'success', 'queue': {'sunday': [], 'monday': [], 'tuesday': [], 'wednesday': [],
+                                                          'thursday': [], 'friday': [], 'saturday': []}})
+
         max_capacity = int(json_doc["max_capacity"])
         queue = json_doc["queue"]
         list_queue = []
@@ -150,7 +158,6 @@ class AvailableQueues(Resource):
                                      'friday': available_queues_friday,
                                      'saturday': available_queues_saturday}
         return jsonify({'state': 'success', 'queue': open_and_available_queues})
-
 
 
 """
@@ -213,4 +220,3 @@ class AvailableQueues(Resource):
 
         # print(available_queues)
 """
-
