@@ -22,8 +22,12 @@ import Colors from '../constants/Colors';
 import Urls from '../constants/Urls'
 import Response from '../constants/Response';
 import { CheckBox } from "react-native-elements";
+import LoadingScreen from '../screens/LoadingScreen';
 
 const AddWorkerScreen = props => {
+  const company_id = props.navigation.getParam('company_id')
+  //console.log("company_id : " , company_id )
+
   const [username, setUsername] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [userPasswordAuthentication, setUserPasswordAuthentication] = useState('');
@@ -56,19 +60,10 @@ const AddWorkerScreen = props => {
 
     if (passwordLengthValidating && validatingPassword) {
       console.log("we all good now send somthing to the server!")
-      /*props.navigation.navigate({
+      props.navigation.navigate({
         routeName: "Loading"
-      })*/
+      })
 
-      /*console.log(JSON.stringify({
-        username: username,
-        business_name: businessName,
-        address: address,
-        company_id: cid,
-        password: userPassword,
-        search_key:[businessName],
-      }));
-*/
       const response = await fetch(Urls.routes.registerWorker , {
         method: 'POST',
         headers: {
@@ -77,18 +72,19 @@ const AddWorkerScreen = props => {
         },
         body: 
           JSON.stringify({
-            //username: username,
+            company_id: company_id,
             password: userPassword,
-            type: text.type.worker
+            type: text.type.worker,
+            
           })
         ,
       });
       console.log("after post");
       const resData = await response.json();
-      console.log(resData);
       props.navigation.pop();
       if (resData.state === Response.success) {
-          props.navigation.popToTop();
+          props.navigation.pop();
+          Alert.alert("Success", `The worker has been register successfully\nUsername: ${resData.username}\nPassword: ${resData.password}`);
           props.navigation.navigate({
             routeName: "BusinessOwnerScreen",
             params: {
@@ -96,16 +92,6 @@ const AddWorkerScreen = props => {
             }
           })
       }
-      else if (resData.state === Response.userExist) {
-        Alert.alert(Response.userExist)
-      }
-      else if (resData.state === Response.companyIdWasNotFound) {
-        Alert.alert(Response.companyIdWasNotFound);
-      }
-
-    }
-    else {
-      Alert.alert(text.alert.pleaseEnterValidUsernameAndPassword)
     }
   }
 
