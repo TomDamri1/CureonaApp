@@ -6,9 +6,28 @@ import Colors from '../constants/Colors';
 import text from '../constants/text';
 import Urls from '../constants/Urls'
 
+
 const QueueItem = props => {
 
-    console.log("==================================", props.address);
+    const handleYes = async () =>{
+
+    }
+    const yesButton = {
+        text: "Yes",
+        onPress: () => handleYes(),
+
+    }
+    const noButton = {
+        text: "No",
+        onPress: () => {},
+        style: "cancel"
+    }
+    const handleQueueCancel = async () => {
+        Alert.alert(
+            text.alert.cancelAppointment,
+            text.alert.wouldYouLikeToCancelQueueToBusinessnameInDateAndHour(props.title, props.date, props.hour),
+            [yesButton, noButton]);
+    }
     return (
         <View>
             <View style={styles.container}>
@@ -22,11 +41,12 @@ const QueueItem = props => {
                     <View style={styles.rowNoSpace}>
                         <Text>{props.date}</Text>
                         <Text>{props.hour}</Text>
-                        <Button title="cancel" />
+                        <Button title="cancel" color={Colors.accentColor} onPress={() => handleQueueCancel()} />
                     </View>
-                    
+
                 </View>
             </View>
+
         </View>
     )
 }
@@ -38,7 +58,7 @@ const styles = StyleSheet.create({
         color: 'black'
     },
     rowNoSpace: {
-        marginTop:-30,
+        marginTop: -30,
     },
     row: {
         flexDirection: "row",
@@ -50,7 +70,8 @@ const styles = StyleSheet.create({
         borderBottomColor: Colors.primaryColor,
         margin: 10,
         padding: 10,
-    }
+    },
+
 })
 
 export default QueueItem;

@@ -19,6 +19,7 @@ const CustomerQueuesScreen = props => {
             <Title title={text.screenHeaders.myQueues}/>
             <FlatList
                     data={queuesList}
+                    style={styles.gap}
                     renderItem={({ item }) =>
                         <QueueItem
                             title={item.businessName}
@@ -32,8 +33,15 @@ const CustomerQueuesScreen = props => {
                         />}
                     keyExtractor={item => item.id}
             />
+            <View />
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    gap: {
+        marginBottom: 100,
+    },
+})
 
 export default CustomerQueuesScreen;
