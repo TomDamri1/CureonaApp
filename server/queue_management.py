@@ -117,46 +117,30 @@ class AvailableQueues(Resource):
         def available_hours(day):
             available_queues = list()
             for hour in list_queue[day]:
-                if max_capacity - len(list_queue[0][hour]) > 0:
+                if max_capacity - len(list_queue[day][hour]) > 0:
                     available_queues.append(hour)
             return available_queues
+        def available_hours_at_day(day):
+            available_queues = list()
+            if isinstance(list_queue[day], str):
+                available_queues = list()
+            else:
+                available_queues = available_hours(day)
+            return available_queues
         data = AvailableQueues_parser.parse_args()
-        print(data)
         json_doc = business_info.find_one({"company_id": data['company_id']})
-        print(json_doc)
         max_capacity = int(json_doc["max_capacity"])
         queue = json_doc["queue"]
         list_queue = []
         for _, value in queue.items():
             list_queue.append(value)
-        if type(list_queue[0]) == string:
-            available_queues_sunday = list()
-        else:
-            available_queues_sunday = available_hours(0)
-        if type(list_queue[1]) == string:
-            available_queues_monday = list()
-        else:
-            available_queues_monday = available_hours(1)
-        if type(list_queue[2]) == string:
-            available_queues_tuesday = list()
-        else:
-            available_queues_tuesday = available_hours(2)
-        if type(list_queue[3]) == string:
-            available_queues_wednesday = list()
-        else:
-            available_queues_wednesday = available_hours(3)
-        if type(list_queue[4]) == string:
-            available_queues_thursday = list()
-        else:
-            available_queues_thursday = available_hours(4)
-        if type(list_queue[5]) == string:
-            available_queues_friday = list()
-        else:
-            available_queues_friday = available_hours(5)
-        if type(list_queue[6]) == string:
-            available_queues_saturday = list()
-        else:
-            available_queues_saturday = available_hours(6)
+        available_queues_sunday = available_hours_at_day(0)
+        available_queues_monday = available_hours_at_day(1)
+        available_queues_tuesday = available_hours_at_day(2)
+        available_queues_wednesday = available_hours_at_day(3)
+        available_queues_thursday = available_hours_at_day(4)
+        available_queues_friday = available_hours_at_day(5)
+        available_queues_saturday = available_hours_at_day(6)
 
         open_and_available_queues = {'sunday': available_queues_sunday,
                                      'monday': available_queues_monday,
