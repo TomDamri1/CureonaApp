@@ -52,9 +52,12 @@ def get_hours_and_minutes_as_int(times):
 
 
 def create_hours_string(hour_start_time, minutes):
-    minutesStr = str(minutes) if minutes != 0 else '00'
-    hour_start = '0' + str(hour_start_time) if hour_start_time < 10 else str(hour_start_time)
+    if minutes<10:
+        minutesStr=  '0'+str(minutes)
+    else:
+        minutesStr = str(minutes) if minutes != 0 else '00'
 
+    hour_start = '0' + str(hour_start_time) if hour_start_time < 10 else str(hour_start_time)
     return hour_start + ':' + minutesStr
 
 
@@ -72,9 +75,9 @@ def add_new_days_hours(times, modified_hours={}):
 
         strToAppend = create_hours_string(hour_start_time, minutes % 60)
         minutes = minutes + MINUTES_INTERVALS
-        if minutes == 60:
+        if minutes >= 60:
             hour_start_time = (hour_start_time + 1) % 24
-            minutes = 0
+            minutes = minutes % 60
 
         modified_hours[strToAppend] = []
         time_intervals -= MINUTES_INTERVALS
