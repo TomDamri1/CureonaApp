@@ -36,6 +36,9 @@ api.add_resource(GetMyQueue, '/GetMyQueue')
 api.add_resource(EMPTY, '/')
 api.add_resource(updateSettings, '/businessSettings')
 api.add_resource(getBusinesses, '/getBusinesses')
+api.add_resource(deleteAppointment, '/deleteAppointment')
+
+
 # driver function
 
 if __name__ == '__main__':
