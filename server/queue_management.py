@@ -113,6 +113,7 @@ AvailableQueues_parser.add_argument('company_id', required=True, help="company_i
 
 
 class AvailableQueues(Resource):
+
     def post(self):
         def available_hours(day):
             available_queues = list()
@@ -158,3 +159,14 @@ class AvailableQueues(Resource):
                                      'friday': available_queues_friday,
                                      'saturday': available_queues_saturday}
         return jsonify({'state': 'success', 'queue': open_and_available_queues})
+
+
+AvailableQueues_parser = reqparse.RequestParser()
+AvailableQueues_parser.add_argument('company_id', required=True, help="company_id name cannot be blank!")
+
+insert_parser = reqparse.RequestParser()
+insert_parser.add_argument('company_id', required=True, help="company_id name cannot be blank!")
+
+
+class Insert(Resource):
+    pass
