@@ -27,6 +27,27 @@ server root url : https://cureona.herokuapp.com/
  ```
 
 
+### Worker Login :
+#### url : https://cureona.herokuapp.com/Login
+#### json example :
+```
+{
+  "username": "vcbfrd", 
+  "password" :"123"
+ }
+ ```
+ #### Returned json:
+ 
+ ```
+ {
+  "company id": "123",
+  "company name": "IKEA",
+  "state": "success",
+  "type": "worker"
+}
+```
+
+
 
 ### Buisness registration  :
 #### url : https://cureona.herokuapp.com/RegisterBusiness
@@ -49,29 +70,36 @@ server root url : https://cureona.herokuapp.com/
 #### that means that you can send an update only for open_hours\open\max_capacity
 #### or all together. 
 
+#### ALSO : the JSON that will be returned will contain the list of costumers that were affected by the changes. 
+for example, if a costumer had an apponintment for some hour, and then the buisiness owner decided to "shrink" the opening hours, so we will let  him know that there are a costumers that were affected by this action. 
+#### more detailed:
+lets assume that some business had an opening  hour for tuesday like so : ["08:00-16:30","17:30-22:00"] and the costumer "tal" had an appointment for 16:15, then that buisness  owner decided to change the opening hours to tuesday : ["08:00-15:30","17:30-22:00"] , then the JSON that will be return will let him know that there are costumers that were affected by this change.
+
 #### return value : 
 #### if NO changes were made:
 ```
 {
-  "changes": "No chacnges",
-  "state": "success"
+    "max_capacity": "no changes",
+    "open": "no changes",
+    "open_hours": "no changes"
 }
 ```
 
-#### for every field that was changed the return value will be: 
+#### for every field that was changed the return value will be ( notice the addition of the affected costumers) : 
 ```
 {
-  "max_capacity": "updated",
-  "open": "updated",
-  "open_hours": "updated"
+    "affected_costumers": "no effect",
+    "max_capacity": "updated",
+    "open": "updated",
+    "open_hours": "updated"
 }
 ```
 
 #### json example :
 ```
 {
-   "company_id" : "1234",
-   "open_hours" : {"sunday" : ["12:30-16:35", "17:00-19:30"],
+   "company_id" : "123",
+   "open_hours" : {"sunday" : ["12:45-16:35", "17:00-19:30"],
 					"monday" : ["12:31-16:30","20:00-21:30"],
 					"tuesday" : ["12:30-16:35", "17:00-19:30"],
 					"wednesday" : ["12:31-16:30","20:00-21:30"],
@@ -79,8 +107,8 @@ server root url : https://cureona.herokuapp.com/
 					"friday" : "closed" ,
 					"saturday" : "closed"
 			 }	,
-	"open" : "False",
-  "max_capacity" : 150
+	"open" : "True",
+  "max_capacity" : 100
 }
  ```
 
