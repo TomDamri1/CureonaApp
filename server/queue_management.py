@@ -158,3 +158,10 @@ class AvailableQueues(Resource):
                                      'friday': available_queues_friday,
                                      'saturday': available_queues_saturday}
         return jsonify({'state': 'success', 'queue': open_and_available_queues})
+
+
+
+class deleteAppointment(Resource):
+    def post(self):
+
+
