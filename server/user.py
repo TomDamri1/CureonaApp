@@ -16,6 +16,7 @@ Login_parser.add_argument('password', required=True, help="password cannot be bl
 
 
 class Login(Resource):
+
     def post(self):
         data = Login_parser.parse_args()
         json_doc = new_col.find_one({"username": data['username']})
@@ -27,7 +28,14 @@ class Login(Resource):
             if sha_encrypt == json_doc['password']:
                 if json_doc['type'] == "business_owner":
                     my_business_info = business_info.find_one({"username": data['username']})
-                    return jsonify({'state': 'success', 'type': json_doc['type'], 'company_id': my_business_info['company_id']})
+                    return jsonify(
+                        {'state': 'success', 'type': json_doc['type'], 'company_id': my_business_info['company_id']})
+                if json_doc['type'] == "worker":
+                    cid = json_doc['company_id']
+                    company_name = business_info.find_one({"company_id": cid})['business_name']
+                    return jsonify(
+                        {'state': 'success', 'type': json_doc['type'],
+                         'company name': company_name, 'company id': json_doc['company_id']})
                 return jsonify({'state': 'success', 'type': json_doc['type']})
             else:
                 return jsonify({'state': 'failed'})

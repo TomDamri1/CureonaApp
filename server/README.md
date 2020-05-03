@@ -27,6 +27,27 @@ server root url : https://cureona.herokuapp.com/
  ```
 
 
+### Worker Login :
+#### url : https://cureona.herokuapp.com/Login
+#### json example :
+```
+{
+  "username": "vcbfrd", 
+  "password" :"123"
+ }
+ ```
+ #### Returned json:
+ 
+ ```
+ {
+  "company id": "123",
+  "company name": "IKEA",
+  "state": "success",
+  "type": "worker"
+}
+```
+
+
 
 ### Buisness registration  :
 #### url : https://cureona.herokuapp.com/RegisterBusiness
