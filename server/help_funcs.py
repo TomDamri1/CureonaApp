@@ -52,8 +52,8 @@ def get_hours_and_minutes_as_int(times):
 
 
 def create_hours_string(hour_start_time, minutes):
-    if minutes<10:
-        minutesStr=  '0'+str(minutes)
+    if minutes < 10:
+        minutesStr = '0' + str(minutes)
     else:
         minutesStr = str(minutes) if minutes != 0 else '00'
 
@@ -113,4 +113,3 @@ def create_list_of_affected_costumers(current_queue, new_queue={}):
                 tmp_dict[appointment] = current_queue[appointment]
 
     return tmp_dict
-
