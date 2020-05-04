@@ -174,6 +174,7 @@ deleteAppointment_parser.add_argument('date', required=True, help=" DD MM YYYY")
 deleteAppointment_parser.add_argument('time', required=True, help="HH:MM-HH:MM")
 
 
+#this class will delete an appointment
 class deleteAppointment(Resource):
 
     def post(self,):
