@@ -192,7 +192,7 @@ class deleteAppointment(Resource):
             if code in appointment:
                 located_appointment = appointment
 
-        print(located_appointment)
+        return jsonify({"state" : "success"})
 
 
 insert_parser = reqparse.RequestParser()
