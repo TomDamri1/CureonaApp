@@ -5,7 +5,6 @@ from server.apps_calendar import *
 import random
 import string
 import datetime
-import calendar
 
 user_queue = new_db["user_queue"]
 business_info = new_db["business_info"]
@@ -109,9 +108,8 @@ class GetQueue(Resource):
         return jsonify({'state': 'success', 'key': queue_key})
 
 
-
 AvailableQueues_parser = reqparse.RequestParser()
-AvailableQueues_parser.add_argument('company_id', required=True, help="company_id cannot be blank!")
+AvailableQueues_parser.add_argument('company_id', required=True, help="company_id name cannot be blank!")
 
 
 class AvailableQueues(Resource):
@@ -163,28 +161,44 @@ class AvailableQueues(Resource):
         return jsonify({'state': 'success', 'queue': open_and_available_queues})
 
 
+AvailableQueues_parser = reqparse.RequestParser()
+AvailableQueues_parser.add_argument('company_id', required=True, help="company_id name cannot be blank!")
+
+
+
+deleteAppointment_parser = reqparse.RequestParser()
+deleteAppointment_parser.add_argument('business_name', required=True, help="business_name name cannot be blank!")
+deleteAppointment_parser.add_argument('username', required=True, help="username cannot be blank!")
+deleteAppointment_parser.add_argument('code', required=True, help="CODE cannot be blank!")
+deleteAppointment_parser.add_argument('date', required=True, help=" DD MM YYYY")
+deleteAppointment_parser.add_argument('time', required=True, help="HH:MM-HH:MM")
+
+
+#this class will delete an appointment
+class deleteAppointment(Resource):
+
+    def post(self,):
+        data = deleteAppointment_parser.parse_args()
+        print(data)
+        date = data['date']  # in a format of DD MM YYYY
+        username = data['username']
+        time_of_appointment = data['time']
+        code = data['code']
+        business_name=data['business_name']
+
+        json_doc = user_queue.find_one({"username": data['username']})
+
+        located_appointment = None
+        for appointment in json_doc['orders']:
+            if code in appointment:
+                located_appointment = appointment
+
+        return jsonify({"state" : "success"})
+
+
 insert_parser = reqparse.RequestParser()
-insert_parser.add_argument('company_id', required=True, help="company_id  cannot be blank!")
-insert_parser.add_argument('key', required=True, help="key cannot be blank!")
+insert_parser.add_argument('company_id', required=True, help="company_id name cannot be blank!")
 
 
-class LetsUserIntoBusiness(Resource):
-    def post(self):
-        data = insert_parser.parse_args()
-        business = business_info.find_one({"company_id": data['company_id']})
-        current_date = datetime.date.today()
-        print(current_date)
-        current_day = datetime.datetime.today().weekday()
-        print(current_day)
-        name_current_day = calendar.day_name[current_day].lower()
-        print(name_current_day)
-        now = datetime.datetime.now()
-        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")[11:13]
-        dt_string = dt_string + ":00-" + str((int(dt_string)+1) % 24) + ":00"
-        print(dt_string)
-
-        code_arr = business["queue"][name_current_day][dt_string]
-
-        if data["key"] in code_arr:
-            return jsonify({'state': 'success'})
-        return jsonify({'state': 'failed'})
+class Insert(Resource):
+    pass

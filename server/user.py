@@ -109,7 +109,7 @@ class RegisterBusiness(Resource):
 
             if not data['open_hours']:
                 business_info_dict['open_hours'] = all_closed
-                business_info_dict['queue'] = my_calendar
+                business_info_dict['queue'] = all_closed
 
             # if business_info_dict is None: ###########################################DELETEE!!!!!
             #     business_info_dict['open_hours'] = all_closed
