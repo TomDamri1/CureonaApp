@@ -29,7 +29,9 @@ class Login(Resource):
                 if json_doc['type'] == "business_owner":
                     my_business_info = business_info.find_one({"username": data['username']})
                     return jsonify(
-                        {'state': 'success', 'type': json_doc['type'], 'company_id': my_business_info['company_id']})
+                        {'state': 'success', 'type': json_doc['type'], 'company_id': my_business_info['company_id'],
+                         'business_name': my_business_info['business_name']})
+
                 if json_doc['type'] == "worker":
                     cid = json_doc['company_id']
                     company_name = business_info.find_one({"company_id": cid})['business_name']
