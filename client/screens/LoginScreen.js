@@ -5,7 +5,6 @@ import {
   Text,
   TextInput,
   StyleSheet,
-  Picker,
   Button,
   TouchableOpacity,
   Alert,
@@ -65,7 +64,7 @@ const LoginScreen = props => {
             routeName: "BusinessOwnerScreen",
             params: {
               username: username,
-              businessName: "fake Business!!!",
+              businessName: resData.business_name,
               USERTYPE: text.type.businessOwner,
               company_id: resData.company_id
             }
