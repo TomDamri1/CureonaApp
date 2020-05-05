@@ -6,6 +6,7 @@ import random
 import string
 import datetime
 import calendar
+import pytz
 
 user_queue = new_db["user_queue"]
 business_info = new_db["business_info"]
@@ -171,6 +172,9 @@ insert_parser.add_argument('key', required=True, help="key cannot be blank!")
 class LetsUserIntoBusiness(Resource):
     def post(self):
         data = insert_parser.parse_args()
+
+        tz_NY = pytz.timezone('Israel')
+
         business = business_info.find_one({"company_id": data['company_id']})
         current_date = datetime.date.today()
         print(current_date)
@@ -178,7 +182,7 @@ class LetsUserIntoBusiness(Resource):
         print(current_day)
         name_current_day = calendar.day_name[current_day].lower()
         print(name_current_day)
-        now = datetime.datetime.now()
+        now = datetime.datetime.now(tz_NY)
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")[11:13]
         dt_string = dt_string + ":00-" + str((int(dt_string)+1) % 24) + ":00"
         print(dt_string)
