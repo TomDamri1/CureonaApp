@@ -110,7 +110,6 @@ class GetQueue(Resource):
         return jsonify({'state': 'success', 'key': queue_key})
 
 
-
 AvailableQueues_parser = reqparse.RequestParser()
 AvailableQueues_parser.add_argument('company_id', required=True, help="company_id cannot be blank!")
 
@@ -183,8 +182,19 @@ class LetsUserIntoBusiness(Resource):
         name_current_day = calendar.day_name[current_day].lower()
         print(name_current_day)
         now = datetime.datetime.now(tz_NY)
-        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")[11:13]
-        dt_string = dt_string + ":00-" + str((int(dt_string)+1) % 24) + ":00"
+
+        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")[11:16]
+        print(dt_string)
+        print(dt_string[3:])
+        if int(dt_string[3:]) >= 45:
+            dt_string = dt_string[:3] + "45"
+        elif 0 <= int(dt_string[3:]) <= 15:
+            dt_string = dt_string[:3] + "00"
+        elif 15 <= int(dt_string[3:]) <= 30:
+            dt_string = dt_string[:3] + "15"
+        elif 30 <= int(dt_string[3:]) <= 45:
+            dt_string = dt_string[:3] + "30"
+
         print(dt_string)
 
         code_arr = business["queue"][name_current_day][dt_string]
