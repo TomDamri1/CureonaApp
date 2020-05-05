@@ -171,12 +171,19 @@ insert_parser.add_argument('key', required=True, help="key cannot be blank!")
 class LetsUserIntoBusiness(Resource):
     def post(self):
         data = insert_parser.parse_args()
+        business = business_info.find_one({"company_id": data['company_id']})
         current_date = datetime.date.today()
         print(current_date)
         current_day = datetime.datetime.today().weekday()
         print(current_day)
         name_current_day = calendar.day_name[current_day].lower()
         print(name_current_day)
-        # current_dat = find_day(current_date)
+        now = datetime.datetime.now()
+        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")[11:13] + ":00"
+        print(dt_string)
 
-        return jsonify({'state': 'success'})
+        code_arr = business["queue"]["name_current_day"]["dt_string"]
+
+        if data["key"] in code_arr:
+            return jsonify({'state': 'success'})
+        return jsonify({'state': 'failed'})
