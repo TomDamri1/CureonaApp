@@ -179,10 +179,11 @@ class LetsUserIntoBusiness(Resource):
         name_current_day = calendar.day_name[current_day].lower()
         print(name_current_day)
         now = datetime.datetime.now()
-        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")[11:13] + ":00"
+        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")[11:13]
+        dt_string = dt_string + ":00-" + str((int(dt_string)+1) % 24) + ":00"
         print(dt_string)
 
-        code_arr = business["queue"]["name_current_day"]["dt_string"]
+        code_arr = business["queue"][name_current_day][dt_string]
 
         if data["key"] in code_arr:
             return jsonify({'state': 'success'})
