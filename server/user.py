@@ -29,7 +29,9 @@ class Login(Resource):
                 if json_doc['type'] == "business_owner":
                     my_business_info = business_info.find_one({"username": data['username']})
                     return jsonify(
-                        {'state': 'success', 'type': json_doc['type'], 'company_id': my_business_info['company_id']})
+                        {'state': 'success', 'type': json_doc['type'], 'company_id': my_business_info['company_id'],
+                         'business_name': my_business_info['business_name']})
+
                 if json_doc['type'] == "worker":
                     cid = json_doc['company_id']
                     company_name = business_info.find_one({"company_id": cid})['business_name']
@@ -75,7 +77,7 @@ RegisterBuisness_parser.add_argument('password', required=True, help="password c
 RegisterBuisness_parser.add_argument('business_name', required=True, help="buisness name cannot be blank!")
 RegisterBuisness_parser.add_argument('address', required=True, help="address cannot be blank!")
 RegisterBuisness_parser.add_argument('company_id', required=True, help="Company id cannot be blank!")
-RegisterBuisness_parser.add_argument('open_hours', type=dict, required=True, help="open hours cannot be blank!")
+RegisterBuisness_parser.add_argument('open_hours', type=dict, required=False, help="open hours cannot be blank!")
 RegisterBuisness_parser.add_argument('search_key', type=dict, required=True, help="search key cannot be blank!")
 RegisterBuisness_parser.add_argument('max_capacity', required=False, help="max capacity in integer")
 RegisterBuisness_parser.add_argument('open_hours', type=dict, required=False, help="search_key cannot be blank!")
@@ -105,9 +107,13 @@ class RegisterBusiness(Resource):
             business_info_dict['open'] = True
             business_info_dict['search_key'] = data['search_key']['keys']
 
-            if business_info_dict is None:
+            if not data['open_hours']:
                 business_info_dict['open_hours'] = all_closed
                 business_info_dict['queue'] = my_calendar
+
+            # if business_info_dict is None: ###########################################DELETEE!!!!!
+            #     business_info_dict['open_hours'] = all_closed
+            #     business_info_dict['queue'] = my_calendar
 
             else:
                 print(business_info_dict)
