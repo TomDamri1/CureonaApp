@@ -5,6 +5,7 @@ from server.apps_calendar import *
 import random
 import string
 import datetime
+import calendar
 
 user_queue = new_db["user_queue"]
 business_info = new_db["business_info"]
@@ -108,6 +109,7 @@ class GetQueue(Resource):
         return jsonify({'state': 'success', 'key': queue_key})
 
 
+
 AvailableQueues_parser = reqparse.RequestParser()
 AvailableQueues_parser.add_argument('company_id', required=True, help="company_id cannot be blank!")
 
@@ -161,13 +163,20 @@ class AvailableQueues(Resource):
         return jsonify({'state': 'success', 'queue': open_and_available_queues})
 
 
-AvailableQueues_parser = reqparse.RequestParser()
-AvailableQueues_parser.add_argument('company_id', required=True, help="company_id  cannot be blank!")
-
 insert_parser = reqparse.RequestParser()
 insert_parser.add_argument('company_id', required=True, help="company_id  cannot be blank!")
 insert_parser.add_argument('key', required=True, help="key cannot be blank!")
 
 
 class LetsUserIntoBusiness(Resource):
-    data = insert_parser.parse_args()
+    def post(self):
+        data = insert_parser.parse_args()
+        current_date = datetime.date.today()
+        print(current_date)
+        current_day = datetime.datetime.today().weekday()
+        print(current_day)
+        name_current_day = calendar.day_name[current_day].lower()
+        print(name_current_day)
+        # current_dat = find_day(current_date)
+
+        return jsonify({'state': 'success'})
