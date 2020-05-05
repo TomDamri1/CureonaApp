@@ -109,7 +109,7 @@ class GetQueue(Resource):
 
 
 AvailableQueues_parser = reqparse.RequestParser()
-AvailableQueues_parser.add_argument('company_id', required=True, help="company_id name cannot be blank!")
+AvailableQueues_parser.add_argument('company_id', required=True, help="company_id cannot be blank!")
 
 
 class AvailableQueues(Resource):
@@ -162,11 +162,12 @@ class AvailableQueues(Resource):
 
 
 AvailableQueues_parser = reqparse.RequestParser()
-AvailableQueues_parser.add_argument('company_id', required=True, help="company_id name cannot be blank!")
+AvailableQueues_parser.add_argument('company_id', required=True, help="company_id  cannot be blank!")
 
 insert_parser = reqparse.RequestParser()
-insert_parser.add_argument('company_id', required=True, help="company_id name cannot be blank!")
+insert_parser.add_argument('company_id', required=True, help="company_id  cannot be blank!")
+insert_parser.add_argument('key', required=True, help="key cannot be blank!")
 
 
-class Insert(Resource):
-    pass
+class LetsUserIntoBusiness(Resource):
+    data = insert_parser.parse_args()
