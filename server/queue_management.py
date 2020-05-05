@@ -188,13 +188,16 @@ class deleteAppointment(Resource):
         code = data['code']
         business_name=data['business_name']
 
-        json_doc = user_queue.find_one({"username": data['username']})
-
+        user_queue_record = user_queue.find_one({"username": data['username']})
+        business_name_record= business_info
         located_appointment = None
-        for appointment in json_doc['orders']:
+        for appointment in user_queue_record['orders']:
             if code in appointment:
-                print(appointment)
-                new_db.business_info.deleteOne({"order" :  appointment})
+                fail= user_queue.update({'username': data['username']}, {'$pull':{"order" :  appointment}} )
+                deleted_from_array = user_queue.update({'username': data['username']}, {'$pull':{"orders" :  appointment}} )
+                print("deletion status:" + 'success' if deleted_from_array['nModified'] else 'fail')
+
+
 
         return jsonify({"state" : "success"})
 
