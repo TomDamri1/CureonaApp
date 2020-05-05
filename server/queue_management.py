@@ -188,14 +188,14 @@ class deleteAppointment(Resource):
         code = data['code']
         business_name=data['business_name']
 
-        user_queue_record = user_queue.find_one({"username": data['username']})
-        business_name_record= business_info
-        located_appointment = None
-        for appointment in user_queue_record['orders']:
-            if code in appointment:
-                fail= user_queue.update({'username': data['username']}, {'$pull':{"order" :  appointment}} )
-                deleted_from_array = user_queue.update({'username': data['username']}, {'$pull':{"orders" :  appointment}} )
-                print("deletion status:" + 'success' if deleted_from_array['nModified'] else 'fail')
+        user_queue_record = user_queue.find_one({"username": username})
+        business_name_record= business_info.find_one({"business_name": business_name})
+
+        if user_queue_record and business_name_record: #if both of the records were found
+            for appointment in user_queue_record['orders']:
+                if code in appointment:
+                    deleted_from_array = user_queue.update({'username': data['username']}, {'$pull':{"orders" :  appointment}} )
+                    print("deletion status:" + 'success' if deleted_from_array['nModified'] else 'fail')
 
 
 
