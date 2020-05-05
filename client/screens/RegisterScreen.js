@@ -129,7 +129,7 @@ const RegisterScreen = props => {
             address: address,
             company_id: cid,
             password: userPassword,
-            search_key: [businessName],
+            search_key: {keys : [businessName]},
 
           })
         ,
@@ -137,8 +137,10 @@ const RegisterScreen = props => {
 
       const resData = await response.json();
       console.log(resData);
+      console.log("got here");
       props.navigation.pop();
       if (resData.state === Response.success) {
+        
         if (!isBusinessOwner) {
           props.navigation.popToTop();
           props.navigation.navigate({
@@ -164,6 +166,9 @@ const RegisterScreen = props => {
       }
       else if (resData.state === Response.companyIdWasNotFound) {
         Alert.alert(Response.companyIdWasNotFound);
+      }
+      else {
+        Alert.alert(text.alert.checkConditions)
       }
 
     }

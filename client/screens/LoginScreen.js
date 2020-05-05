@@ -54,7 +54,7 @@ const LoginScreen = props => {
             routeName: "CustomerScreen",
             params: {
               username: username,
-              USERTYPE: text.type.customer
+              USERTYPE: text.type.customer,
             }
           })
           break;
@@ -86,7 +86,9 @@ const LoginScreen = props => {
             routeName: "WorkerScreen",
             params: {
               username: username,
-              USERTYPE: text.type.worker
+              USERTYPE: text.type.worker,
+              company_id : resData.company_id,
+              company_name : resData.company_name,
             }
           })
           break;

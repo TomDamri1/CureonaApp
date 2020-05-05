@@ -10,7 +10,8 @@ export default {
         registerBusiness: MainURL + 'RegisterBusiness',
         getBusiness : MainURL + 'getBusinesses',
         getMyQueue : MainURL + 'GetMyQueue',
-        registerWorker: MainURL + 'RegistrationWorker'
+        registerWorker: MainURL + 'RegistrationWorker',
+        letsUserIntoBusiness : MainURL + 'LetsUserIntoBusiness',
     }
 
 }
