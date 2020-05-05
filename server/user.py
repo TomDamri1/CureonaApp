@@ -37,7 +37,7 @@ class Login(Resource):
                     company_name = business_info.find_one({"company_id": cid})['business_name']
                     return jsonify(
                         {'state': 'success', 'type': json_doc['type'],
-                         'company name': company_name, 'company id': json_doc['company_id']})
+                         'company_name': company_name, 'company_id': json_doc['company_id']})
                 return jsonify({'state': 'success', 'type': json_doc['type']})
             else:
                 return jsonify({'state': 'failed'})
