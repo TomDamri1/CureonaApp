@@ -111,7 +111,7 @@ class GetQueue(Resource):
 
 
 AvailableQueues_parser = reqparse.RequestParser()
-AvailableQueues_parser.add_argument('company_id', required=True, help="company_id cannot be blank!")
+AvailableQueues_parser.add_argument('company_id', required=True, help="company_id name cannot be blank!")
 
 
 class AvailableQueues(Resource):
@@ -163,11 +163,49 @@ class AvailableQueues(Resource):
         return jsonify({'state': 'success', 'queue': open_and_available_queues})
 
 
+AvailableQueues_parser = reqparse.RequestParser()
+AvailableQueues_parser.add_argument('company_id', required=True, help="company_id name cannot be blank!")
+
+
+
+deleteAppointment_parser = reqparse.RequestParser()
+deleteAppointment_parser.add_argument('business_name', required=True, help="business_name name cannot be blank!")
+deleteAppointment_parser.add_argument('username', required=True, help="username cannot be blank!")
+deleteAppointment_parser.add_argument('code', required=True, help="CODE cannot be blank!")
+deleteAppointment_parser.add_argument('date', required=True, help=" DD MM YYYY")
+deleteAppointment_parser.add_argument('time', required=True, help="HH:MM-HH:MM")
+
+
+#this class will delete an appointment
+class deleteAppointment(Resource):
+
+    def post(self,):
+        data = deleteAppointment_parser.parse_args()
+        print(data)
+        date = data['date']  # in a format of DD MM YYYY
+        username = data['username']
+        time_of_appointment = data['time']
+        code = data['code']
+        business_name=data['business_name']
+
+        json_doc = user_queue.find_one({"username": data['username']})
+
+        located_appointment = None
+        for appointment in json_doc['orders']:
+            if code in appointment:
+                print(appointment)
+                new_db.business_info.deleteOne({"order" :  appointment})
+
+        return jsonify({"state" : "success"})
+
+
 insert_parser = reqparse.RequestParser()
-insert_parser.add_argument('company_id', required=True, help="company_id  cannot be blank!")
-insert_parser.add_argument('key', required=True, help="key cannot be blank!")
+insert_parser.add_argument('company_id', required=True, help="company_id name cannot be blank!")
 
 
+
+class Insert(Resource):
+    pass
 class LetsUserIntoBusiness(Resource):
     def post(self):
         data = insert_parser.parse_args()
