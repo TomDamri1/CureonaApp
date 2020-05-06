@@ -56,7 +56,8 @@ export default {
 
     or_if_you_dont_have_user: "Or if you dont have a user, ",
     addWorker: "Add Worker to your business",
-    addWorkerbButton: "Add Worker"
-
+    addWorkerbButton: "Add Worker",
+    chooseDayBusinessOwner: "Choose the day you want to",
+    updateTheOpeningHoursBusinessOwner: "Update opening hours",
 }
 
