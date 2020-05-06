@@ -43,8 +43,12 @@ class TestUserUpdateSettings(unittest.TestCase):
         self.assertNotEqual(except_result, response)
 
     def test_lets_user_into_business_with_not_exist_code(self):
-        url = 'https://curona.herokuapp.com/LetsUserIntoBusiness'
-
+        url = 'https://curona.herokuapp.com/deleteAppointment'
+        myobj = {"business_name" : "notRealBusiness","username": "notRealUser", "code":"NotRealCode",
+                "date":"05-05-2020","time" : "22:00-23:00"}
+        response = requests.post(url, data=myobj)
+        except_result = {"state": "couldn't locate the appointment!"}
+        self.assertNotEqual(except_result, response)
 
 
 

@@ -197,24 +197,28 @@ class deleteAppointment(Resource):
                 if code in appointment:
                     deleted_from_array = user_queue.update({'username': username},
                                                            {'$pull': {"orders": appointment}})
-                    ret_val["deleted from user queue"]= 'success' if deleted_from_array['nModified'] else 'fail'
+                    ret_val["deleted_from_user_queue"]= 'success' if deleted_from_array['nModified'] else 'fail'
 
             for time_range in business_name_record['queue'][day]:
                 if time_of_appointment == time_range and code in business_name_record['queue'][day][time_range]:
                     deleted_from_array = business_info.update({'business_name': business_name},
                                                               {'$pull': {"queue." + day + "." + time_range: code}})
-                    ret_val["deleted from business queue"]= 'success' if deleted_from_array['nModified'] else 'fail'
+                    ret_val["deleted_from_business_queue"]= 'success' if deleted_from_array['nModified'] else 'fail'
 
         if not ret_val:
-            ret_val['state'] = "couldn't locate the appointment!"
+            ret_val['state'] = "failed"
+            ret_val['msg'] = "couldn't locate the appointment!"
+
         else:
             if "deleted from business queue" in ret_val and "deleted from user queue" in ret_val:
                 if ret_val["deleted from business queue"] == "success" and ret_val["deleted from user queue"] == "success":
                     ret_val[
-                        'state'] = 'the appointment to ' + business_name + " at " + day + " : " + time_of_appointment +\
+                        'msg'] = 'the appointment to ' + business_name + " at " + day + " : " + time_of_appointment +\
                                    " successfully canceled "
+                    ret_val['state'] = "success"
             else:
-                ret_val['state'] = "operation not fully succeeded "
+                ret_val['msd'] = "operation not fully succeeded "
+                ret_val['state'] = "failed"
 
             ### for the next sprint use this code:
             # for interval in time_range:
