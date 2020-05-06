@@ -42,6 +42,10 @@ class TestUserUpdateSettings(unittest.TestCase):
         except_result = {'state': 'failed'}
         self.assertNotEqual(except_result, response)
 
+    def test_lets_user_into_business_with_not_exist_code(self):
+        url = 'https://curona.herokuapp.com/LetsUserIntoBusiness'
+
+
 
 
 
