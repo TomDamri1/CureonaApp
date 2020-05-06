@@ -5,13 +5,13 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import Title from '../components/Title';
 import text from '../constants/text';
 import { FlatList } from 'react-native-gesture-handler';
-import QueueItem from '../components/QueueItem';
+import QueueItem from '../components/QueueItem/QueueItem';
 
 
 const CustomerQueuesScreen = props => {
     const username = props.navigation.getParam('username');
     const queuesList = props.navigation.getParam('queuesList');
-    console.log(queuesList);
+    console.log("username : ",username);
 
     
     return (
@@ -22,14 +22,15 @@ const CustomerQueuesScreen = props => {
                     style={styles.gap}
                     renderItem={({ item }) =>
                         <QueueItem
+                            username = {username}
                             title={item.businessName}
                             address={item.address}
                             date={item.date}
                             hour={item.hour}
                             content = {item}
                             navigation={props.navigation}
-                            username={props.username}
                             id = {item.id}
+                            code = {item.code}
                         />}
                     keyExtractor={item => item.id}
             />

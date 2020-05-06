@@ -11,6 +11,8 @@ export default {
     ownerName :"Owner Name",
     businessAdress :"Business Address",
     ownerId :"Owner ID",
+    theUserCanGetIn : "The user can get in",
+    theUserCannotGetIn : "The user can't get in",
     placeholder: {
         username: "The username consists of A-Z, a-z letters",
         password: "Password must be between 6-8 characters",
@@ -20,6 +22,7 @@ export default {
         ownerName:"Enter your first name",
         businessAddress:"Enter business adress",
         ownerId:"Enter your ID",
+        code : "Insert user code",
     },
     alert: {
         pleaseEnterValidUsernameAndPassword: "please enter valid username and password.",
@@ -28,6 +31,12 @@ export default {
         cancelAppointment : "Cancel Appointment",
         wouldYouLikeToCancelQueueToBusinessnameInDateAndHour : 
             (businessName, date , hour) => `${businessName} \nin ${date}, ${hour}\nwould you like to cancel?`,
+        success : "Success",
+        theUserCanGetIn : "The user can get in!",
+        failed : "Failed",
+        theUserCannotGetIn : "The user can't get in!\ntry again or ask him to leave.",
+        yes : "Yes",
+        no : "No",
     },
     type: {
         customer: "customer",

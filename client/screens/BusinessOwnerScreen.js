@@ -4,6 +4,15 @@ import Title from '../components/Title';
 import text from '../constants/text';
 
 const BusinessOwnerScreen = props => {
+    const handleAddWorkerUserToMyBusiness = () => {
+        props.navigation.setParams({company_id : company_id});
+        props.navigation.navigate({
+            routeName: "AddWorkerScreen",
+            params : {
+                company_id : company_id,
+            }
+        })
+    }
     const company_id = props.navigation.getParam('company_id');
     return(
         <View>
