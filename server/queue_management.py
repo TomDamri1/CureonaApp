@@ -191,25 +191,38 @@ class deleteAppointment(Resource):
         user_queue_record = user_queue.find_one({"username": username})
         business_name_record = business_info.find_one({"business_name": business_name})
 
+        ret_val = {}
         if user_queue_record and business_name_record:  # if both of the records were found
             for appointment in user_queue_record['orders']:
                 if code in appointment:
                     deleted_from_array = user_queue.update({'username': username},
                                                            {'$pull': {"orders": appointment}})
-                    print("deletion status:" + 'success' if deleted_from_array['nModified'] else 'fail')
+                    ret_val["deleted from user queue"]= 'success' if deleted_from_array['nModified'] else 'fail'
 
             for time_range in business_name_record['queue'][day]:
                 if time_of_appointment == time_range and code in business_name_record['queue'][day][time_range]:
                     deleted_from_array = business_info.update({'business_name': business_name},
                                                               {'$pull': {"queue." + day + "." + time_range: code}})
+                    ret_val["deleted from business queue"]= 'success' if deleted_from_array['nModified'] else 'fail'
 
-                    ### for the next sprint use this code:
-                    # for interval in time_range:
-                    #   deleted_from_array = business_info.update({'business_name': business_name},
-                    #                           {'$pull': {"queue." + day + "." + time_range: code}})
-                    #    calculate how many iterations need to do and then delete
+        if not ret_val:
+            ret_val['state'] = "couldn't locate the appointment!"
+        else:
+            if "deleted from business queue" in ret_val and "deleted from user queue" in ret_val:
+                if ret_val["deleted from business queue"] == "success" and ret_val["deleted from user queue"] == "success":
+                    ret_val[
+                        'state'] = 'the appointment to ' + business_name + " at " + day + " : " + time_of_appointment +\
+                                   " successfully canceled "
+            else:
+                ret_val['state'] = "operation not fully succeeded "
 
-        return jsonify({"state": "success"})
+            ### for the next sprint use this code:
+            # for interval in time_range:
+            #   deleted_from_array = business_info.update({'business_name': business_name},
+            #                           {'$pull': {"queue." + day + "." + time_range: code}})
+            #    calculate how many iterations need to do and then
+
+        return jsonify(ret_val)
 
 
 insert_parser = reqparse.RequestParser()
