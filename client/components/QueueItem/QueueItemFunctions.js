@@ -63,14 +63,14 @@ const deleteAndReloadPage = async (props, navigation) => {
 
 const createYesButton = (props, navigation) => {
     return {
-        text: "Yes",
+        text: text.alert.yes,
         onPress: () => deleteAndReloadPage(props, navigation),
     }
 }
 
 const createNoButton = () => {
     return {
-        text: "No",
+        text: text.alert.no,
         onPress: () => { },
         style: "cancel"
     }
