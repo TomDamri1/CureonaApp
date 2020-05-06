@@ -1,6 +1,7 @@
 import json
 import ast
 import shutil
+import datetime
 
 from server.mongo_connection import *
 
@@ -113,3 +114,11 @@ def create_list_of_affected_costumers(current_queue, new_queue={}):
                 tmp_dict[appointment] = current_queue[appointment]
 
     return tmp_dict
+
+
+# ---------------------------------------------------------------------------- DELETE APPOINTMENT FUNCS
+
+def convert_date_string_to_day(date):
+    day_name = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    date = date.replace("-"," ")
+    return day_name[datetime.datetime.strptime(date, '%d %m %Y').weekday()].lower()

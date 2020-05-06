@@ -1,5 +1,7 @@
 from flask import jsonify
 from flask_restful import reqparse, Resource
+
+from server.help_funcs import *
 from server.mongo_connection import *
 from server.apps_calendar import *
 import random
@@ -166,8 +168,6 @@ class AvailableQueues(Resource):
 AvailableQueues_parser = reqparse.RequestParser()
 AvailableQueues_parser.add_argument('company_id', required=True, help="company_id name cannot be blank!")
 
-
-
 deleteAppointment_parser = reqparse.RequestParser()
 deleteAppointment_parser.add_argument('business_name', required=True, help="business_name name cannot be blank!")
 deleteAppointment_parser.add_argument('username', required=True, help="username cannot be blank!")
@@ -176,39 +176,48 @@ deleteAppointment_parser.add_argument('date', required=True, help=" DD MM YYYY")
 deleteAppointment_parser.add_argument('time', required=True, help="HH:MM-HH:MM")
 
 
-#this class will delete an appointment
+# this class will delete an appointment
 class deleteAppointment(Resource):
 
-    def post(self,):
+    def post(self, ):
         data = deleteAppointment_parser.parse_args()
         print(data)
-        date = data['date']  # in a format of DD MM YYYY
+        date = data['date']  # in a format of DD-MM-YYYY
+        day = convert_date_string_to_day(date)
         username = data['username']
         time_of_appointment = data['time']
         code = data['code']
-        business_name=data['business_name']
-
+        business_name = data['business_name']
         user_queue_record = user_queue.find_one({"username": username})
-        business_name_record= business_info.find_one({"business_name": business_name})
+        business_name_record = business_info.find_one({"business_name": business_name})
 
-        if user_queue_record and business_name_record: #if both of the records were found
+        if user_queue_record and business_name_record:  # if both of the records were found
             for appointment in user_queue_record['orders']:
                 if code in appointment:
-                    deleted_from_array = user_queue.update({'username': data['username']}, {'$pull':{"orders" :  appointment}} )
+                    deleted_from_array = user_queue.update({'username': username},
+                                                           {'$pull': {"orders": appointment}})
                     print("deletion status:" + 'success' if deleted_from_array['nModified'] else 'fail')
 
+            for time_range in business_name_record['queue'][day]:
+                if time_of_appointment == time_range and code in business_name_record['queue'][day][time_range]:
+                    print(business_name_record['queue'][day][time_range])
+                    print("path: " + "queue." + day + "." + time_range)
+                    deleted_from_array = business_info.update({'business_name': business_name},
+                                                           {'$pull': {"queue." + day + "." + time_range: code}})
 
+                    ### for the next sprint use this code:
 
-        return jsonify({"state" : "success"})
+        return jsonify({"state": "success"})
 
 
 insert_parser = reqparse.RequestParser()
 insert_parser.add_argument('company_id', required=True, help="company_id name cannot be blank!")
 
 
-
 class Insert(Resource):
     pass
+
+
 class LetsUserIntoBusiness(Resource):
     def post(self):
         data = insert_parser.parse_args()
