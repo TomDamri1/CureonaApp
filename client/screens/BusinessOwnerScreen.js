@@ -19,6 +19,15 @@ const BusinessOwnerScreen = props => {
                     }
                 })
             }} />
+            <Button title="Update business opening hours" onPress={() => {
+                props.navigation.setParams({company_id : company_id});
+                props.navigation.navigate({
+                    routeName: "BOchangesScreen",
+                    params : {
+                        company_id : company_id
+                    }
+                })
+            }} />
 
         </View>
 
