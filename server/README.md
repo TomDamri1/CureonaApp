@@ -197,16 +197,18 @@ the JSON that will be returned could include few fields:
 1) if the appointments is scheduled in both the user queue and the business queue, then the json is:
 ```
 {
-    "deleted from business queue": "success",
-    "deleted from user queue": "success",
-    "state": "the appointment to shufersal at tuesday : 22:00-23:00 successfully canceled "
+    "deleted_from_business_queue": "success",
+    "deleted_from_user_queue": "success",
+    "msg": "the appointment to shufersal at tuesday : 22:00-23:00 successfully canceled "
+    "state": "success"
 }
 ```
 2) if the appointment is only in one of the queues, then the returned JSON will indicate us what went wrong:
 ```
 {
-    "deleted from business queue": "success",
-    "state": "operation not fully succeeded "
+    "deleted_from_business_queue": "success",
+    "state": "failed "
+    "msg": "operation not fully succeeded "
 }
 ```
 
