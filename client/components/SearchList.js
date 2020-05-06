@@ -11,7 +11,7 @@ import {
     TouchableWithoutFeedback,
     ListView
 } from 'react-native';
-import SearchItem from './SearchItem';
+import SearchItem from './SearchItem/SearchItem';
 //import DATA from '../data/dummydata';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import text from '../constants/text';
