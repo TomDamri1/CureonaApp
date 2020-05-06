@@ -210,8 +210,8 @@ class deleteAppointment(Resource):
             ret_val['msg'] = "couldn't locate the appointment!"
 
         else:
-            if "deleted from business queue" in ret_val and "deleted from user queue" in ret_val:
-                if ret_val["deleted from business queue"] == "success" and ret_val["deleted from user queue"] == "success":
+            if "deleted_from_business_queue" in ret_val and "deleted_from_user_queue" in ret_val:
+                if ret_val["deleted_from_business_queue"] == "success" and ret_val["deleted_from_user_queue"] == "success":
                     ret_val[
                         'msg'] = 'the appointment to ' + business_name + " at " + day + " : " + time_of_appointment +\
                                    " successfully canceled "
