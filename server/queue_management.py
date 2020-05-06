@@ -217,7 +217,7 @@ class deleteAppointment(Resource):
                                    " successfully canceled "
                     ret_val['state'] = "success"
             else:
-                ret_val['msd'] = "operation not fully succeeded "
+                ret_val['msg'] = "operation not fully succeeded "
                 ret_val['state'] = "failed"
 
             ### for the next sprint use this code:
