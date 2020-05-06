@@ -18,6 +18,7 @@ import AppointmentScreen from '../screens/AppointmentScreen';
 import AdminChangesScreen from '../screens/AdminChangesScreen';
 import WorkerScreen from '../screens/WorkerScreen';
 import AddWorkerScreen from '../screens/AddWorkerScreen';
+import BOchangesScreen from '../screens/BOchangesScreen';
 
 const LoginNavigator = createStackNavigator({
     Login: LoginScreen,
@@ -48,6 +49,13 @@ const LoginNavigator = createStackNavigator({
     },
     AddWorkerScreen: AddWorkerScreen,
     CustomerQueuesScreen: CustomerQueuesScreen,
+    BOchangesScreen: BOchangesScreen,
+    Loading: {
+        screen: LoadingScreen,
+        navigationOptions: {
+            headerShown: false
+        }
+    },
 })
 
 
