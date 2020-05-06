@@ -1,6 +1,5 @@
 # Cureona - server side
 
-
 server root url : https://cureona.herokuapp.com/
 
 ## simple stories:
@@ -117,7 +116,7 @@ lets assume that some business had an opening  hour for tuesday like so : ["08:0
 
 ### getting  list of  businesses  :
 
-#### url : https://cureona.herokuapp.com/getBusinesses
+#### url : https://curona.herokuapp.com/getBusinesses
 
 #### there are to options to get the list of businesses : 
 > 1) sending a post request with no parameters - that will generate a JSON that contains all the current available businesses (see example below).
@@ -174,3 +173,40 @@ example for a JSON to be returned :
   }
 ]
 ```
+
+
+
+
+### Deleting an appointment  :
+
+#### url : https://curona.herokuapp.com/deleteAppointment
+
+the deletion will be performed for BOTH user queue and the businesses queue<br>
+<u>example for JSON:</u>
+```
+{
+	"business_name" : "shufersal",
+	"username": "c",
+	"code":"itsu",
+	"date":"05-05-2020",
+	"time" : "22:00-23:00"
+}
+```
+the JSON that will be returned could include few fields:
+
+1) if the appointments is scheduled in both the user queue and the business queue, then the json is:
+```
+{
+    "deleted from business queue": "success",
+    "deleted from user queue": "success",
+    "state": "the appointment to shufersal at tuesday : 22:00-23:00 successfully canceled "
+}
+```
+2) if the appointment is only in one of the queues, then the returned JSON will indicate us what went wrong:
+```
+{
+    "deleted from business queue": "success",
+    "state": "operation not fully succeeded "
+}
+```
+
