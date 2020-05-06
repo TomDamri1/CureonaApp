@@ -3,19 +3,13 @@ import text from '../../constants/text';
 import Response from '../../constants/Response';
 import { Alert } from 'react-native';
 import getIntoLoadingScreen from '../../functions/navigationFunctions/getIntoLoadingScreen';
+import requestFromUrl from '../../functions/routeFunctions/requestFromUrl';
+import getIntoCustomerQueuesScreen from '../../functions/navigationFunctions/getIntoCustomerQueuesScreen';
 
 const deleteAppointment = async (requestBody) => {
-    const response = await fetch(Urls.routes.deleteAppointment, {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestBody),
-    });
 
-    const resData = await response.json();
-    return (resData);
+    const response = await requestFromUrl(Urls.routes.deleteAppointment, requestBody);
+    return (response);
 }
 
 const makeAppointmentFromProps = (props) => {
@@ -29,35 +23,25 @@ const makeAppointmentFromProps = (props) => {
 }
 
 const getIntoQueuesAgain = async (props, navigation) => {
-    const response = await getQueues(props.username);
-    const queues = await response.json();
+    const queues = await getQueues(props.username);
     const queuesList = await getQueueList(queues);
 
     console.log(queuesList);
-    navigation.setParams({ username: props.username, queuesList: queuesList });
-    navigation.navigate({
-        routeName: "CustomerQueuesScreen",
-        params: {
-            username: props.username,
-            queuesList: queuesList,
-        }
-    })
+    getIntoCustomerQueuesScreen(navigation, props.username, queuesList);
 }
 
 const deleteAndReloadPage = async (props, navigation) => {
     const thisAppointment = await makeAppointmentFromProps(props);
-    console.log(thisAppointment);
     getIntoLoadingScreen(navigation);
     const res = await deleteAppointment(thisAppointment)
-    console.log("state: ", res.state);
     navigation.pop();
     getIntoQueuesAgain(props, navigation)
 
     if (res.state === Response.success) {
-        Alert.alert(text.alert.success , res.msg)
+        Alert.alert(text.alert.success, res.msg)
     }
     else {
-        Alert.alert(text.alert.failed , res.msg)
+        Alert.alert(text.alert.failed, res.msg)
     }
 }
 
@@ -88,16 +72,9 @@ export const createQueueCancelDialog = (props, navigation) => {
 }
 
 const getQueues = async (username) => {
-    return await fetch(Urls.routes.getMyQueue, {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            username: username,
-        }),
-    });
+    const requestBody = { username: username }
+    const resData = await requestFromUrl(Urls.routes.getMyQueue, requestBody);
+    return resData;
 }
 async function getQueueList(queues) {
 
