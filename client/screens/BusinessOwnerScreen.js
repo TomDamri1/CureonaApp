@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, Button } from 'react-native';
-import Title from '../components/Title'
+import Title from '../components/Title';
+import text from '../constants/text';
 
 const BusinessOwnerScreen = props => {
     const company_id = props.navigation.getParam('company_id');
@@ -19,10 +20,10 @@ const BusinessOwnerScreen = props => {
                     }
                 })
             }} />
-            <Button title="Update business opening hours" onPress={() => {
+            <Button title={text.updateTheOpeningHoursBusinessOwner}onPress={() => {
                 props.navigation.setParams({company_id : company_id});
                 props.navigation.navigate({
-                    routeName: "BOchangesScreen",
+                    routeName: "BusinessOwnerchangesScreen",
                     params : {
                         company_id : company_id
                     }
