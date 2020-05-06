@@ -50,6 +50,12 @@ const WorkerScreen = props => {
             setCanTheUserGetIn(false);
         }
 
+        else {
+            Alert.alert(text.alert.failed, text.alert.theUserCannotGetIn)
+            setPass(Colors.fail);
+            setCanTheUserGetIn(false);
+        }
+
     }
     const handleOutPress = async () => {
 
