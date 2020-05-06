@@ -200,12 +200,14 @@ class deleteAppointment(Resource):
 
             for time_range in business_name_record['queue'][day]:
                 if time_of_appointment == time_range and code in business_name_record['queue'][day][time_range]:
-                    print(business_name_record['queue'][day][time_range])
-                    print("path: " + "queue." + day + "." + time_range)
                     deleted_from_array = business_info.update({'business_name': business_name},
-                                                           {'$pull': {"queue." + day + "." + time_range: code}})
+                                                              {'$pull': {"queue." + day + "." + time_range: code}})
 
                     ### for the next sprint use this code:
+                    # for interval in time_range:
+                    #   deleted_from_array = business_info.update({'business_name': business_name},
+                    #                           {'$pull': {"queue." + day + "." + time_range: code}})
+                    #    calculate how many iterations need to do and then delete
 
         return jsonify({"state": "success"})
 
