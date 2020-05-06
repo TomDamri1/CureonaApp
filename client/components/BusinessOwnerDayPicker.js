@@ -8,7 +8,7 @@ const NUMBER_OF_DAYS_IN_THE_WEEK = 7
 
 
 const BusinessOwnerDayPicker = props => {
-    //const [selectedDayValue, setSelectedDayValue] = props.selectedDayValueState;
+    const [selectedDayValue, setSelectedDayValue] = props.selectedDayValueState;
     
     //const now = new Date();
     //const daynum = now.getDay();
@@ -27,7 +27,10 @@ const BusinessOwnerDayPicker = props => {
 
         <View>
 
-            <Picker
+            <Picker mode = "dropdown"
+                selectedValue={selectedDayValue}
+                style={{ height: 50, width: '100%' }}
+                onValueChange={(itemValue, itemIndex) => setSelectedDayValue(itemValue)}
                 itemStyle={{ borderBottomColor: Colors.primaryColor, borderBottomWidth: 1 }}
             >
                 {
