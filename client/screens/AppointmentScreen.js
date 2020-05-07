@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View } from 'react-native';
 import Title from '../components/Title'
 import MakeAppointment from '../components/MakeAppointment'
-import DayPicker from '../components/DayPicker';
+import DayPicker from '../components/DayPicker/DayPicker';
 import Time from '../constants/Time';
 
 const AppointmentScreen = props => {

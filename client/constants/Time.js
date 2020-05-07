@@ -5,3 +5,5 @@ export default {
     minutes: ['00', '15', '30', '45']
 
 }
+
+export const NUMBER_OF_DAYS_IN_THE_WEEK = 7
