@@ -14,16 +14,18 @@ import ChooseBetweenAdminAndCustomer from './SearchItemFunctions';
 const SearchItem = props => {
     return (
         <TouchableOpacity onPress={() =>
-            ChooseBetweenAdminAndCustomer(props.pressAction,props, props.navigation)
+            ChooseBetweenAdminAndCustomer(props.pressAction, props, props.navigation)
         }>
             <View style={styles.container}>
-                <Text style={styles.title}>
-                    {props.title}
-                </Text>
                 <View style={styles.row}>
-                    <Text>
-                        {props.address}
-                    </Text>
+                    <View>
+                        <Text style={styles.title}>
+                            {props.title}
+                        </Text>
+                        <Text>
+                            {props.address}
+                        </Text>
+                    </View>
                     <View style={styles.rowNoSpace}>
                         {props.keywords.map(word => <Text key={word}>{word} </Text>)}
                     </View>

@@ -15,7 +15,16 @@ export default StyleSheet.create({
     container: {
         borderBottomWidth: 1,
         borderBottomColor: Colors.primaryColor,
-        margin: 10,
+        height:80,
         padding: 10,
-    }
+        alignContent:"center"
+    },
+    rowNoSpace : {
+        borderLeftColor : Colors.accentColor,
+        borderLeftWidth : 2,
+        width : "35%",
+        paddingLeft:10,
+        height : 50,
+        alignContent:"center",
+    },
 })
