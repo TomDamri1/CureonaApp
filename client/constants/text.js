@@ -68,6 +68,7 @@ export default {
     DoYouhaveABreak: "Do you have a break?",
     fillDowndTheHours: "fill down the opening hours after the break",
     close: "close",
+    update: "Update"
      
 }
 
