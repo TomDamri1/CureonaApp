@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Picker } from 'react-native';
+import { StyleSheet, View, Picker } from 'react-native';
 import Colors from '../constants/Colors';
 import Time from '../constants/Time';
 

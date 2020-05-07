@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import SingleHour from './SingleHour'
+import SingleHour from './SingleHour/SingleHour'
 
 const MakeAppointment = props => {
     console.log("MA : " ,props.schedule.queue[props.selectedDay.toLowerCase()] )
