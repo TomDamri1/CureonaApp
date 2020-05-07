@@ -13,6 +13,7 @@ export default {
     ownerId: "Owner ID",
     theUserCanGetIn: "The user can get in",
     theUserCannotGetIn: "The user can't get in",
+    searchBusiness : "Search Business",
     placeholder: {
         username: "The username consists of A-Z, a-z letters",
         password: "Password must be between 6-8 characters",

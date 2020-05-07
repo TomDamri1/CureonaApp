@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import { StyleSheet } from 'react-native';
 
 import LoginNavigator from './navigation/LoginNavigator';
-import SearchList from './components/SearchList';
 
 export default function App() {
   return (

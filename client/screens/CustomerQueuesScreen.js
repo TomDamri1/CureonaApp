@@ -1,7 +1,5 @@
 import React from 'react'
-import SearchList from '../components/SearchList';
-import Urls from  '../constants/Urls'
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Title from '../components/Title';
 import text from '../constants/text';
 import { FlatList } from 'react-native-gesture-handler';
