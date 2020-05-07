@@ -1,5 +1,5 @@
 import React from 'react'
-import SearchList from '../components/SearchList';
+import SearchList from '../components/SearchList/SearchList';
 import Urls from  '../constants/Urls'
 
 

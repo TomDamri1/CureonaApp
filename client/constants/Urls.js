@@ -5,7 +5,7 @@ export default {
         login: MainURL + 'Login',
         register: MainURL + 'Registration',
         makeAnAppointment: MainURL + 'GetQueue',
-        avilableQueues: MainURL + 'AvailableQueues',
+        availableQueues: MainURL + 'AvailableQueues',
         businessSettings: MainURL + 'businessSettings',
         registerBusiness: MainURL + 'RegisterBusiness',
         getBusiness : MainURL + 'getBusinesses',
