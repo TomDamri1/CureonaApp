@@ -48,7 +48,8 @@ const SearchList = props => {
                         onChangeText={text => setSearchInput(text)}
                     />
                 </View>
-            </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback >
+
             <FlatList
                 style={styles.gap}
                 data={filteredData}
@@ -67,8 +68,10 @@ const SearchList = props => {
             />
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View style={styles.gap} />
+
             </TouchableWithoutFeedback>
         </View>
+
     )
 }
 
