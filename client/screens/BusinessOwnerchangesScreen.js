@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, Platform, UnimplementedView} from 'react-native';
+import { View, Text, StyleSheet, Platform, UnimplementedView, CheckBox} from 'react-native';
 import Title from '../components/Title'
 import Time from '../constants/Time';
 import BusinessOwnerDayPicker from '../components/BusinessOwnerDayPicker';
@@ -12,10 +12,13 @@ const  BusinessOwnerchangesScreen = props => {
     const [selectedDayValue, setSelectedDayValue] = useState(Time.days[date.getDay()]);
     const [selectedHourValue, setSelectedHourValue] = useState(Time.hours[date.getHours()]);
     const [selectedMinuteValue, setSelectedMinuteValue] = useState(Time.minutes[date.getMinutes()]);
+    const [closed, setClosed] = useState(false);
+    const [selectedHour1Value, setSelectedHour1Value] = useState(Time.hours[date.getHours()]);
+    const [selectedMinute1Value, setSelectedMinute1Value] = useState(Time.minutes[date.getMinutes()]);
     //const username = props.navigation.getParam('username');
     //const schedule = props.navigation.getParam('schedule');
     //console.log( "AS : " , schedule)
-    //console.log(username);
+    console.log(closed);
     return (
         <View>
             <Title
@@ -26,13 +29,35 @@ const  BusinessOwnerchangesScreen = props => {
             <View>
                 <BusinessOwnerDayPicker selectedDayValueState={[selectedDayValue, setSelectedDayValue]} />
             </View>
-            <View>
-                 <BusinessOwnerHourPicker selectedHourValueState={[selectedHourValue, setSelectedHourValue]} />
+            <View style={{margin:'35%', flexDirection: 'row'}}>
+              <View style={{width: 50, height: 50,}}>
+                  <BusinessOwnerHourPicker selectedHourValueState={[selectedHourValue, setSelectedHourValue]} />
+              </View>
+              <View style={{width: 50, height: 100,}}>
+                <Text>:</Text>
+              </View>
+              <View style={{width: 50, height: 50,}}>
+                  <BusinessOwnerMinutePicker selectedMinuteValueState={[selectedMinuteValue, setSelectedMinuteValue]} />
+              </View>
             </View>
-            <View>
-                <BusinessOwnerMinutePicker selectedMinuteValueState={[selectedMinuteValue, setSelectedMinuteValue]} />
+            <Text style={styles.label}>{text.DoYouhaveABreak}</Text>
+            <Text style={styles.label}>{text.fillDowndTheHours}</Text>
+            <CheckBox
+              title={text.closed}
+              checked={closed}
+              onPress={() => setClosed(!closed)}
+            />
+            <View style={{margin:'35%', flexDirection: 'row'}}>
+              <View style={{width: 50, height: 50,}}>
+                  <BusinessOwnerHourPicker selectedHour1ValueState={[selectedHour1Value, setSelectedHour1Value]} />
+              </View>
+              <View style={{width: 50, height: 100,}}>
+                <Text>:</Text>
+              </View>
+              <View style={{width: 50, height: 50,}}>
+                  <BusinessOwnerMinutePicker selectedMinute1ValueState={[selectedMinute1Value, setSelectedMinute1Value]} />
+              </View>
             </View>
-           
         </View>
     )
 }

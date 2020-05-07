@@ -59,5 +59,9 @@ export default {
     addWorkerbButton: "Add Worker",
     chooseDayBusinessOwner: "Choose the day you want to",
     updateTheOpeningHoursBusinessOwner: "Update opening hours",
+    DoYouhaveABreak: "Do you have a break?",
+    fillDowndTheHours: "fill down the opening hours after the break",
+    close: "close",
+     
 }
 

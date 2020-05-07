@@ -24,7 +24,7 @@ const BusinessOwnerHourPicker = props => {
 
         <View>
 
-            <Picker  mode = "dropdown"
+            <Picker  mode = "dialog"
                 selectedValue={selectedHourValue}
                 style={{ height: 50, width: '100%' }}
                 onValueChange={(itemValue, itemIndex) => setSelectedHourValue(itemValue)}
