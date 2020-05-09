@@ -27,7 +27,7 @@ const BusinessOwnerDayPicker = props => {
 
         <View>
 
-            <Picker mode = "dropdown"
+            <Picker mode = "dialog"
                 selectedValue={selectedDayValue}
                 style={{ height: 50, width: '100%' }}
                 onValueChange={(itemValue, itemIndex) => setSelectedDayValue(itemValue)}

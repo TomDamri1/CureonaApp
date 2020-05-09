@@ -24,7 +24,7 @@ const BusinessOwnerMinutePicker = props => {
 
         <View>
 
-            <Picker  mode = "dropdown"
+            <Picker  mode = "dialog"
                 selectedValue={selectedMinuteValue}
                 style={{ height: 50, width: '100%' }}
                 onValueChange={(itemValue, itemIndex) => setSelectedMinuteValue(itemValue)}
