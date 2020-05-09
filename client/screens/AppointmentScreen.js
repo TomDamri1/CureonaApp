@@ -10,8 +10,7 @@ const AppointmentScreen = props => {
     const [selectedDayValue, setSelectedDayValue] = useState(Time.days[date.getDay()]);
     const username = props.navigation.getParam('username');
     const schedule = props.navigation.getParam('schedule');
-    console.log( "AS : " , schedule)
-    console.log(username);
+    
     return (
         <View>
             <Title

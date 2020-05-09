@@ -192,7 +192,7 @@ const RegisterScreen = props => {
                 placeholder={text.placeholder.username}
                 style={styles.input}
                 value={username}
-                onChangeText={text => setUsername(text)}
+                onChangeText={text => {setUsername(text)}}
                 returnKeyType="next"
 
               />

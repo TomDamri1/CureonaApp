@@ -1,24 +1,24 @@
 import React from 'react'
-import { View, Picker } from 'react-native';
-import styles from './DayPickerStyles';
-import generateDayListForToday from './DayPickerFunctions';
+import {Platform } from 'react-native';
+import IOSDayPicker from './iOS_DayPicker/IOSDayPicker';
+import AndroidDayPicker from  './Android_DayPicker/AndriodDayPicker';
 
 const DayPicker = props => {
     const [selectedDayValue, setSelectedDayValue] = props.selectedDayValueState;
-    const dayList = generateDayListForToday();
-    return (
-        <View>
-            <Picker
-                selectedValue={selectedDayValue}
-                style={styles.picker}
-                onValueChange={(itemValue, itemIndex) => setSelectedDayValue(itemValue)}
-                itemStyle={styles.item}
-            >
-                {dayList}
-            </Picker>
-        </View>
-
-    )
+    if (Platform.OS === 'ios') {
+        return (
+            <IOSDayPicker 
+                selectedDayValueState = {[selectedDayValue, setSelectedDayValue]}
+            />
+        )
+    }
+    else {
+        return (
+            <AndroidDayPicker 
+                selectedDayValueState = {[selectedDayValue, setSelectedDayValue]}
+            />
+        )
+    }
 }
 
 export default DayPicker
