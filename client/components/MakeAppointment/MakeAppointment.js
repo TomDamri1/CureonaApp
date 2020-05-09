@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Platform } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import SingleHour from '../SingleHour/SingleHour';
 import styles from './MakeAppointmentStyles';
@@ -8,6 +8,7 @@ const MakeAppointment = props => {
     return (
         <View style={styles.container}>
             <FlatList
+                contentContainerStyle = {Platform.OS === 'ios' ? {paddingBottom:60} : {}}
                 data={props.schedule.queue[props.selectedDay.toLowerCase()]}
                 renderItem={({ item, index }) =>
                     <SingleHour

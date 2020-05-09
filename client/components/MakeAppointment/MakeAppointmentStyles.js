@@ -6,7 +6,8 @@ export default StyleSheet.create({
         fontWeight: 'bold',
     },
     container: {
-        padding: 20
+        padding: 20,
+        marginBottom : 350,
     },
     listConainer: {
 
