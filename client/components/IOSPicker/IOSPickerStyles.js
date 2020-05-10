@@ -18,13 +18,22 @@ export default StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        elevation: 5,
+        elevation: 10,
         marginTop: '50%',
     },
     openButton: {
+        borderRadius:5,
         backgroundColor: "#fff",
         padding: 10,
         width: '100%',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
     },
     textStyle: {
         fontSize: 20,
