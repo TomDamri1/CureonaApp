@@ -17,7 +17,10 @@ const AppointmentScreen = props => {
                 title={`${props.navigation.getParam('item').name}`}
                 subTitle="Make an appointment"
             />
-            <DayPicker selectedDayValueState={[selectedDayValue, setSelectedDayValue]} />
+            <DayPicker 
+                selectedDayValueState={[selectedDayValue, setSelectedDayValue]} 
+                showDate={true}
+            />
             <MakeAppointment
                 item={props.navigation.getParam('item')}
                 selectedDay={selectedDayValue}

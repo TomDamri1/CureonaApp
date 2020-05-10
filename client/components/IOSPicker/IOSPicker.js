@@ -3,7 +3,8 @@ import {
     Modal,
     Text,
     TouchableHighlight,
-    View
+    View,
+    ScrollView
 } from "react-native";
 import styles from './IOSPickerStyles';
 
@@ -20,11 +21,10 @@ import styles from './IOSPickerStyles';
         setSelectedItem = {setSelectedItem}
 */
 const IOSModal = props => {
-
     const [modalVisible, setModalVisible] = useState(false);
     const data = props.data;
     var firstItemToDisplay ='';
-    if(props.itemToDisplay !== undefined){
+    if(props.itemToDisplay === undefined){
         firstItemToDisplay = data[0][0];
     }
     else {
@@ -52,7 +52,7 @@ const IOSModal = props => {
         return displayItems;
     }
     return (
-        <View style={styles.centeredView}>
+        <View style={{...styles.centeredView, ...props.style}}>
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -61,11 +61,11 @@ const IOSModal = props => {
                     setModalVisible(false);
                 }}
             >
-                <View style={styles.centeredView}>
+                <ScrollView style={styles.centeredView}>
                     <View style={styles.modalView}>
                         {generateTouchableButtons()}
                     </View>
-                </View>
+                </ScrollView>
             </Modal>
 
             <TouchableHighlight

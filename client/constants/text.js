@@ -36,6 +36,7 @@ export default {
             `you are now registerd to ${hour}. please dont be late. \nyour code is :${key}`,
 
         somethingWentWrong : "something went wrong.",
+        hoursUpdated : "Hours Updated!",
         success: "Success",
         failed: "Failed",
 

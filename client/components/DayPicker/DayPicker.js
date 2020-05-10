@@ -9,6 +9,7 @@ const DayPicker = props => {
         return (
             <IOSDayPicker 
                 selectedDayValueState = {[selectedDayValue, setSelectedDayValue]}
+                showDate = {props.showDate}
             />
         )
     }
@@ -16,6 +17,7 @@ const DayPicker = props => {
         return (
             <AndroidDayPicker 
                 selectedDayValueState = {[selectedDayValue, setSelectedDayValue]}
+                showDate = {props.showDate}
             />
         )
     }

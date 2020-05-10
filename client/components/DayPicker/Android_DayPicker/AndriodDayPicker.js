@@ -5,7 +5,7 @@ import {generateDayListForToday_Andorid , } from '../DayPickerFunctions';
 
 const AndroidDayPicker = props => {
     const [selectedDayValue, setSelectedDayValue] = props.selectedDayValueState;
-    const dayList = generateDayListForToday_Andorid();
+    const dayList = generateDayListForToday_Andorid(props.showDate);
     return (
         <View>
             <Picker

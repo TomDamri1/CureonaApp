@@ -4,7 +4,7 @@ import {generateDayListForToday_iOS} from '../DayPickerFunctions'
 
 const DayPickerIOS = props => {
     const [selectedDayValue, setSelectedDayValue] = props.selectedDayValueState;
-    const dayList = generateDayListForToday_iOS()
+    const dayList = generateDayListForToday_iOS(props.showDate)
     return (
         <IOSPicker
             data={dayList}
