@@ -41,7 +41,7 @@ class TestUserLogin(unittest.TestCase):
         url = 'https://curona.herokuapp.com/Login'
         myobj = {'username': 'test', 'password': '123'}
         response = requests.post(url, data=myobj)
-        self.assertEqual(response.json(), {'state': 'success', "company_id": "123", 'type': 'business_owner'})
+        self.assertEqual(response.json(), {'state': 'success', "company_id": "123", 'type': 'business_owner','business_name': 'IKEA'})
 
 
 
