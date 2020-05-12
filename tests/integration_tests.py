@@ -1,10 +1,9 @@
 import unittest
-
 import requests
 
 
 class TestUser(unittest.TestCase):
-    # register with user name that already exist and login with this user.
+    # register with tal username and password and login with this user.
     def test_Registration(self):
         url = 'https://curona.herokuapp.com/Registration'
         myobj = {'username': 'tal', 'password': '123', 'type': 'customer'}
@@ -16,7 +15,7 @@ class TestUser(unittest.TestCase):
 
         self.assertEqual(response.json(), {'state': 'success', 'type': 'customer'})
 
-        # login and order a queue.
+    # login with tal username and password, and order a queue.
     def test_login_and_order_queue(self):
         url = 'https://curona.herokuapp.com/Login'
         myobj = {'username': 'tal', 'password': '123'}
@@ -29,6 +28,7 @@ class TestUser(unittest.TestCase):
         except_result = {"state": "failed, sorry you can not get two queue to the same hour"}
         self.assertEqual(response.json(), except_result)
 
+    # change business setting to open and order a queue with c_test user name
     def test_get_two_queue_to_same_place_at_same_time(self):
         url = 'https://curona.herokuapp.com/businessSettings'
         myobj = {'company_id': '123', 'open': 'True'}
@@ -40,6 +40,8 @@ class TestUser(unittest.TestCase):
         except_result = {"state": "failed, sorry you can not get two queue to the same hour"}
         self.assertEqual(response.json(), except_result)
 
+    # change business setting to close and order a queue with c_test user name, at the end return the business
+    # setting to open
     def test_get_queue_to_closed_business(self):
         url = 'https://curona.herokuapp.com/businessSettings'
         myobj = {'company_id': '123', 'open': 'False'}
@@ -52,6 +54,8 @@ class TestUser(unittest.TestCase):
         myobj = {'company_id': '123', 'open': 'True'}
         requests.post(url, data=myobj)
         self.assertEqual(response.json(), except_result)
+
+
 
 if __name__ == '__main__':
     unittest.main()
