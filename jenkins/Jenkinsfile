@@ -46,16 +46,7 @@ pipeline {
                     junit 'test-reports/results.xml'
                     
                 }
-                success {
-                    mail to: 'cureonaapp@gmail.com',
-	                subject: "success",
-		             body: 'Test success"
-                }
-                failure {
-                    mail to: 'cureonaapp@gmail.com',
-	                subject: "failed",
-		             body: 'Test failed"
-                }
+                
             }
 
         }
