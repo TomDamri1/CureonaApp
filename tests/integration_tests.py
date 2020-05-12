@@ -55,6 +55,29 @@ class TestUser(unittest.TestCase):
         requests.post(url, data=myobj)
         self.assertEqual(response.json(), except_result)
 
+    def test_register_business_and_closed_for_customer(self):
+        url = 'https://cureona.herokuapp.com/RegisterBusiness'
+        myobj = {'username': 'b123', 'password': '121212', 'type': 'business_owner', 'BusinessName': 'Zara', 'CompanyId': '345678'}
+        requests.post(url, data=myobj)
+        url = 'https://curona.herokuapp.com/AvailableQueues'
+        myobj = {'CompanyId': '345678'}
+        response = requests.post(url, data=myobj)
+        except_result = {'state': 'success', 'queue': {'sunday': [], 'monday': [], 'tuesday': [], 'wednesday': [],
+                                                          'thursday': [], 'friday': [], 'saturday': []}}
+        self.assertEqual(response.json(), except_result)
+
+    def test_change_max_capacity_and_schedule_an_appointment(self):
+        url = 'https://cureona.herokuapp.com/businessSettings'
+        myobj = {'company_id':'1', 'max_capacity': 1}
+        requests.post(url, data=myobj)
+        url = 'https://curona.herokuapp.com/GetQueue'
+        myobj = {"username": "c_test", 'company_id': '123', "BusinessName": "IKEA", "Day": "wednesday", "Hour": "15:00"}
+        response = requests.post(url, data=myobj)
+        myobj = {"username": "tal", 'company_id': '123', "BusinessName": "IKEA", "Day": "wednesday", "Hour": "15:00"}
+        response = requests.post(url, data=myobj)
+        except_result = {'state': 'failed, sorry the queue is full'}
+        self.assertEqual(response.json(), except_result)
+
 
 
 if __name__ == '__main__':
