@@ -35,6 +35,8 @@ export default {
         theUserCanGetIn : "The user can get in!",
         failed : "Failed",
         theUserCannotGetIn : "The user can't get in!\ntry again or ask him to leave.",
+        yes : "Yes",
+        no : "No",
     },
     type: {
         customer: "customer",
@@ -55,5 +57,6 @@ export default {
     or_if_you_dont_have_user: "Or if you dont have a user, ",
     addWorker: "Add Worker to your business",
     addWorkerbButton: "Add Worker"
+
 }
 

@@ -12,6 +12,7 @@ export default {
         getMyQueue : MainURL + 'GetMyQueue',
         registerWorker: MainURL + 'RegistrationWorker',
         letsUserIntoBusiness : MainURL + 'LetsUserIntoBusiness',
+        deleteAppointment : MainURL + 'deleteAppointment',
     }
 
 }
