@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Picker } from 'react-native';
+import { StyleSheet, View, Picker } from 'react-native';
 import Colors from '../constants/Colors';
 import Time from '../constants/Time';
 
@@ -7,28 +7,27 @@ const NUMBER_OF_DAYS_IN_THE_WEEK = 7
 
 
 
-const DayPicker = props => {
+const BusinessOwnerDayPicker = props => {
     const [selectedDayValue, setSelectedDayValue] = props.selectedDayValueState;
     
-    const now = new Date();
-    const daynum = now.getDay();
+    //const now = new Date();
+    //const daynum = now.getDay();
     let dayList = [];
     for (let index = 0; index < NUMBER_OF_DAYS_IN_THE_WEEK; index++) {
 
-        const thisDay = Time.days[(daynum + index) % 7];
-        const newDate = new Date();
-        newDate.setDate(now.getDate() + index)
-        const displayDate = newDate.getDate() + "-" + Time.months[newDate.getMonth()] + "-" + newDate.getFullYear();
+        const thisDay = Time.days[index];
         dayList.push(
-            <Picker.Item label={`${thisDay} \t\t ${displayDate}`} value={thisDay} key={thisDay} />
+            <Picker.Item label={`${thisDay}`} value={thisDay} key={thisDay} />
         );
     }
-
+    dayList.push(
+        <Picker.Item label={`${'All Week'}`} value={'All Week'} key={'All Week'} />
+    );
     return (
 
         <View>
 
-            <Picker
+            <Picker mode = "dialog"
                 selectedValue={selectedDayValue}
                 style={{ height: 50, width: '100%' }}
                 onValueChange={(itemValue, itemIndex) => setSelectedDayValue(itemValue)}
@@ -43,6 +42,6 @@ const DayPicker = props => {
     )
 }
 
-export default DayPicker
+export default BusinessOwnerDayPicker
 
 const styles = StyleSheet.create({})

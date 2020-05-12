@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View, Button } from 'react-native';
 import Title from '../components/Title'
 import Urls from '../constants/Urls';
+import Colors from '../constants/Colors';
 //import getStoreList from "../data/getStoreList";
 
 const STORE_NAME = 0;
@@ -93,16 +94,40 @@ const CustomerScreen = props => {
     }
 
     return (
-        <View>
-            <Title title="welcome!" subTitle={props.navigation.getParam('username')} />
-            <Text>this is an initial-dummy user-screen </Text>
-            <Button title="Search a Business" onPress={() => handleSearchABusinessPress()} />
-            <Button title="my queues" onPress={() => handleMyQueuesPress()} />
+        <View style={styles.form}>
+            <Title title="cureona" />
+            <View style={styles.buttonContainer}>
+                <Button
+                    title="Search a Business"
+                    onPress={() => handleSearchABusinessPress()}
+                    color={Colors.primaryColor}
+                />
+            </View>
+            <View style={styles.buttonContainer}>
+                <Button
+                    title="my queues"
+                    onPress={() => handleMyQueuesPress()}
+                    color = {Colors.accentColor}
+                />
+            </View>
 
         </View>
 
     )
 }
+
+
+const styles = StyleSheet.create({
+    form: {
+
+    },
+    buttonContainer: {
+        marginHorizontal: 30,
+        marginVertical:20,
+    }
+
+});
+
 
 
 

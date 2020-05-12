@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Switch, StyleSheet, Text, View, Button, TextInput, Alert } from 'react-native';
 import Title from '../components/Title';
-import SearchList from '../components/SearchList';
 import Colors from '../constants/Colors';
 import Urls from '../constants/Urls'
 
