@@ -48,6 +48,9 @@ pipeline {
                 failure {
                     mail to: 'cureonaapp@gmail.com',subject: 'failed',body: 'Test failed'
                 }
+                success {
+                    mail to: 'cureonaapp@gmail.com',subject: 'success',body: 'Test success'
+                }
                 
             }
 
