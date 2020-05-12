@@ -4,7 +4,7 @@ import requests
 
 class TestUser(unittest.TestCase):
     # register with tal username and password and login with this user.
-    def test_Registration(self):
+    def test_Registration_and_login(self):
         url = 'https://curona.herokuapp.com/Registration'
         myobj = {'username': 'tal', 'password': '123', 'type': 'customer'}
         requests.post(url, data=myobj)
@@ -22,19 +22,19 @@ class TestUser(unittest.TestCase):
         response = requests.post(url, data=myobj)
 
         url = 'https://curona.herokuapp.com/GetQueue'
-        myobj = {"username": "tal", 'company_id': '123', "BusinessName": "IKEA", "Day": "wednesday",
-                 "Hour": "15:00"}
+        myobj = {"username": "tal", 'company_id': '1213', "BusinessName": "STAMESEK", "Day": "sunday",
+                 "Hour": "16:00"}
         response = requests.post(url, data=myobj)
-        except_result = {"state": "failed, sorry you can not get two queue to the same hour"}
-        self.assertEqual(response.json(), except_result)
+        except_result = {"state": "failed, sorry the queue is full"}
+        self.assertEqual(except_result, response.json())
 
     # change business setting to open and order a queue with c_test user name
-    def test_get_two_queue_to_same_place_at_same_time(self):
+    def test_open_business_and_get_two_queue_to_same_place_at_same_time(self):
         url = 'https://curona.herokuapp.com/businessSettings'
-        myobj = {'company_id': '123', 'open': 'True'}
+        myobj = {'company_id': '345678', 'open': 'True'}
         requests.post(url, data=myobj)
         url = 'https://curona.herokuapp.com/GetQueue'
-        myobj = {"username": "c_test", 'company_id': '123', "BusinessName": "IKEA", "Day": "wednesday", "Hour": "15:00"}
+        myobj = {"username": "c_test", 'company_id': '345678', "BusinessName": "Zara", "Day": "sunday", "Hour": "19:00"}
         requests.post(url, data=myobj)
         response = requests.post(url, data=myobj)
         except_result = {"state": "failed, sorry you can not get two queue to the same hour"}
@@ -42,7 +42,7 @@ class TestUser(unittest.TestCase):
 
     # change business setting to close and order a queue with c_test user name, at the end return the business
     # setting to open
-    def test_get_queue_to_closed_business(self):
+    def test_closing_business_and_get_queue(self):
         url = 'https://curona.herokuapp.com/businessSettings'
         myobj = {'company_id': '123', 'open': 'False'}
         requests.post(url, data=myobj)
@@ -56,24 +56,25 @@ class TestUser(unittest.TestCase):
         self.assertEqual(response.json(), except_result)
 
     def test_register_business_and_closed_for_customer(self):
-        url = 'https://cureona.herokuapp.com/RegisterBusiness'
-        myobj = {'username': 'b123', 'password': '121212', 'type': 'business_owner', 'BusinessName': 'Zara', 'CompanyId': '345678'}
+        url = 'https://curona.herokuapp.com/RegisterBusiness'
+        myobj = {'username': 'aabbcc','address' : 'aaccbb', 'password': '121212', 'type': 'business_owner',
+                 'business_name': 'SCE', 'company_id': '111', 'search_key': {'keys': []}}
         requests.post(url, data=myobj)
         url = 'https://curona.herokuapp.com/AvailableQueues'
-        myobj = {'CompanyId': '345678'}
+        myobj = {'company_id': '111'}
         response = requests.post(url, data=myobj)
         except_result = {'state': 'success', 'queue': {'sunday': [], 'monday': [], 'tuesday': [], 'wednesday': [],
                                                           'thursday': [], 'friday': [], 'saturday': []}}
         self.assertEqual(response.json(), except_result)
 
     def test_change_max_capacity_and_schedule_an_appointment(self):
-        url = 'https://cureona.herokuapp.com/businessSettings'
-        myobj = {'company_id':'1', 'max_capacity': 1}
+        url = 'https://curona.herokuapp.com/businessSettings'
+        myobj = {'company_id':'1213', 'max_capacity': 1}
         requests.post(url, data=myobj)
         url = 'https://curona.herokuapp.com/GetQueue'
-        myobj = {"username": "c_test", 'company_id': '123', "BusinessName": "IKEA", "Day": "wednesday", "Hour": "15:00"}
-        response = requests.post(url, data=myobj)
-        myobj = {"username": "tal", 'company_id': '123', "BusinessName": "IKEA", "Day": "wednesday", "Hour": "15:00"}
+        myobj = {"username": "hadas", 'company_id': '1213', "BusinessName": "STAMESEK", "Day": "sunday", "Hour": "16:00"}
+        requests.post(url, data=myobj)
+        myobj = {"username": "tal", 'company_id': '1213', "BusinessName": "STAMESEK", "Day": "sunday", "Hour": "16:00"}
         response = requests.post(url, data=myobj)
         except_result = {'state': 'failed, sorry the queue is full'}
         self.assertEqual(response.json(), except_result)

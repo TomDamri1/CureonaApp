@@ -9,7 +9,7 @@ class TestUserUpdateSettings(unittest.TestCase):
         myobj = {'company_id': '123', 'open': 'True'}
         requests.post(url, data=myobj)
         url = 'https://curona.herokuapp.com/GetQueue'
-        myobj = {"username": "c_test", 'company_id': '123', "BusinessName": "IKEA", "Day": "wednesday", "Hour": "15:00"}
+        myobj = {"username": "c_test", 'company_id': '123', "BusinessName": "IKEA", "Day": "tuesday", "Hour": "17:30"}
         requests.post(url, data=myobj)
         response = requests.post(url, data=myobj)
         except_result = {"state": "failed, sorry you can not get two queue to the same hour"}
