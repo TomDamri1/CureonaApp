@@ -36,7 +36,10 @@ pipeline {
 
             }
             steps {
-                sh 'py.test --verbose --junit-xml test-reports/results.xml tests/test_user.py'
+                sh 'py.test --verbose --junit-xml test-reports/results.xml tests/test_business_properties.py'
+                sh 'py.test --verbose --junit-xml test-reports/results.xml tests/test_login.py'
+                sh 'py.test --verbose --junit-xml test-reports/results.xml tests/test_queue_settings.py'
+                sh 'py.test --verbose --junit-xml test-reports/results.xml tests/test_registration.py'
             }
             post {
                 always {
