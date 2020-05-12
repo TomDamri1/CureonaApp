@@ -51,7 +51,7 @@ pipeline {
 	                subject: "success",
 		             body: 'Test success"
                 }
-                fail {
+                failure {
                     mail to: 'cureonaapp@gmail.com',
 	                subject: "failed",
 		             body: 'Test failed"
