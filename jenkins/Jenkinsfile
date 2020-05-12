@@ -44,6 +44,17 @@ pipeline {
             post {
                 always {
                     junit 'test-reports/results.xml'
+                    
+                }
+                success {
+                    mail to: 'cureonaapp@gmail.com',
+	                subject: "success",
+		             body: 'Test success"
+                }
+                fail {
+                    mail to: 'cureonaapp@gmail.com',
+	                subject: "failed",
+		             body: 'Test failed"
                 }
             }
 
