@@ -12,7 +12,7 @@ class TestUserUpdateSettings(unittest.TestCase):
         myobj = {"username": "c_test", 'company_id': '123', "BusinessName": "IKEA", "Day": "wednesday", "Hour": "15:00"}
         requests.post(url, data=myobj)
         response = requests.post(url, data=myobj)
-        except_result = {"state": "success, sorry you can not get two queue to the same hour"}
+        except_result = {"state": "failed, sorry you can not get two queue to the same hour"}
         self.assertEqual(response.json(), except_result)
 
     def test_get_queue_to_closed_business(self):
@@ -23,7 +23,7 @@ class TestUserUpdateSettings(unittest.TestCase):
         myobj = {"username": "c_test", 'company_id': '123', "BusinessName": "IKEA", "Day": "wednesday",
                  "Hour": "15:00"}
         response = requests.post(url, data=myobj)
-        except_result = {"state": "success, Business is closed"}
+        except_result = {"state": "failed, Business is closed"}
         myobj = {'company_id': '123', 'open': 'True'}
         requests.post(url, data=myobj)
         self.assertEqual(response.json(), except_result)
