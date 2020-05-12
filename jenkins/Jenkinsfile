@@ -44,12 +44,16 @@ pipeline {
             post {
                 always {
                     junit 'test-reports/results.xml'
-                    
+                }
+                failure {
+                    mail to: 'cureonaapp@gmail.com',
+	                subject: "failed",
+		             body: 'Test failed"
                 }
                 
             }
 
-        }
+         }
                 stage('integration testing') {
 
             agent {
