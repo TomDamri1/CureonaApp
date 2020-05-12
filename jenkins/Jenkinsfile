@@ -40,7 +40,7 @@ pipeline {
                 sh 'py.test --verbose --junit-xml test-reports/results.xml tests/test_login.py'
                 sh 'py.test --verbose --junit-xml test-reports/results.xml tests/test_queue_settings.py'
                 sh 'py.test --verbose --junit-xml test-reports/results.xml tests/test_registration.py'
-                junit healthScaleFactor : 0.1 , testResults: '**/test-results.xml'
+                junit healthScaleFactor : 0.1 , testResults: 'test-reports/results.xml'
             }
             post {
                 always {
