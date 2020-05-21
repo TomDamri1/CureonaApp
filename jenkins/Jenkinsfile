@@ -55,7 +55,7 @@ pipeline {
             }
 
          }
-                stage('integration testing') {
+        stage('integration testing') {
 
             agent {
 
@@ -76,6 +76,24 @@ pipeline {
             }
 
         }
+
+        stage('measure to urls activity') {
+
+            agent {
+
+                docker {
+
+                    image 'qnib/pytest'
+
+                }
+
+            }
+            steps {
+                sh 'tests/measure_url_response.py'
+            }
+
+        }
+
 
     }
 
