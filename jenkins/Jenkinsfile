@@ -92,6 +92,7 @@ pipeline {
             steps {
                 script {
                     def percentage_of_urls_activity = sh(script: 'python --version tests/measure_url_response.py', returnStdout: true)
+                    println percentage_of_urls_activity
                     echo "${percentage_of_urls_activity}"
                 }
 
