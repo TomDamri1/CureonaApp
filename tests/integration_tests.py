@@ -83,3 +83,6 @@ class TestUser(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+#  sh 'python --version tests/measure_url_response.py'

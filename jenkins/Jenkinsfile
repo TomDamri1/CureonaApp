@@ -90,8 +90,10 @@ pipeline {
 
             }
             steps {
-                def version_numbers = bat(script: 'python --version tests/measure_url_response.py', returnStdout: true)
-                sh 'python --version tests/measure_url_response.py'
+                script {
+                    def percentage_of_urls_activity = bat(script: 'python --version tests/measure_url_response.py', returnStdout: true)
+                }
+
             }
 
         }
