@@ -90,7 +90,7 @@ pipeline {
 
             }
             steps {
-                sh 'tests/measure_url_response.py'
+                sh 'python --version tests/measure_url_response.py'
             }
 
         }
