@@ -1,4 +1,5 @@
 import requests
+import smtplib, ssl
 
 MainURL = 'https://curona.herokuapp.com/'
 routes = {
@@ -16,19 +17,47 @@ routes = {
 }
 
 count = 0
+res = ''
 print("checks urls activity...")
 for key, value in routes.items():
-    print("checking " + key + "... ", end='')
+    res += "checking " + key + "... "
     myobj = dict()
     response = requests.post(value, data=myobj)
     response = str(response)
     if response != "<Response [404]>":
         count += 1
-        print("OK")
+        res += "OK\n"
     else:
-        print("not OK!")
+        res += "not OK!\n"
     # print("{0}: {1}".format(key, response))
 percentage_of_passed_tests = round(count / len(routes) * 100, 2)
-print("percentage of url that working properly: " + str(percentage_of_passed_tests) + "%")
 
+res += "\npercentage of url that working properly: " + str(percentage_of_passed_tests) + "%\n"
 
+gmail_user = 'cureonaapp@gmail.com'
+gmail_password = 'hadas2020'
+
+sent_from = gmail_user
+to = ['cureonaapp@gmail.com', ]
+subject = 'check result of all routes'
+body = res
+
+email_text = """\
+From: %s
+To: %s
+Subject: %s
+
+%s
+""" % (sent_from, ", ".join(to), subject, body)
+
+try:
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    #server.connect("smtp.gmail.com", 468)
+    server.ehlo()
+    server.starttls()
+    server.login(gmail_user, gmail_password)
+    server.sendmail(sent_from, to, email_text)
+    server.close()
+except Exception as e:
+    print('Something went wrong...')
+    print(e)
