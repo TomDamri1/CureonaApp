@@ -6,8 +6,7 @@ import datetime
 from server.mongo_connection import *
 
 db = new_db["business_info"]
-
-business_settings = db
+business_info ,business_settings = db,db
 
 
 def get_businesses_from_db():
@@ -122,3 +121,10 @@ def convert_date_string_to_day(date):
     day_name = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     date = date.replace("-"," ")
     return day_name[datetime.datetime.strptime(date, '%d %m %Y').weekday()].lower()
+
+
+def get_business_data(cid):
+    return business_info.find_one({"company_id": cid})
+
+def get_time_and_date_for_now(time_zone):
+    return datetime.datetime.now(time_zone).strftime("%d/%m/%Y %H:%M:%S")[11:16]

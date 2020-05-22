@@ -197,13 +197,13 @@ class deleteAppointment(Resource):
                 if code in appointment:
                     deleted_from_array = user_queue.update({'username': username},
                                                            {'$pull': {"orders": appointment}})
-                    ret_val["deleted_from_user_queue"]= 'success' if deleted_from_array['nModified'] else 'fail'
+                    ret_val["deleted_from_user_queue"] = 'success' if deleted_from_array['nModified'] else 'fail'
 
             for time_range in business_name_record['queue'][day]:
                 if time_of_appointment == time_range and code in business_name_record['queue'][day][time_range]:
                     deleted_from_array = business_info.update({'business_name': business_name},
                                                               {'$pull': {"queue." + day + "." + time_range: code}})
-                    ret_val["deleted_from_business_queue"]= 'success' if deleted_from_array['nModified'] else 'fail'
+                    ret_val["deleted_from_business_queue"] = 'success' if deleted_from_array['nModified'] else 'fail'
 
         if not ret_val:
             ret_val['state'] = "failed"
@@ -211,10 +211,11 @@ class deleteAppointment(Resource):
 
         else:
             if "deleted_from_business_queue" in ret_val and "deleted_from_user_queue" in ret_val:
-                if ret_val["deleted_from_business_queue"] == "success" and ret_val["deleted_from_user_queue"] == "success":
+                if ret_val["deleted_from_business_queue"] == "success" and ret_val[
+                    "deleted_from_user_queue"] == "success":
                     ret_val[
-                        'msg'] = 'the appointment to ' + business_name + " at " + day + " : " + time_of_appointment +\
-                                   " successfully canceled "
+                        'msg'] = 'the appointment to ' + business_name + " at " + day + " : " + time_of_appointment + \
+                                 " successfully canceled "
                     ret_val['state'] = "success"
             else:
                 ret_val['msg'] = "operation not fully succeeded "
@@ -273,5 +274,18 @@ class LetsUserIntoBusiness(Resource):
         return jsonify({'state': 'failed'})
 
 
-class insertWithoutPreorderedAppointment(Resource):
+current_amount_at_business = reqparse.RequestParser()
+current_amount_at_business.add_argument('company_id', required=True, help="company_id name cannot be blank!")
+
+
+class currentAmountAtBusiness(Resource):
+
+    def post(self):
+
+        data = current_amount_at_business.parse_args()
+        business = get_business_data(data['company_id'])
+        timeZone= pytz.timezone('Israel')
+        now = get_time_and_date_for_now(timeZone)
+        print(now)
+
 
