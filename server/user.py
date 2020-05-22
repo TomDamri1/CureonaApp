@@ -81,7 +81,7 @@ RegisterBuisness_parser.add_argument('open_hours', type=dict, required=False, he
 RegisterBuisness_parser.add_argument('search_key', type=dict, required=True, help="search key cannot be blank!")
 RegisterBuisness_parser.add_argument('max_capacity', required=False, help="max capacity in integer")
 RegisterBuisness_parser.add_argument('open_hours', type=dict, required=False, help="search_key cannot be blank!")
-RegisterBuisness_parser.add_argument('minutes_intervals', type=int, required=False, help="if empty,time intervals=60")
+RegisterBuisness_parser.add_argument('minutes_intervals', type=int, required=False, help="if empty,time intervals=15")
 
 
 class RegisterBusiness(Resource):
@@ -109,7 +109,8 @@ class RegisterBusiness(Resource):
             business_info_dict['search_key'] = data['search_key']['keys']
             if not data['minutes_intervals']:
                 business_info_dict['minutes_intervals'] = 15
-            business_info_dict['minutes_intervals'] = data['minutes_intervals']
+            else:
+                business_info_dict['minutes_intervals'] = data['minutes_intervals']
 
             if not data['open_hours']:
                 business_info_dict['open_hours'] = all_closed
@@ -119,7 +120,7 @@ class RegisterBusiness(Resource):
                 print(business_info_dict)
                 business_info_dict['open_hours'] = data['open_hours']
                 business_info_dict['queue'] = {}
-                modifyWorkingHoursForDays(business_info_dict['queue'], data['open_hours'],data['time_intervals'])
+                modifyWorkingHoursForDays(business_info_dict['queue'], data['open_hours'],business_info_dict['minutes_intervals'])
 
             # business_info_dict['open_hours'] = {'sunday': 'closed', 'monday': 'closed', 'tuesday': 'closed',
             #                                     'wednesday': 'closed', 'thursday': 'closed', 'friday': 'closed',

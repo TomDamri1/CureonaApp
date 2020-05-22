@@ -30,7 +30,7 @@ def modifyWorkingHoursForDays(queue, opened_hours,minutes_intervals):
         modified_hours = {}
         if v != 'closed':
             for times in v:
-                queue[k] = add_new_days_hours(times, minutes_intervals,minutes_intervals)
+                queue[k] = add_new_days_hours(times, minutes_intervals , modified_hours)
         else:
             queue[k] = v  # v means "closed"
 
