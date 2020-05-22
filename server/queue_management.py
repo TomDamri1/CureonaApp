@@ -271,3 +271,7 @@ class LetsUserIntoBusiness(Resource):
         if data["key"] in code_arr:
             return jsonify({'state': 'success'})
         return jsonify({'state': 'failed'})
+
+
+class insertWithoutPreorderedAppointment(Resource):
+
