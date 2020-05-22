@@ -284,8 +284,10 @@ class currentAmountAtBusiness(Resource):
 
         data = current_amount_at_business.parse_args()
         business = get_business_data(data['company_id'])
-        timeZone= pytz.timezone('Israel')
-        now = get_time_and_date_for_now(timeZone)
+        timeZone = pytz.timezone('Israel')
+        current_time = get_time_and_day_for_now(timeZone) # current_time is an array that built like so: current_time[0]=day name, current_time[1]=hour
+        convert_time_to_str(current_time,business['minutes_intervals'])
+        len(business['queue'][current_time[0]][current_time[1]] ))
 
 
 
