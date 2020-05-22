@@ -286,6 +286,6 @@ class currentAmountAtBusiness(Resource):
         business = get_business_data(data['company_id'])
         timeZone= pytz.timezone('Israel')
         now = get_time_and_date_for_now(timeZone)
-        print(now)
+
 
 

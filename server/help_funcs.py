@@ -127,4 +127,5 @@ def get_business_data(cid):
     return business_info.find_one({"company_id": cid})
 
 def get_time_and_date_for_now(time_zone):
+
     return datetime.datetime.now(time_zone).strftime("%d/%m/%Y %H:%M:%S")[11:16]
