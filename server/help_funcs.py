@@ -25,12 +25,12 @@ def get_businesses_from_db():
 MINUTES_INTERVALS = 15
 
 
-def modifyWorkingHoursForDays(queue, opened_hours):
+def modifyWorkingHoursForDays(queue, opened_hours,minutes_intervals):
     for k, v in opened_hours.items():
         modified_hours = {}
         if v != 'closed':
             for times in v:
-                queue[k] = add_new_days_hours(times, modified_hours)
+                queue[k] = add_new_days_hours(times, minutes_intervals,minutes_intervals)
         else:
             queue[k] = v  # v means "closed"
 
@@ -61,7 +61,7 @@ def create_hours_string(hour_start_time, minutes):
     return hour_start + ':' + minutesStr
 
 
-def add_new_days_hours(times, modified_hours={}):
+def add_new_days_hours(times,minutes_intervals, modified_hours={}):
     try:
         hour_start_time, minute_start_time, hour_end_time, minute_end_time = get_hours_and_minutes_as_int(times)
 
@@ -74,13 +74,13 @@ def add_new_days_hours(times, modified_hours={}):
     while time_intervals > 0:
 
         strToAppend = create_hours_string(hour_start_time, minutes % 60)
-        minutes = minutes + MINUTES_INTERVALS
+        minutes = minutes + minutes_intervals
         if minutes >= 60:
             hour_start_time = (hour_start_time + 1) % 24
             minutes = minutes % 60
 
         modified_hours[strToAppend] = []
-        time_intervals -= MINUTES_INTERVALS
+        time_intervals -= minutes_intervals
     return modified_hours
 
 
@@ -127,5 +127,4 @@ def get_business_data(cid):
     return business_info.find_one({"company_id": cid})
 
 def get_time_and_date_for_now(time_zone):
-
     return datetime.datetime.now(time_zone).strftime("%d/%m/%Y %H:%M:%S")[11:16]

@@ -52,13 +52,18 @@ server root url : https://cureona.herokuapp.com/
 #### url : https://cureona.herokuapp.com/RegisterBusiness
 #### json example :
 ```
-{ 
-  "username": "shlomo123", 
-  "password" :"12345", 
-  "type": "business_owner", 
-  "BusinessName" : "MYBusiness", 
-  "CompanyId":"123456"
- }
+{
+    "username": "my_test123321",
+    "password": "12223",
+    "business_name": "STAMESEK",
+    "address": "balfor 24/1",
+    "company_id": "12333313",
+    "search_key": {
+        "keys": [
+            "stam"
+        ]
+    }
+}
  ```
 
 
