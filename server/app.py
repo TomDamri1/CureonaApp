@@ -39,6 +39,7 @@ api.add_resource(getBusinesses, '/getBusinesses')
 api.add_resource(LetsUserIntoBusiness, '/LetsUserIntoBusiness')
 api.add_resource(deleteAppointment, '/deleteAppointment')
 api.add_resource(currentAmountAtBusiness, '/currentAmount')
+api.add_resource(generateCodeForSpontaneousAppointment, '/SpontaneousAppointment')
 
 # driver function
 

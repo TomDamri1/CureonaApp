@@ -1,8 +1,9 @@
 import calendar
-import json
-import ast
-import shutil
+#import json
+#import ast
+#import shutil
 import datetime
+import random
 
 from server.mongo_connection import *
 
@@ -128,11 +129,13 @@ def convert_date_string_to_day(date):
 # ---------------------------------------------------------------------------- currentAmountAtBusiness FUNCS
 
 def get_business_data(cid):
-    return business_info.find_one({"company_id": cid})
-
+    business_data =  business_info.find_one({"company_id": cid})
+    if business_data is None:
+        raise Exception("business was not found by the given cid")
+    return business_data
 
 def get_time_and_day_for_now(time_zone):
-    time_and_day = [ get_day(),reformat_time(time_zone)]
+    time_and_day = [get_day(), reformat_time(time_zone)]
     return time_and_day
 
 
@@ -143,11 +146,24 @@ def reformat_time(time_zone):
 def get_day():
     return calendar.day_name[datetime.datetime.today().weekday()].lower()
 
-def convert_time_to_str(current_time,minutes_interval):
+
+def convert_time_to_str(current_time, minutes_interval):
     minutes = int((current_time[1])[3:])
-    for time in range(0,60,minutes_interval):
+    for time in range(0, 60, minutes_interval):
         if time < minutes < time + minutes_interval:
             if time < 10:
-                time = '0'+str(time)
+                time = '0' + str(time)
             current_time[1] = (current_time[1])[0:3] + str(time)
+            break
     return current_time
+
+
+# ---------------------------------------------------------------------------- SpontaneousAppointment funcs
+
+def validate_a_number(number_to_be):
+    try:
+        int(number_to_be)
+    except Exception as err:
+        raise Exception("the number contains other elemnets")
+
+

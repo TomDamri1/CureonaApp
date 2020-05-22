@@ -14,6 +14,9 @@ user_queue = new_db["user_queue"]
 business_info = new_db["business_info"]
 login = new_db["login"]
 
+# ----------------------------------------
+timeZone = pytz.timezone('Israel')
+# ----------------------------------------
 GetQueue_parser = reqparse.RequestParser()
 GetQueue_parser.add_argument('username', required=True, help="username name cannot be blank!")
 GetQueue_parser.add_argument('BusinessName', required=True, help="business name cannot be blank!")
@@ -241,9 +244,7 @@ class Insert(Resource):
 class LetsUserIntoBusiness(Resource):
     def post(self):
         data = insert_parser.parse_args()
-
         tz_NY = pytz.timezone('Israel')
-
         business = business_info.find_one({"company_id": data['company_id']})
         current_date = datetime.date.today()
         print(current_date)
@@ -281,13 +282,38 @@ current_amount_at_business.add_argument('company_id', required=True, help="compa
 class currentAmountAtBusiness(Resource):
 
     def post(self):
-
         data = current_amount_at_business.parse_args()
         business = get_business_data(data['company_id'])
         timeZone = pytz.timezone('Israel')
-        current_time = get_time_and_day_for_now(timeZone) # current_time is an array that built like so: current_time[0]=day name, current_time[1]=hour
-        convert_time_to_str(current_time,business['minutes_intervals'])
-        len(business['queue'][current_time[0]][current_time[1]] ))
+        current_time = get_time_and_day_for_now(
+            timeZone)  # current_time is an array that built like so: current_time[0]=day name, current_time[1]=hour
+        convert_time_to_str(current_time, business['minutes_intervals'])
+        amount = len(business['queue'][current_time[0]][current_time[1]])
+        return jsonify({'state': 'success', "current_amount_in_business": amount})
 
 
+spontaneous_appointment = reqparse.RequestParser()
+spontaneous_appointment.add_argument('company_id', required=True, help="company_id name cannot be blank!")
+spontaneous_appointment.add_argument('cellphone', required=True, help="cellphone number cannot be blank!")
 
+
+class generateCodeForSpontaneousAppointment(Resource):
+
+    def post(self):
+        data = spontaneous_appointment.parse_args()
+        try:
+            business = get_business_data(data['company_id'])
+            validate_a_number(data['cellphone'])
+        except Exception as err:
+            return jsonify({'state': 'fail', 'reason': str(err)})
+        current_time = get_time_and_day_for_now(timeZone)
+        convert_time_to_str(current_time, business['minutes_intervals'])
+        print(business['business_name'])
+        print("queue." + current_time[0] + "." + current_time[1] + data['cellphone'])
+        # example: current_time[0]=day name, current_time[1]=hour
+        query_result = business_info.update({'business_name': business['business_name']},
+                                            {"$push": {
+                                                "queue." + current_time[0] + "." + current_time[1]: data['cellphone']}})
+        json_to_return = {"state": 'sucess' if query_result['nModified'] != 0 else 'fail',
+                          }
+        return
