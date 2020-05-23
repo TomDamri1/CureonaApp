@@ -165,6 +165,7 @@ def check_if_hour_exists(business,current_time):
     except KeyError as err:
         return 'error : the business is closed for this day and hour'
     else:
+        print(amount)
         return len(amount)
 # ---------------------------------------------------------------------------- SpontaneousAppointment funcs
 
