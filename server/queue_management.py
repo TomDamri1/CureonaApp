@@ -303,7 +303,7 @@ class generateCodeForSpontaneousAppointment(Resource):
         data = spontaneous_appointment.parse_args()
         try:
             business = get_business_data(data['company_id'])
-            validate_data(business,data['cellphone'])
+            validate_data(data['cellphone'])
         except Exception as err:
             return jsonify({'state': 'fail', 'reason': str(err)})
 
