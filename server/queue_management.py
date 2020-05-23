@@ -289,11 +289,12 @@ class currentAmountAtBusiness(Resource):
             timeZone)  # current_time is an array that built like so: current_time[0]=day name, current_time[1]=hour
         convert_time_to_str(current_time, business['minutes_intervals'])
         print(current_time)
-        amount = check_if_hour_exists(business,current_time)
+        amount = check_if_hour_exists(business, current_time)
         if 'error' in amount:
             return jsonify({'state': 'fail', "current_amount_in_business": amount})
         else:
-            return jsonify({'state': 'success', "current_amount_in_business": amount})
+            return jsonify({'state': 'success', "current_amount_in_business": amount,
+                            'max_capacity': business['max_capacity']})
 
 
 spontaneous_appointment = reqparse.RequestParser()
@@ -322,4 +323,3 @@ class generateCodeForSpontaneousAppointment(Resource):
         no_error = True if query_result['nModified'] != 0 else False
         return jsonify({"state": 'success' if no_error else 'fail',
                         'costumer_entered': data['cellphone'] if no_error else 'unknown error'})
-

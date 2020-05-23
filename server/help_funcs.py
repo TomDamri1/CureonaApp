@@ -166,8 +166,9 @@ def check_if_hour_exists(business,current_time):
         print("error is" +str(err))
         return 'error : the business is closed for this day and hour'
     else:
+        print("amount is  ")
         print(amount)
-        return len(amount)
+        return str(len(amount))
 # ---------------------------------------------------------------------------- SpontaneousAppointment funcs
 
 def validate_a_number(number_to_be):
