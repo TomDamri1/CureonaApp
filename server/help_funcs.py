@@ -159,6 +159,13 @@ def convert_time_to_str(current_time, minutes_interval):
     return current_time
 
 
+def check_if_hour_exists(business,current_time):
+    try:
+        amount = business['queue'][current_time[0]][current_time[1]]
+    except KeyError as err:
+        return 'error : the business is closed for this day and hour'
+    else:
+        return len(amount)
 # ---------------------------------------------------------------------------- SpontaneousAppointment funcs
 
 def validate_a_number(number_to_be):

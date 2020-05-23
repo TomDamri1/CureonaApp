@@ -288,9 +288,12 @@ class currentAmountAtBusiness(Resource):
         current_time = get_time_and_day_for_now(
             timeZone)  # current_time is an array that built like so: current_time[0]=day name, current_time[1]=hour
         convert_time_to_str(current_time, business['minutes_intervals'])
-        amount = len(business['queue'][current_time[0]][current_time[1]])
-        return jsonify({'state': 'success', "current_amount_in_business": amount})
 
+        amount = check_if_hour_exists(business,current_time)
+        if 'error' in amount:
+            return jsonify({'state': 'fail', "current_amount_in_business": amount})
+        else:
+            return jsonify({'state': 'success', "current_amount_in_business": amount})
 
 spontaneous_appointment = reqparse.RequestParser()
 spontaneous_appointment.add_argument('company_id', required=True, help="company_id name cannot be blank!")
