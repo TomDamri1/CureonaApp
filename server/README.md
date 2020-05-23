@@ -202,10 +202,12 @@ send the following json:
 this request will return a JSON in the following form:
 ```
 {
-  "current_amount_in_business": 0, #can be and number- zero is an example
+  "current_amount_in_business": "0",#can be and number- zero is an example
+  "max_capacity": 10,
   "state": "success"
 }
 ```
+we also return the business max capacity
 <hr>
 
 ### Entering a costumer who didn't made an appointment 
