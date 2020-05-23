@@ -162,7 +162,8 @@ def convert_time_to_str(current_time, minutes_interval):
 def check_if_hour_exists(business,current_time):
     try:
         amount = business['queue'][current_time[0]][current_time[1]]
-    except KeyError as err:
+    except Exception as err:
+        print("error is" +str(err))
         return 'error : the business is closed for this day and hour'
     else:
         print(amount)
