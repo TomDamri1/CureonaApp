@@ -303,9 +303,10 @@ class generateCodeForSpontaneousAppointment(Resource):
         data = spontaneous_appointment.parse_args()
         try:
             business = get_business_data(data['company_id'])
-            validate_a_number(data['cellphone'])
+            validate_data(business,data['cellphone'])
         except Exception as err:
             return jsonify({'state': 'fail', 'reason': str(err)})
+
         current_time = get_time_and_day_for_now(timeZone)
         convert_time_to_str(current_time, business['minutes_intervals'])
         print(business['business_name'])
@@ -314,6 +315,7 @@ class generateCodeForSpontaneousAppointment(Resource):
         query_result = business_info.update({'business_name': business['business_name']},
                                             {"$push": {
                                                 "queue." + current_time[0] + "." + current_time[1]: data['cellphone']}})
-        json_to_return = {"state": 'sucess' if query_result['nModified'] != 0 else 'fail',
-                          }
-        return
+        no_error = True if query_result['nModified'] != 0 else False
+        return jsonify({"state": 'success' if no_error else 'fail',
+                        'costumer_entered': data['cellphone'] if no_error else 'unknown error'})
+

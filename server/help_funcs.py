@@ -1,7 +1,7 @@
 import calendar
-#import json
-#import ast
-#import shutil
+# import json
+# import ast
+# import shutil
 import datetime
 import random
 
@@ -129,10 +129,11 @@ def convert_date_string_to_day(date):
 # ---------------------------------------------------------------------------- currentAmountAtBusiness FUNCS
 
 def get_business_data(cid):
-    business_data =  business_info.find_one({"company_id": cid})
+    business_data = business_info.find_one({"company_id": cid})
     if business_data is None:
         raise Exception("business was not found by the given cid")
     return business_data
+
 
 def get_time_and_day_for_now(time_zone):
     time_and_day = [get_day(), reformat_time(time_zone)]
@@ -164,6 +165,14 @@ def validate_a_number(number_to_be):
     try:
         int(number_to_be)
     except Exception as err:
-        raise Exception("the number contains other elemnets")
+        raise Exception("the number contains other elements")
 
 
+def validate_number_length(number):
+    if len(number) != 10:
+        raise Exception("the number most contain 10 digits precisely")
+
+
+def validate_data(number):
+    validate_a_number(number)
+    validate_number_length(number)
