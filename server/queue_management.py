@@ -312,7 +312,7 @@ class generateCodeForSpontaneousAppointment(Resource):
         print(business['business_name'])
         print("queue." + current_time[0] + "." + current_time[1] + data['cellphone'])
         # example: current_time[0]=day name, current_time[1]=hour
-        query_result = business_info.update({'business_name': business['business_name']},
+        query_result = business_info.update({'company_id': business['company_id']},
                                             {"$push": {
                                                 "queue." + current_time[0] + "." + current_time[1]: data['cellphone']}})
         no_error = True if query_result['nModified'] != 0 else False

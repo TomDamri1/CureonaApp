@@ -14,6 +14,7 @@ server root url : https://cureona.herokuapp.com/
   "type": "customer"
 }
 ```
+<hr>
 
 ### customer Login :
 #### url : https://cureona.herokuapp.com/Login
@@ -25,6 +26,7 @@ server root url : https://cureona.herokuapp.com/
  }
  ```
 
+<hr>
 
 ### Worker Login :
 #### url : https://cureona.herokuapp.com/Login
@@ -47,6 +49,7 @@ server root url : https://cureona.herokuapp.com/
 ```
 
 
+<hr>
 
 ### Buisness registration  :
 #### url : https://cureona.herokuapp.com/RegisterBusiness
@@ -66,6 +69,7 @@ server root url : https://cureona.herokuapp.com/
 }
  ```
 
+<hr>
 
 ### updating Settings for business  :
 #### url : https://cureona.herokuapp.com/businessSettings
@@ -116,6 +120,7 @@ lets assume that some business had an opening  hour for tuesday like so : ["08:0
 }
  ```
 
+<hr>
 
 
 
@@ -180,6 +185,48 @@ example for a JSON to be returned :
 ```
 
 
+<hr>
+
+
+### Getting the current amount of costumers in the business for the moment
+#### url : https://curona.herokuapp.com/currentAmount 
+
+in order to get the current amount of costumers ina certain time at the day
+send the following json:
+```
+{
+    "company_id": "company_id_number"
+}
+```
+
+this request will return a JSON in the following form:
+```
+{
+  "current_amount_in_business": 0, #can be and number- zero is an example
+  "state": "success"
+}
+```
+<hr>
+
+### Entering a costumer who didn't made an appointment 
+#### url : https://curona.herokuapp.com/SpontaneousAppointment 
+
+in order to schedule an appointment to a costumer who didn't made an appointment just send the following JSON:
+```
+{
+    "company_id": "company_id",
+    "cellphone" : "10 digits number ONLY"
+}
+```
+the JSON that will be returned (if all the data is correct) is:
+```
+{
+  "costumer_entered": "COSTUMER CELLPHONE NUMBER",
+  "state": "success"
+}
+```
+<hr>
+
 
 
 ### Deleting an appointment  :
@@ -217,3 +264,5 @@ the JSON that will be returned could include few fields:
 }
 ```
 
+
+<hr>
