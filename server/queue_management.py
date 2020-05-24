@@ -231,15 +231,50 @@ class deleteAppointment(Resource):
 
 insert_parser = reqparse.RequestParser()
 insert_parser.add_argument('company_id', required=True, help="company_id name cannot be blank!")
-
-
-class Insert(Resource):
-    pass
-
+insert_parser.add_argument('key', required=True, help="key cannot be blank!")
 
 class LetsUserIntoBusiness(Resource):
     def post(self):
         data = insert_parser.parse_args()
+
+        tz_NY = pytz.timezone('Israel')
+
+        business = business_info.find_one({"company_id": data['company_id']})
+        current_date = datetime.date.today()
+        print(current_date)
+        current_day = datetime.datetime.today().weekday()
+        print(current_day)
+        name_current_day = calendar.day_name[current_day].lower()
+        print(name_current_day)
+        now = datetime.datetime.now(tz_NY)
+
+        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")[11:16]
+        print(dt_string)
+        print(dt_string[3:])
+        if int(dt_string[3:]) >= 45:
+            dt_string = dt_string[:3] + "45"
+        elif 0 <= int(dt_string[3:]) <= 15:
+            dt_string = dt_string[:3] + "00"
+        elif 15 <= int(dt_string[3:]) <= 30:
+            dt_string = dt_string[:3] + "15"
+        elif 30 <= int(dt_string[3:]) <= 45:
+            dt_string = dt_string[:3] + "30"
+
+        print(dt_string)
+
+        code_arr = business["queue"][name_current_day][dt_string]
+
+        if data["key"] in code_arr:
+            return jsonify({'state': 'success'})
+        return jsonify({'state': 'failed'})
+
+get_out_parser = reqparse.RequestParser()
+get_out_parser.add_argument('company_id', required=True, help="company_id name cannot be blank!")
+get_out_parser.add_argument('key', required=True, help="key cannot be blank!")
+
+class LetsUserOutBusiness(Resource):
+    def post(self):
+        data = get_out_parser.parse_args()
 
         tz_NY = pytz.timezone('Israel')
 
