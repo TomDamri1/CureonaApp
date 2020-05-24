@@ -148,9 +148,9 @@ def get_day():
     return calendar.day_name[datetime.datetime.today().weekday()].lower()
 
 
-def convert_time_to_str(current_time, minutes_interval):
+def convert_time_to_str(current_time, minutes_interval, open_hours):
     minutes = int((current_time[1])[3:])
-    for time in range(0, 60, minutes_interval):
+    for time in range(minute_to_start_with(current_time[1], minutes_interval, open_hours), 60, minutes_interval):
         if time < minutes < time + minutes_interval:
             if time < 10:
                 time = '0' + str(time)
@@ -159,16 +159,46 @@ def convert_time_to_str(current_time, minutes_interval):
     return current_time
 
 
-def check_if_hour_exists(business,current_time):
+def get_minimum(time, interval):
+    while time - interval >= 0:
+        time = time - interval
+    return time
+
+
+def find_time_interval(times, curr_time, hour):
+    if times[3] < times[1]:
+        times[3] + 24
+        if curr_time == 0:  # special case where the time is midnight  00:MM
+            curr_time = curr_time + 24
+    if times[0] <= curr_time <= times[2]:  # get the hour that matches the time (times example : [16, 32, 2, 0] )
+        hour = times
+
+
+def minute_to_start_with(current_time, intervals, open_hours):
+    curr_time = int((current_time[0:2]))
+    time_intervals = [get_hours_and_minutes_as_int(x) for x in open_hours]
+    print(time_intervals)
+    hour = time_intervals[len(time_intervals) - 1]  # first we will define the hour to be the last interval
+    for times in time_intervals:
+        find_time_interval(times, curr_time, hour)
+    print(hour)
+    print(hour[1])
+
+    return get_minimum(hour[1], intervals)
+
+
+def check_if_hour_exists(business, current_time):
     try:
         amount = business['queue'][current_time[0]][current_time[1]]
     except Exception as err:
-        print("error is" +str(err))
-        return 'error : the business is closed for this day and hour'
+        print("error is" + str(err))
+        return 'error : the business is closed for ' + current_time[0] + " at " + current_time[1]
     else:
         print("amount is  ")
         print(amount)
         return str(len(amount))
+
+
 # ---------------------------------------------------------------------------- SpontaneousAppointment funcs
 
 def validate_a_number(number_to_be):

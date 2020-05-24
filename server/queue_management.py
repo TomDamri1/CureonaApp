@@ -287,13 +287,13 @@ class currentAmountAtBusiness(Resource):
         timeZone = pytz.timezone('Israel')
         current_time = get_time_and_day_for_now(
             timeZone)  # current_time is an array that built like so: current_time[0]=day name, current_time[1]=hour
-        convert_time_to_str(current_time, business['minutes_intervals'])
-        print(current_time)
+        convert_time_to_str(current_time,  business['minutes_intervals'], business['open_hours'][current_time[0]])
         amount = check_if_hour_exists(business, current_time)
         if 'error' in amount:
             return jsonify({'state': 'fail', "current_amount_in_business": amount})
-        else:
-            return jsonify({'state': 'success', "current_amount_in_business": amount,
+        print(current_time)
+
+        return jsonify({'state': 'success', "current_amount_in_business": amount,
                             'max_capacity': business['max_capacity']})
 
 
