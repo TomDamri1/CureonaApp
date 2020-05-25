@@ -66,6 +66,7 @@ class GetQueue(Resource):
         data = GetQueue_parser.parse_args()
         print(data)
         business = business_info.find_one({"company_id": data['company_id']})
+        print(business)
         # check for legal day name
         if data['Day'] == "sunday" or data['Day'] == "monday" or data['Day'] == "tuesday" or data[
             'Day'] == "wednesday" or data['Day'] == "thursday" or data['Day'] == "friday" or data['Day'] == "saturday":
@@ -79,6 +80,11 @@ class GetQueue(Resource):
         if not business["open"]:
             return jsonify({'state': 'failed, Business is closed'})
         # check if in the given day and hor there are available queue
+        print(business["queue"])
+        print(business["queue"][data['Day']])
+        print(business["queue"][data['Day']][data['Hour']])
+        print(len(business["queue"][data['Day']][data['Hour']]))
+        print(str(int(len(business["queue"][data['Day']][data['Hour']]))))
         print("num of queue to this hour: " + str(int(len(business["queue"][data['Day']][data['Hour']]))))
         print("max capacity: " + str(business["max_capacity"]))
         if len(business["queue"][data['Day']][data['Hour']]) >= int(business["max_capacity"]):
@@ -151,12 +157,19 @@ class AvailableQueues(Resource):
         for _, value in queue.items():
             list_queue.append(value)
         available_queues_sunday = available_hours_at_day(0)
+        print("available_queues_sunday", available_queues_sunday)
         available_queues_monday = available_hours_at_day(1)
+        print("available_queues_monday", available_queues_monday)
         available_queues_tuesday = available_hours_at_day(2)
+        print("available_queues_tuesday", available_queues_tuesday)
         available_queues_wednesday = available_hours_at_day(3)
+        print("available_queues_wednesday", available_queues_sunday)
         available_queues_thursday = available_hours_at_day(4)
+        print("available_queues_thursday", available_queues_thursday)
         available_queues_friday = available_hours_at_day(5)
+        print("available_queues_friday", available_queues_friday)
         available_queues_saturday = available_hours_at_day(6)
+        print("available_queues_saturday", available_queues_saturday)
 
         open_and_available_queues = {'sunday': available_queues_sunday,
                                      'monday': available_queues_monday,
