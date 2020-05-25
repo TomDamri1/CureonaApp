@@ -237,6 +237,7 @@ insert_parser = reqparse.RequestParser()
 insert_parser.add_argument('company_id', required=True, help="company_id name cannot be blank!")
 insert_parser.add_argument('key', required=True, help="key cannot be blank!")
 
+
 class LetsUserIntoBusiness(Resource):
     def post(self):
         data = insert_parser.parse_args()
@@ -273,7 +274,6 @@ class LetsUserIntoBusiness(Resource):
         return jsonify({'state': 'failed'})
 
 
-
 current_amount_at_business = reqparse.RequestParser()
 current_amount_at_business.add_argument('company_id', required=True, help="company_id name cannot be blank!")
 
@@ -286,14 +286,14 @@ class currentAmountAtBusiness(Resource):
         timeZone = pytz.timezone('Israel')
         current_time = get_time_and_day_for_now(
             timeZone)  # current_time is an array that built like so: current_time[0]=day name, current_time[1]=hour
-        convert_time_to_str(current_time,  business['minutes_intervals'], business['open_hours'][current_time[0]])
+        convert_time_to_str(current_time, business['minutes_intervals'], business['open_hours'][current_time[0]])
         amount = check_if_hour_exists(business, current_time)
         if 'error' in amount:
             return jsonify({'state': 'fail', "current_amount_in_business": amount})
         print(current_time)
 
         return jsonify({'state': 'success', "current_amount_in_business": amount,
-                            'max_capacity': business['max_capacity']})
+                        'max_capacity': business['max_capacity']})
 
 
 spontaneous_appointment = reqparse.RequestParser()
@@ -328,6 +328,7 @@ get_out_parser = reqparse.RequestParser()
 get_out_parser.add_argument('company_id', required=True, help="company_id name cannot be blank!")
 get_out_parser.add_argument('key', required=True, help="key cannot be blank!")
 
+
 class LetsUserOutBusiness(Resource):
     def post(self):
         data = get_out_parser.parse_args()
@@ -341,26 +342,23 @@ class LetsUserOutBusiness(Resource):
         print(current_day)
         name_current_day = calendar.day_name[current_day].lower()
         print(name_current_day)
-        now = datetime.datetime.now(tz_NY)
-
-        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")[11:16]
-        print(dt_string)
-        print(dt_string[3:])
-        if int(dt_string[3:]) >= 45:
-            dt_string = dt_string[:3] + "45"
-        elif 0 <= int(dt_string[3:]) <= 15:
-            dt_string = dt_string[:3] + "00"
-        elif 15 <= int(dt_string[3:]) <= 30:
-            dt_string = dt_string[:3] + "15"
-        elif 30 <= int(dt_string[3:]) <= 45:
-            dt_string = dt_string[:3] + "30"
-
-        print(dt_string)
+        print("codes")
         code_arr = business["queue"][name_current_day]
+
+        print(code_arr)
+        for time_range in business['queue'][name_current_day]:
+            business_info.update({'company_id': data['company_id']},
+                             {'$pull': {"queue." + name_current_day + "." + time_range: data["key"]}})
+        """
         for q in code_arr:
             if data["key"] in q:
                 q.remove(data["key"])
+                print(q)
+        """
+        business = business_info.find_one({"company_id": data['company_id']})
+        code_arr = business["queue"][name_current_day]
         print(code_arr)
+
         return jsonify({'state': 'success'})
         business_info.update({'business_name': data['BusinessName']},
                              {"$set": {"queue." + data['Day']: code_arr}})
@@ -370,4 +368,3 @@ class LetsUserOutBusiness(Resource):
         if data["key"] in code_arr:
             return jsonify({'state': 'success'})
         return jsonify({'state': 'failed'})
-
