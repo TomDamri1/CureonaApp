@@ -300,10 +300,14 @@ class LetsUserOutBusiness(Resource):
             dt_string = dt_string[:3] + "30"
 
         print(dt_string)
-        code_arr = business["queue"][name_current_day][dt_string]
-
-        # business_info.update({'business_name': data['BusinessName']},
-        #                      {"$push": {"queue." + data['Day'] + "." + data['Hour']: queue_key}})
+        code_arr = business["queue"][name_current_day]
+        for q in code_arr:
+            if data["key"] in q:
+                q.remove(data["key"])
+        print(code_arr)
+        return jsonify({'state': 'success'})
+        business_info.update({'business_name': data['BusinessName']},
+                             {"$set": {"queue." + data['Day']: code_arr}})
 
         code_arr = business["queue"][name_current_day][dt_string]
 
