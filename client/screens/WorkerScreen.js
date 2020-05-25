@@ -12,8 +12,13 @@ import requestFromUrl from '../functions/routeFunctions/requestFromUrl';
 
 const checkAmountOfPeaple = async (company_id) => {
     const req = await requestFromUrl(Urls.routes.currentAmountOfPeapleInTheStore, { company_id: company_id });
-    const returnValue = await req.current_amount_in_business;
-    return returnValue;
+    const current_amount_in_business = await req.current_amount_in_business;
+    const max_capacity = await req.max_capacity;
+
+    return {
+        current_amount_in_business: current_amount_in_business,
+        max_capacity: max_capacity
+    };
 }
 
 
@@ -22,14 +27,20 @@ const WorkerScreen = props => {
     const [pass, setPass] = useState('#fff');
     const [canTheUserGetIn, setCanTheUserGetIn] = useState(false);
     const [amountOfCustomersInBusiness, setAmountOfCustomersInBusiness] = useState('0');
+    const [maxCapacity, setMaxCapacity] = useState('0');
     const username = props.navigation.getParam('username');
     const company_id = props.navigation.getParam('company_id');
+
+
+    const CUSTOMERS_IN_STORE = 0;
+    const MAX_CAPACITY = 1;
+
     console.log(company_id)
 
     const handleSpontaneousAppointment = async () => {
-        
-        const resData = await requestFromUrl(Urls.routes.SpontaneousAppointment, {"company_id": company_id,"cellphone" : entranceKey}) ;
-        if (resData.state === "success"){
+
+        const resData = await requestFromUrl(Urls.routes.SpontaneousAppointment, { "company_id": company_id, "cellphone": entranceKey });
+        if (resData.state === "success") {
             Alert.alert("Success");
         }
         else {
@@ -81,8 +92,10 @@ const WorkerScreen = props => {
     }
     useEffect(() => {
         const interval = setInterval(async () => {
-            const AmountOfPeaple = await checkAmountOfPeaple(company_id);
+            const AmountOfPeaple = await (await checkAmountOfPeaple(company_id)).current_amount_in_business;
+            const MaxCapacity = await (await checkAmountOfPeaple(company_id)).max_capacity;
             setAmountOfCustomersInBusiness(AmountOfPeaple);
+            setMaxCapacity(MaxCapacity);
         }, 5000);
         return () => clearInterval(interval);
     })
@@ -121,15 +134,16 @@ const WorkerScreen = props => {
             <View>
                 <Button
                     color={Colors.primaryColor}
-                    title ="Spontaneous Appointment"
-                    onPress = {() => handleSpontaneousAppointment()}
+                    title="Spontaneous Appointment"
+                    onPress={() => handleSpontaneousAppointment()}
                 />
             </View>
             <View style={{ ...styles.getinTextContainer, backgroundColor: pass }}>
                 <Text style={styles.getinText}>{canTheUserGetIn ? text.theUserCanGetIn : text.theUserCannotGetIn}</Text>
             </View>
-            <View>
-                <Text>Number of peaple in the shop : {amountOfCustomersInBusiness}</Text>
+            <View style={styles.customerNubmerText}>
+                <Text style={styles.label}>{amountOfCustomersInBusiness} / {maxCapacity}</Text>
+                <Text>Customers in the shop</Text>
             </View>
         </View>
     )
@@ -169,6 +183,10 @@ const styles = StyleSheet.create({
         height: 50,
         textAlign: "center",
         alignItems: "center"
+    },
+    customerNubmerText:{
+        alignItems:"center",
+        margin : 20,
     }
 
 })

@@ -7,13 +7,15 @@ import { Alert } from "react-native";
 
 
 const makeRegistrationHourBody = (props) => {
-    return {
+    const x = {
         Hour: props.time,
         BusinessName: props.businessName,
         Day: props.selectedDay.toLowerCase(),
         username: props.username,
         company_id: props.id
     }
+    console.log("x=" ,x);
+    return x;
 }
 
 export default registerToHour = async (props, navigation) => {
@@ -23,6 +25,7 @@ export default registerToHour = async (props, navigation) => {
 
     const registerHourBody = makeRegistrationHourBody(props);
     const resData = await requestFromUrl(Urls.routes.makeAnAppointment, registerHourBody)
+    console.log(resData);
     navigation.pop();
 
     if (resData.state.toLowerCase() === Response.success) {

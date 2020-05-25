@@ -27,6 +27,10 @@ const LoginScreen = props => {
   const [userPassword, setUserPassword] = useState('');
 
   const handleLogin = async () => {
+    console.log("login details: ",  JSON.stringify({
+      username: username,
+      password: userPassword,
+    }))
     props.navigation.navigate({
       routeName: "Loading"
     })
