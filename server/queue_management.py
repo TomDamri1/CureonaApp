@@ -159,6 +159,7 @@ class AvailableQueues(Resource):
         list_queue = []
         list_queue.append(queue["sunday"])
         list_queue.append(queue["monday"])
+
         list_queue.append(queue["tuesday"])
         list_queue.append(queue["wednesday"])
         list_queue.append(queue["thursday"])
