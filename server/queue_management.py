@@ -14,6 +14,9 @@ user_queue = new_db["user_queue"]
 business_info = new_db["business_info"]
 login = new_db["login"]
 
+# ----------------------------------------
+timeZone = pytz.timezone('Israel')
+# ----------------------------------------
 GetQueue_parser = reqparse.RequestParser()
 GetQueue_parser.add_argument('username', required=True, help="username name cannot be blank!")
 GetQueue_parser.add_argument('BusinessName', required=True, help="business name cannot be blank!")
@@ -197,13 +200,13 @@ class deleteAppointment(Resource):
                 if code in appointment:
                     deleted_from_array = user_queue.update({'username': username},
                                                            {'$pull': {"orders": appointment}})
-                    ret_val["deleted_from_user_queue"]= 'success' if deleted_from_array['nModified'] else 'fail'
+                    ret_val["deleted_from_user_queue"] = 'success' if deleted_from_array['nModified'] else 'fail'
 
             for time_range in business_name_record['queue'][day]:
                 if time_of_appointment == time_range and code in business_name_record['queue'][day][time_range]:
                     deleted_from_array = business_info.update({'business_name': business_name},
                                                               {'$pull': {"queue." + day + "." + time_range: code}})
-                    ret_val["deleted_from_business_queue"]= 'success' if deleted_from_array['nModified'] else 'fail'
+                    ret_val["deleted_from_business_queue"] = 'success' if deleted_from_array['nModified'] else 'fail'
 
         if not ret_val:
             ret_val['state'] = "failed"
@@ -211,10 +214,11 @@ class deleteAppointment(Resource):
 
         else:
             if "deleted_from_business_queue" in ret_val and "deleted_from_user_queue" in ret_val:
-                if ret_val["deleted_from_business_queue"] == "success" and ret_val["deleted_from_user_queue"] == "success":
+                if ret_val["deleted_from_business_queue"] == "success" and ret_val[
+                    "deleted_from_user_queue"] == "success":
                     ret_val[
-                        'msg'] = 'the appointment to ' + business_name + " at " + day + " : " + time_of_appointment +\
-                                   " successfully canceled "
+                        'msg'] = 'the appointment to ' + business_name + " at " + day + " : " + time_of_appointment + \
+                                 " successfully canceled "
                     ret_val['state'] = "success"
             else:
                 ret_val['msg'] = "operation not fully succeeded "
@@ -231,14 +235,16 @@ class deleteAppointment(Resource):
 
 insert_parser = reqparse.RequestParser()
 insert_parser.add_argument('company_id', required=True, help="company_id name cannot be blank!")
-insert_parser.add_argument('key', required=True, help="key cannot be blank!")
+
+
+class Insert(Resource):
+    pass
+
 
 class LetsUserIntoBusiness(Resource):
     def post(self):
         data = insert_parser.parse_args()
-
         tz_NY = pytz.timezone('Israel')
-
         business = business_info.find_one({"company_id": data['company_id']})
         current_date = datetime.date.today()
         print(current_date)
@@ -268,49 +274,52 @@ class LetsUserIntoBusiness(Resource):
             return jsonify({'state': 'success'})
         return jsonify({'state': 'failed'})
 
-get_out_parser = reqparse.RequestParser()
-get_out_parser.add_argument('company_id', required=True, help="company_id name cannot be blank!")
-get_out_parser.add_argument('key', required=True, help="key cannot be blank!")
 
-class LetsUserOutBusiness(Resource):
+current_amount_at_business = reqparse.RequestParser()
+current_amount_at_business.add_argument('company_id', required=True, help="company_id name cannot be blank!")
+
+
+class currentAmountAtBusiness(Resource):
+
     def post(self):
-        data = get_out_parser.parse_args()
+        data = current_amount_at_business.parse_args()
+        business = get_business_data(data['company_id'])
+        timeZone = pytz.timezone('Israel')
+        current_time = get_time_and_day_for_now(
+            timeZone)  # current_time is an array that built like so: current_time[0]=day name, current_time[1]=hour
+        convert_time_to_str(current_time,  business['minutes_intervals'], business['open_hours'][current_time[0]])
+        amount = check_if_hour_exists(business, current_time)
+        if 'error' in amount:
+            return jsonify({'state': 'fail', "current_amount_in_business": amount})
+        print(current_time)
 
-        tz_NY = pytz.timezone('Israel')
+        return jsonify({'state': 'success', "current_amount_in_business": amount,
+                            'max_capacity': business['max_capacity']})
 
-        business = business_info.find_one({"company_id": data['company_id']})
-        current_date = datetime.date.today()
-        print(current_date)
-        current_day = datetime.datetime.today().weekday()
-        print(current_day)
-        name_current_day = calendar.day_name[current_day].lower()
-        print(name_current_day)
-        now = datetime.datetime.now(tz_NY)
 
-        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")[11:16]
-        print(dt_string)
-        print(dt_string[3:])
-        if int(dt_string[3:]) >= 45:
-            dt_string = dt_string[:3] + "45"
-        elif 0 <= int(dt_string[3:]) <= 15:
-            dt_string = dt_string[:3] + "00"
-        elif 15 <= int(dt_string[3:]) <= 30:
-            dt_string = dt_string[:3] + "15"
-        elif 30 <= int(dt_string[3:]) <= 45:
-            dt_string = dt_string[:3] + "30"
+spontaneous_appointment = reqparse.RequestParser()
+spontaneous_appointment.add_argument('company_id', required=True, help="company_id name cannot be blank!")
+spontaneous_appointment.add_argument('cellphone', required=True, help="cellphone number cannot be blank!")
 
-        print(dt_string)
-        code_arr = business["queue"][name_current_day]
-        for q in code_arr:
-            if data["key"] in q:
-                q.remove(data["key"])
-        print(code_arr)
-        return jsonify({'state': 'success'})
-        business_info.update({'business_name': data['BusinessName']},
-                             {"$set": {"queue." + data['Day']: code_arr}})
 
-        code_arr = business["queue"][name_current_day][dt_string]
+class generateCodeForSpontaneousAppointment(Resource):
 
-        if data["key"] in code_arr:
-            return jsonify({'state': 'success'})
-        return jsonify({'state': 'failed'})
+    def post(self):
+        data = spontaneous_appointment.parse_args()
+        try:
+            business = get_business_data(data['company_id'])
+            validate_data(data['cellphone'])
+        except Exception as err:
+            return jsonify({'state': 'fail', 'reason': str(err)})
+
+        current_time = get_time_and_day_for_now(timeZone)
+        convert_time_to_str(current_time, business['minutes_intervals'])
+        print(business['business_name'])
+        print("queue." + current_time[0] + "." + current_time[1] + data['cellphone'])
+        # example: current_time[0]=day name, current_time[1]=hour
+        query_result = business_info.update({'company_id': business['company_id']},
+                                            {"$push": {
+                                                "queue." + current_time[0] + "." + current_time[1]: data['cellphone']}})
+        no_error = True if query_result['nModified'] != 0 else False
+        return jsonify({"state": 'success' if no_error else 'fail',
+                        'costumer_entered': data['cellphone'] if no_error else 'unknown error'})

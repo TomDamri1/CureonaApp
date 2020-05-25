@@ -1,13 +1,14 @@
-import json
-import ast
-import shutil
+import calendar
+# import json
+# import ast
+# import shutil
 import datetime
+import random
 
 from server.mongo_connection import *
 
 db = new_db["business_info"]
-
-business_settings = db
+business_info, business_settings = db, db
 
 
 def get_businesses_from_db():
@@ -26,12 +27,12 @@ def get_businesses_from_db():
 MINUTES_INTERVALS = 15
 
 
-def modifyWorkingHoursForDays(queue, opened_hours):
+def modifyWorkingHoursForDays(queue, opened_hours, minutes_intervals):
     for k, v in opened_hours.items():
         modified_hours = {}
         if v != 'closed':
             for times in v:
-                queue[k] = add_new_days_hours(times, modified_hours)
+                queue[k] = add_new_days_hours(times, minutes_intervals, modified_hours)
         else:
             queue[k] = v  # v means "closed"
 
@@ -62,7 +63,7 @@ def create_hours_string(hour_start_time, minutes):
     return hour_start + ':' + minutesStr
 
 
-def add_new_days_hours(times, modified_hours={}):
+def add_new_days_hours(times, minutes_intervals, modified_hours={}):
     try:
         hour_start_time, minute_start_time, hour_end_time, minute_end_time = get_hours_and_minutes_as_int(times)
 
@@ -75,13 +76,13 @@ def add_new_days_hours(times, modified_hours={}):
     while time_intervals > 0:
 
         strToAppend = create_hours_string(hour_start_time, minutes % 60)
-        minutes = minutes + MINUTES_INTERVALS
+        minutes = minutes + minutes_intervals
         if minutes >= 60:
             hour_start_time = (hour_start_time + 1) % 24
             minutes = minutes % 60
 
         modified_hours[strToAppend] = []
-        time_intervals -= MINUTES_INTERVALS
+        time_intervals -= minutes_intervals
     return modified_hours
 
 
@@ -118,7 +119,100 @@ def create_list_of_affected_costumers(current_queue, new_queue={}):
 
 # ---------------------------------------------------------------------------- DELETE APPOINTMENT FUNCS
 
+
 def convert_date_string_to_day(date):
     day_name = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-    date = date.replace("-"," ")
+    date = date.replace("-", " ")
     return day_name[datetime.datetime.strptime(date, '%d %m %Y').weekday()].lower()
+
+
+# ---------------------------------------------------------------------------- currentAmountAtBusiness FUNCS
+
+def get_business_data(cid):
+    business_data = business_info.find_one({"company_id": cid})
+    if business_data is None:
+        raise Exception("business was not found by the given cid")
+    return business_data
+
+
+def get_time_and_day_for_now(time_zone):
+    time_and_day = [get_day(), reformat_time(time_zone)]
+    return time_and_day
+
+
+def reformat_time(time_zone):
+    return datetime.datetime.now(time_zone).strftime("%d/%m/%Y %H:%M:%S")[11:16]
+
+
+def get_day():
+    return calendar.day_name[datetime.datetime.today().weekday()].lower()
+
+
+def convert_time_to_str(current_time, minutes_interval, open_hours):
+    minutes = int((current_time[1])[3:])
+    for time in range(minute_to_start_with(current_time[1], minutes_interval, open_hours), 60, minutes_interval):
+        if time < minutes < time + minutes_interval:
+            if time < 10:
+                time = '0' + str(time)
+            current_time[1] = (current_time[1])[0:3] + str(time)
+            break
+    return current_time
+
+
+def get_minimum(time, interval):
+    while time - interval >= 0:
+        time = time - interval
+    return time
+
+
+def find_time_interval(times, curr_time, hour):
+    if times[3] < times[1]:
+        times[3] + 24
+        if curr_time == 0:  # special case where the time is midnight  00:MM
+            curr_time = curr_time + 24
+    if times[0] <= curr_time <= times[2]:  # get the hour that matches the time (times example : [16, 32, 2, 0] )
+        hour = times
+
+
+def minute_to_start_with(current_time, intervals, open_hours):
+    curr_time = int((current_time[0:2]))
+    time_intervals = [get_hours_and_minutes_as_int(x) for x in open_hours]
+    print(time_intervals)
+    hour = time_intervals[len(time_intervals) - 1]  # first we will define the hour to be the last interval
+    for times in time_intervals:
+        find_time_interval(times, curr_time, hour)
+    print(hour)
+    print(hour[1])
+
+    return get_minimum(hour[1], intervals)
+
+
+def check_if_hour_exists(business, current_time):
+    try:
+        amount = business['queue'][current_time[0]][current_time[1]]
+    except Exception as err:
+        print("error is" + str(err))
+        return 'error : the business is closed for ' + current_time[0] + " at " + current_time[1]
+    else:
+        print("amount is  ")
+        print(amount)
+        return str(len(amount))
+
+
+# ---------------------------------------------------------------------------- SpontaneousAppointment funcs
+
+def validate_a_number(number_to_be):
+    try:
+        int(number_to_be)
+    except Exception as err:
+        raise Exception("the number contains other elements")
+
+
+def validate_number_length(number):
+    if len(number) != 10:
+        raise Exception("the number most contain 10 digits precisely")
+
+
+def validate_data(number):
+    validate_a_number(number)
+    validate_number_length(number)

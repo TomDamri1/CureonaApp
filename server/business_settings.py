@@ -45,7 +45,7 @@ class updateSettings(Resource):
             costumers_affected, ret = {}, {}
             # if the user chose to change the opening hours for the business
             if data['open_hours'] is not None and data['open_hours'] != json_doc['open_hours']:
-                update_hours_and_inform_costumers(cid, data['open_hours'], costumers_affected)
+                update_hours_and_inform_costumers(cid, data['open_hours'], json_doc['minutes_intervals'],  costumers_affected)
                 ret["open_hours"] = "updated"
                 ret['affected_costumers'] = 'no effect' if not costumers_affected else costumers_affected
             else:
@@ -73,7 +73,7 @@ class updateSettings(Resource):
         return jsonify({'state': 'company id was not found'})
 
 
-def update_hours_and_inform_costumers(cid, new_opening_hours, costumers_affected):
+def update_hours_and_inform_costumers(cid, new_opening_hours, minutes_intervals , costumers_affected):
     # we no get the old opening hours
     current_opening_hours = get_the_current_opening_hours(cid)
     current_opening_hours_queue = get_the_current_queue(cid)  # we will need the queue for later- when we will need
@@ -92,7 +92,7 @@ def update_hours_and_inform_costumers(cid, new_opening_hours, costumers_affected
         if new_opening_hours[day] != 'closed':
             tmp_queue = {}
             for time_interval in new_opening_hours[day]:
-                tmp_queue = add_new_days_hours(time_interval, tmp_queue)
+                tmp_queue = add_new_days_hours(time_interval,minutes_intervals , tmp_queue)
             new_opening_hours_queue[day] = tmp_queue
         else:
             new_opening_hours_queue[day] = "closed"
