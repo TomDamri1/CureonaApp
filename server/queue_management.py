@@ -346,7 +346,10 @@ class LetsUserOutBusiness(Resource):
         code_arr = business["queue"][name_current_day]
 
         print(code_arr)
+        flag = 0
         for time_range in business['queue'][name_current_day]:
+            if data["key"] in code_arr[time_range]:
+                flag = 1
             business_info.update({'company_id': data['company_id']},
                              {'$pull': {"queue." + name_current_day + "." + time_range: data["key"]}})
         """
@@ -358,13 +361,7 @@ class LetsUserOutBusiness(Resource):
         business = business_info.find_one({"company_id": data['company_id']})
         code_arr = business["queue"][name_current_day]
         print(code_arr)
-
-        return jsonify({'state': 'success'})
-        business_info.update({'business_name': data['BusinessName']},
-                             {"$set": {"queue." + data['Day']: code_arr}})
-
-        code_arr = business["queue"][name_current_day][dt_string]
-
-        if data["key"] in code_arr:
-            return jsonify({'state': 'success'})
-        return jsonify({'state': 'failed'})
+        if flag == 1:
+            return jsonify({'state': 'success', 'msg': 'the code exist'})
+        else:
+            return jsonify({'state': 'success', 'msg': 'the code is not exist'})
