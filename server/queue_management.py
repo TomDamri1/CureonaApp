@@ -133,6 +133,7 @@ class AvailableQueues(Resource):
             # print("DAY =============", day)
             for hour in list_queue[day]:
                 # print(hour)
+
                 if max_capacity - len(list_queue[day][hour]) > 0:
                     available_queues.append(hour)
             return available_queues
