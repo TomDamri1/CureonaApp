@@ -130,7 +130,9 @@ class AvailableQueues(Resource):
     def post(self):
         def available_hours(day):
             available_queues = list()
+            # print("DAY =============", day)
             for hour in list_queue[day]:
+                # print(hour)
                 if max_capacity - len(list_queue[day][hour]) > 0:
                     available_queues.append(hour)
             return available_queues
@@ -153,9 +155,19 @@ class AvailableQueues(Resource):
 
         max_capacity = int(json_doc["max_capacity"])
         queue = json_doc["queue"]
+        print(queue)
         list_queue = []
-        for _, value in queue.items():
-            list_queue.append(value)
+        list_queue.append(queue["sunday"])
+        list_queue.append(queue["monday"])
+        list_queue.append(queue["tuesday"])
+        list_queue.append(queue["wednesday"])
+        list_queue.append(queue["thursday"])
+        list_queue.append(queue["friday"])
+        list_queue.append(queue["saturday"])
+        # for key, value in queue.items():
+        #     print(key)
+        #     list_queue.append(value)
+        print(list_queue)
         available_queues_sunday = available_hours_at_day(0)
         print("available_queues_sunday", available_queues_sunday)
         available_queues_monday = available_hours_at_day(1)
@@ -163,7 +175,7 @@ class AvailableQueues(Resource):
         available_queues_tuesday = available_hours_at_day(2)
         print("available_queues_tuesday", available_queues_tuesday)
         available_queues_wednesday = available_hours_at_day(3)
-        print("available_queues_wednesday", available_queues_sunday)
+        print("available_queues_wednesday", available_queues_wednesday)
         available_queues_thursday = available_hours_at_day(4)
         print("available_queues_thursday", available_queues_thursday)
         available_queues_friday = available_hours_at_day(5)
@@ -178,6 +190,7 @@ class AvailableQueues(Resource):
                                      'thursday': available_queues_thursday,
                                      'friday': available_queues_friday,
                                      'saturday': available_queues_saturday}
+        print(open_and_available_queues)
         return jsonify({'state': 'success', 'queue': open_and_available_queues})
 
 
