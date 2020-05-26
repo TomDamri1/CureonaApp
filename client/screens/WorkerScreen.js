@@ -40,12 +40,18 @@ const WorkerScreen = props => {
     const handleSpontaneousAppointment = async () => {
 
         const resData = await requestFromUrl(Urls.routes.SpontaneousAppointment, { "company_id": company_id, "cellphone": entranceKey });
+        console.log(resData);
         if (resData.state === "success") {
-            Alert.alert("Success");
+            Alert.alert("Success", "the user can get it.");
+            setPass(Colors.success);
+            setCanTheUserGetIn(true);
+            setEntranceKey('');
         }
         else {
-            Alert.alert("Falied");
+            Alert.alert("Falied", "something went wrong, check the details you'v entered.");
             console.log(resData);
+            setPass(Colors.fail);
+            setCanTheUserGetIn(false);
         }
     }
 
