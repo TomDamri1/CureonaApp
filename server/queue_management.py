@@ -66,6 +66,7 @@ class GetQueue(Resource):
         data = GetQueue_parser.parse_args()
         print(data)
         business = business_info.find_one({"company_id": data['company_id']})
+        print(business)
         # check for legal day name
         if data['Day'] == "sunday" or data['Day'] == "monday" or data['Day'] == "tuesday" or data[
             'Day'] == "wednesday" or data['Day'] == "thursday" or data['Day'] == "friday" or data['Day'] == "saturday":
@@ -79,6 +80,11 @@ class GetQueue(Resource):
         if not business["open"]:
             return jsonify({'state': 'failed, Business is closed'})
         # check if in the given day and hor there are available queue
+        print(business["queue"])
+        print(business["queue"][data['Day']])
+        print(business["queue"][data['Day']][data['Hour']])
+        print(len(business["queue"][data['Day']][data['Hour']]))
+        print(str(int(len(business["queue"][data['Day']][data['Hour']]))))
         print("num of queue to this hour: " + str(int(len(business["queue"][data['Day']][data['Hour']]))))
         print("max capacity: " + str(business["max_capacity"]))
         if len(business["queue"][data['Day']][data['Hour']]) >= int(business["max_capacity"]):
@@ -124,7 +130,10 @@ class AvailableQueues(Resource):
     def post(self):
         def available_hours(day):
             available_queues = list()
+            # print("DAY =============", day)
             for hour in list_queue[day]:
+                # print(hour)
+
                 if max_capacity - len(list_queue[day][hour]) > 0:
                     available_queues.append(hour)
             return available_queues
@@ -147,16 +156,34 @@ class AvailableQueues(Resource):
 
         max_capacity = int(json_doc["max_capacity"])
         queue = json_doc["queue"]
+        print(queue)
         list_queue = []
-        for _, value in queue.items():
-            list_queue.append(value)
+        list_queue.append(queue["sunday"])
+        list_queue.append(queue["monday"])
+
+        list_queue.append(queue["tuesday"])
+        list_queue.append(queue["wednesday"])
+        list_queue.append(queue["thursday"])
+        list_queue.append(queue["friday"])
+        list_queue.append(queue["saturday"])
+        # for key, value in queue.items():
+        #     print(key)
+        #     list_queue.append(value)
+        print(list_queue)
         available_queues_sunday = available_hours_at_day(0)
+        print("available_queues_sunday", available_queues_sunday)
         available_queues_monday = available_hours_at_day(1)
+        print("available_queues_monday", available_queues_monday)
         available_queues_tuesday = available_hours_at_day(2)
+        print("available_queues_tuesday", available_queues_tuesday)
         available_queues_wednesday = available_hours_at_day(3)
+        print("available_queues_wednesday", available_queues_wednesday)
         available_queues_thursday = available_hours_at_day(4)
+        print("available_queues_thursday", available_queues_thursday)
         available_queues_friday = available_hours_at_day(5)
+        print("available_queues_friday", available_queues_friday)
         available_queues_saturday = available_hours_at_day(6)
+        print("available_queues_saturday", available_queues_saturday)
 
         open_and_available_queues = {'sunday': available_queues_sunday,
                                      'monday': available_queues_monday,
@@ -165,6 +192,7 @@ class AvailableQueues(Resource):
                                      'thursday': available_queues_thursday,
                                      'friday': available_queues_friday,
                                      'saturday': available_queues_saturday}
+        print(open_and_available_queues)
         return jsonify({'state': 'success', 'queue': open_and_available_queues})
 
 
@@ -235,16 +263,15 @@ class deleteAppointment(Resource):
 
 insert_parser = reqparse.RequestParser()
 insert_parser.add_argument('company_id', required=True, help="company_id name cannot be blank!")
-
-
-class Insert(Resource):
-    pass
+insert_parser.add_argument('key', required=True, help="key cannot be blank!")
 
 
 class LetsUserIntoBusiness(Resource):
     def post(self):
         data = insert_parser.parse_args()
+
         tz_NY = pytz.timezone('Israel')
+
         business = business_info.find_one({"company_id": data['company_id']})
         current_date = datetime.date.today()
         print(current_date)
@@ -287,14 +314,14 @@ class currentAmountAtBusiness(Resource):
         timeZone = pytz.timezone('Israel')
         current_time = get_time_and_day_for_now(
             timeZone)  # current_time is an array that built like so: current_time[0]=day name, current_time[1]=hour
-        convert_time_to_str(current_time,  business['minutes_intervals'], business['open_hours'][current_time[0]])
+        convert_time_to_str(current_time, business['minutes_intervals'], business['open_hours'][current_time[0]])
         amount = check_if_hour_exists(business, current_time)
         if 'error' in amount:
             return jsonify({'state': 'fail', "current_amount_in_business": amount})
         print(current_time)
 
         return jsonify({'state': 'success', "current_amount_in_business": amount,
-                            'max_capacity': business['max_capacity']})
+                        'max_capacity': business['max_capacity']})
 
 
 spontaneous_appointment = reqparse.RequestParser()
@@ -324,3 +351,46 @@ class generateCodeForSpontaneousAppointment(Resource):
         no_error = True if query_result['nModified'] != 0 else False
         return jsonify({"state": 'success' if no_error else 'fail',
                         'costumer_entered': data['cellphone'] if no_error else 'unknown error'})
+
+
+get_out_parser = reqparse.RequestParser()
+get_out_parser.add_argument('company_id', required=True, help="company_id name cannot be blank!")
+get_out_parser.add_argument('key', required=True, help="key cannot be blank!")
+
+
+class LetsUserOutBusiness(Resource):
+    def post(self):
+        data = get_out_parser.parse_args()
+
+        data = insert_parser.parse_args()
+        tz_NY = pytz.timezone('Israel')
+        business = business_info.find_one({"company_id": data['company_id']})
+        current_date = datetime.date.today()
+        print(current_date)
+        current_day = datetime.datetime.today().weekday()
+        print(current_day)
+        name_current_day = calendar.day_name[current_day].lower()
+        print(name_current_day)
+        print("codes")
+        code_arr = business["queue"][name_current_day]
+
+        print(code_arr)
+        flag = 0
+        for time_range in business['queue'][name_current_day]:
+            if data["key"] in code_arr[time_range]:
+                flag = 1
+            business_info.update({'company_id': data['company_id']},
+                             {'$pull': {"queue." + name_current_day + "." + time_range: data["key"]}})
+        """
+        for q in code_arr:
+            if data["key"] in q:
+                q.remove(data["key"])
+                print(q)
+        """
+        business = business_info.find_one({"company_id": data['company_id']})
+        code_arr = business["queue"][name_current_day]
+        print(code_arr)
+        if flag == 1:
+            return jsonify({'state': 'success', 'msg': 'the code exist'})
+        else:
+            return jsonify({'state': 'success', 'msg': 'the code is not exist'})
