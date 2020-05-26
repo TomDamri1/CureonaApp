@@ -339,8 +339,9 @@ class generateCodeForSpontaneousAppointment(Resource):
         except Exception as err:
             return jsonify({'state': 'fail', 'reason': str(err)})
 
+
         current_time = get_time_and_day_for_now(timeZone)
-        convert_time_to_str(current_time, business['minutes_intervals'])
+        convert_time_to_str(current_time, business['minutes_intervals'],  business['open_hours'][current_time[0]])
         print(business['business_name'])
         print("queue." + current_time[0] + "." + current_time[1] + data['cellphone'])
         # example: current_time[0]=day name, current_time[1]=hour
