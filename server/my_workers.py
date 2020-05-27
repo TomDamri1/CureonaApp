@@ -17,7 +17,6 @@ class GetMyWorkers(Resource):
         businessInfo = db_business.find_one({"username": data["username"]})
         # check if there are queues for the customer
         if not businessInfo:
-            empty = list()
-            return jsonify(empty)
+            return {'state': "fail, the business is not exist."}
         my_workers = businessInfo["workers"]
         return jsonify(my_workers)
