@@ -14,4 +14,10 @@ class GetMyWorkers(Resource):
     def post(self):
         data = get_my_workers_parser.parse_args()
         print(data)
-        user_queues = db_business.find_one({"username": data["username"]})
+        businessInfo = db_business.find_one({"username": data["username"]})
+        # check if there are queues for the customer
+        if not businessInfo:
+            empty = list()
+            return jsonify(empty)
+        my_workers = businessInfo["workers"]
+        return jsonify(my_workers)
