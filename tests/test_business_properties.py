@@ -31,12 +31,18 @@ class TestUserUpdateSettings(unittest.TestCase):
         response = requests.post(url)
         self.assertNotEqual(response.json(), {})
 
-    def test_get_my_workers(self):
+    def test_get_my_workers_not_empty(self):
+        url = 'https://curona.herokuapp.com/GetMyWorkers'
+        myobj = {"username": "test"}
+        response = requests.post(url, data=myobj)
+        self.assertTrue(response.json())
+
+    def test_get_my_workers_empty(self):
         url = 'https://curona.herokuapp.com/GetMyWorkers'
         myobj = {"username": "IsNotExist"}
         response = requests.post(url, data=myobj)
-        self.assertEqual({'state': "fail, the business is not exist."}, response.json())
-
+        except_result = {'state': "fail, the username is not exist(not a business owner)."}
+        self.assertEqual(except_result, response.json())
 
 
 
