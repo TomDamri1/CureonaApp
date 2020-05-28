@@ -268,3 +268,44 @@ the JSON that will be returned could include few fields:
 
 
 <hr>
+
+
+### get the amount of costumers for a specific day and hour  :
+
+#### url : https://curona.herokuapp.com/AmountForDayAndHour
+
+send a company id , day and  hour - and receive an amount of costumers in the business.
+if one of the parameters is incorrect of invalid - a proper ,message will be returned 
+<u>example for JSON:</u>
+
+```
+{
+    "company_id": "101010",
+    "day" : "sunday",
+    "hour" : "07:00"
+}
+```
+and the returned json :
+```
+{
+  "amount": "0",
+  "state": "success"
+}
+```
+
+This is an example for a request that is invalid-  due to the fact that there is no such interval 07:05:
+```
+{
+    "company_id": "101010",
+    "day" : "sunday",
+    "hour" : "07:05"
+}
+```
+and the returned json :
+
+```
+{
+  "amount": "error : no such meeting intervals for sunday at 07:05",
+  "state": "fail"
+}
+```
