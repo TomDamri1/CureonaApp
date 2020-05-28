@@ -275,7 +275,7 @@ the JSON that will be returned could include few fields:
 #### url : https://curona.herokuapp.com/AmountForDayAndHour
 
 send a company id , day and  hour - and receive an amount of costumers in the business.
-if one of the parameters is incorrect of invalid - a proper ,message will be returned 
+if one of the parameters is incorrect or invalid - a proper ,message will be returned 
 <u>example for JSON:</u>
 
 ```
