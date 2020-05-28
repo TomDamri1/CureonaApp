@@ -339,9 +339,8 @@ class generateCodeForSpontaneousAppointment(Resource):
         except Exception as err:
             return jsonify({'state': 'fail', 'reason': str(err)})
 
-
         current_time = get_time_and_day_for_now(timeZone)
-        convert_time_to_str(current_time, business['minutes_intervals'],  business['open_hours'][current_time[0]])
+        convert_time_to_str(current_time, business['minutes_intervals'], business['open_hours'][current_time[0]])
         print(business['business_name'])
         print("queue." + current_time[0] + "." + current_time[1] + data['cellphone'])
         # example: current_time[0]=day name, current_time[1]=hour
@@ -380,7 +379,7 @@ class LetsUserOutBusiness(Resource):
             if data["key"] in code_arr[time_range]:
                 flag = 1
             business_info.update({'company_id': data['company_id']},
-                             {'$pull': {"queue." + name_current_day + "." + time_range: data["key"]}})
+                                 {'$pull': {"queue." + name_current_day + "." + time_range: data["key"]}})
         """
         for q in code_arr:
             if data["key"] in q:
@@ -396,7 +395,6 @@ class LetsUserOutBusiness(Resource):
             return jsonify({'state': 'failed', 'msg': 'the code is not exist'})
 
 
-
 get_amount_day_hour = reqparse.RequestParser()
 get_amount_day_hour.add_argument('company_id', required=True, help="company_id name cannot be blank!")
 get_amount_day_hour.add_argument('day', required=True, help="day cannot be blank!")
@@ -406,6 +404,9 @@ get_amount_day_hour.add_argument('hour', required=True, help="hour cannot be bla
 class getAmountOfCostumersForDayAndHour(Resource):
 
     def post(self):
-        return
-
+        data = get_amount_day_hour.parse_args()
+        business = get_business_data(data['company_id'])
+        time_to_check = [data['day'], data['hour']]
+        amount = check_if_hour_exists(business, time_to_check)
+        return jsonify({"state": 'success' if not 'error' in amount else 'fail','amount' : amount})
 
