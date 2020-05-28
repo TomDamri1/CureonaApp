@@ -394,3 +394,11 @@ class LetsUserOutBusiness(Resource):
             return jsonify({'state': 'success', 'msg': 'the code exist'})
         else:
             return jsonify({'state': 'failed', 'msg': 'the code is not exist'})
+
+
+class getAmountOfCostumersForDayAndHour(Resource):
+
+    def post(self):
+        return
+
+
