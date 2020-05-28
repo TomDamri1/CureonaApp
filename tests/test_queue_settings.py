@@ -44,18 +44,19 @@ class TestUserUpdateSettings(unittest.TestCase):
 
     def test_lets_user_into_business_with_not_exist_code(self):
         url = 'https://curona.herokuapp.com/deleteAppointment'
-        myobj = {"business_name" : "notRealBusiness","username": "notRealUser", "code":"NotRealCode",
-                "date":"05-05-2020","time" : "22:00-23:00"}
+        myobj = {"business_name": "notRealBusiness", "username": "notRealUser", "code": "NotRealCode",
+                 "date": "05-05-2020", "time": "22:00-23:00"}
         response = requests.post(url, data=myobj)
         except_result = {"state": "couldn't locate the appointment!"}
         self.assertNotEqual(except_result, response)
 
-    def test_current_amount_is_zero(self):
-        url = 'https://curona.herokuapp.com/currentAmount'
-        myobj = {"company_id": "101010"}
+    def test_lets_user_get_out_business_with_not_exist_code(self):
+        url = 'https://curona.herokuapp.com/LetsUserOutBusiness'
+        myobj = {"company_id": "123", "key": "NotRealCode"}
         response = requests.post(url, data=myobj)
-        except_result = {"current_amount_in_business": "0", "max_capacity": 10, "state": "success"}
+        except_result = {'state': 'success', 'msg': 'the code is not exist'}
         self.assertNotEqual(except_result, response)
+
 
 if __name__ == '__main__':
     unittest.main()

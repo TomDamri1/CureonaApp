@@ -393,4 +393,4 @@ class LetsUserOutBusiness(Resource):
         if flag == 1:
             return jsonify({'state': 'success', 'msg': 'the code exist'})
         else:
-            return jsonify({'state': 'success', 'msg': 'the code is not exist'})
+            return jsonify({'state': 'failed', 'msg': 'the code is not exist'})

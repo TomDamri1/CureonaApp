@@ -8,6 +8,7 @@ from server.business_settings import *
 from server.queue_management import *
 from server.MyQueue import *
 from server.user import *
+from server.my_workers import *
 
 # creating the flask app
 app = Flask(__name__)
@@ -41,7 +42,7 @@ api.add_resource(LetsUserOutBusiness, '/LetsUserOutBusiness')
 api.add_resource(deleteAppointment, '/deleteAppointment')
 api.add_resource(currentAmountAtBusiness, '/currentAmount')
 api.add_resource(generateCodeForSpontaneousAppointment, '/SpontaneousAppointment')
-
+api.add_resource(GetMyWorkers, '/GetMyWorkers')
 # driver function
 
 if __name__ == '__main__':
