@@ -396,6 +396,13 @@ class LetsUserOutBusiness(Resource):
             return jsonify({'state': 'failed', 'msg': 'the code is not exist'})
 
 
+
+get_amount_day_hour = reqparse.RequestParser()
+get_amount_day_hour.add_argument('company_id', required=True, help="company_id name cannot be blank!")
+get_amount_day_hour.add_argument('day', required=True, help="day cannot be blank!")
+get_amount_day_hour.add_argument('hour', required=True, help="hour cannot be blank!")
+
+
 class getAmountOfCostumersForDayAndHour(Resource):
 
     def post(self):
