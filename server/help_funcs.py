@@ -192,7 +192,7 @@ def check_if_hour_exists(business, current_time):
         amount = business['queue'][current_time[0]][current_time[1]]
     except Exception as err:
         print("error is" + str(err))
-        return 'error : the business is closed for ' + current_time[0] + " at " + current_time[1]
+        return 'error : no such meeting intervals for ' + current_time[0] + " at " + current_time[1]
     else:
         print("amount is  ")
         print(amount)
