@@ -142,7 +142,7 @@ const WorkerScreen = props => {
             setPass(Colors.fail);
             setCanTheUserGetIn(false);
         }
-    }
+    
 
     return (
         <View style={styles.form}>
