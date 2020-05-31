@@ -1,5 +1,5 @@
 export default async (route , requestBody) => {
-    
+    console.log("===========",JSON.stringify(requestBody));
     const response = await fetch(route, {
         method: 'POST',
         headers: {
@@ -9,6 +9,6 @@ export default async (route , requestBody) => {
         body: JSON.stringify(requestBody),
     });
     const resData = await response.json();
-    console.log("from inside :",resData)
+    //console.log("from inside :",resData)
     return resData;
 }

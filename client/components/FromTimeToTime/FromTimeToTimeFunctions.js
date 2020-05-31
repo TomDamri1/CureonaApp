@@ -11,8 +11,8 @@ export const generateHourList = () => {
   }
 export const generateMinuteList = () => {
     let hourList = [];
-    for (let index = 0; index < 60; index++) {
-      var num = index.toString();
+    for (let index = 0; index < 4; index++) {
+      var num = (index*15).toString();
       if (num.length < 2) {
         num = "0" + num;
       }

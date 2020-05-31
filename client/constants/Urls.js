@@ -13,6 +13,8 @@ export default {
         registerWorker: MainURL + 'RegistrationWorker',
         letsUserIntoBusiness : MainURL + 'LetsUserIntoBusiness',
         deleteAppointment : MainURL + 'deleteAppointment',
+        currentAmountOfPeapleInTheStore : MainURL + 'currentAmount',
+        SpontaneousAppointment : MainURL + 'SpontaneousAppointment',
     }
 
 }
