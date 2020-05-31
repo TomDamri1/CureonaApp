@@ -32,9 +32,6 @@ const WorkerScreen = props => {
     const company_id = props.navigation.getParam('company_id');
 
 
-    const CUSTOMERS_IN_STORE = 0;
-    const MAX_CAPACITY = 1;
-
     console.log(company_id)
 
     const handleSpontaneousAppointment = async () => {

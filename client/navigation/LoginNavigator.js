@@ -19,7 +19,7 @@ import AdminChangesScreen from '../screens/AdminChangesScreen';
 import WorkerScreen from '../screens/WorkerScreen';
 import AddWorkerScreen from '../screens/AddWorkerScreen';
 import BusinessOwnerchangesScreen from '../screens/BusinessOwnerchangesScreen';
-
+import ViewWorkersScreen from "../screens/ViewWorkersScreen";
 const LoginNavigator = createStackNavigator({
     Login: LoginScreen,
     Registration: RegisterScreen,
@@ -30,6 +30,7 @@ const LoginNavigator = createStackNavigator({
             headerTitle: text.screenHeaders.search
         }
     },
+    ViewWorkersScreen : ViewWorkersScreen,
     AppointmentScreen: AppointmentScreen,
     BusinessOwnerScreen: BusinessOwnerScreen,
     AdminScreen: AdminScreen,
@@ -56,6 +57,7 @@ const LoginNavigator = createStackNavigator({
             headerShown: false
         }
     },
+
 })
 
 
