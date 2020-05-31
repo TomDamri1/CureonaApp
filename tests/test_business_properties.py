@@ -43,7 +43,12 @@ class TestUserUpdateSettings(unittest.TestCase):
         response = requests.post(url, data=myobj)
         except_result = {'state': "fail, the username is not exist(not a business owner)."}
         self.assertEqual(except_result, response.json())
-
+    def test_remove_worker(self):
+        url = 'https://curona.herokuapp.com/RemoveWorkers'
+        myobj = {"username": "IsNotExist", "worker_name": "aaa"}
+        response = requests.post(url, data=myobj)
+        except_result = {'state': "fail, the username is not exist(not a business owner)."}
+        self.assertEqual(response.json(), except_result)
 
 
 if __name__ == '__main__':
