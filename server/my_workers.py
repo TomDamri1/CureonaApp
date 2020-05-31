@@ -4,7 +4,7 @@ from flask_restful import reqparse, Resource
 from server.help_funcs import *
 
 db_business = new_db["business_info"]
-
+db_login = new_db["login"]
 get_my_workers_parser = reqparse.RequestParser()
 get_my_workers_parser.add_argument('username', required=True, help="username name cannot be blank!")
 
@@ -35,8 +35,8 @@ class RemoveMyWorkers(Resource):
         # check if there are queues for the customer
         if not businessInfo:
             return {'state': "fail, the username is not exist(not a business owner)."}
-        deleted_from_array = businessInfo.update({'username': data["username"]},
-                                               {'$pull': {"orders": data["worker_name"]}})
+        deleted_from_business_array = db_business.update({'username': data["username"]}, {'$pull': {"workers": data["worker_name"]}})
+        deleted_from_login_array = db_login.delete_one({"username": data["worker_name"]})
         ret_val = dict()
-        ret_val["state"] = 'success' if deleted_from_array['nModified'] else 'fail'
+        ret_val["state"] = 'success' if deleted_from_business_array['nModified'] or deleted_from_login_array['nModified'] else 'fail'
         return jsonify(ret_val)
