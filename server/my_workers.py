@@ -20,3 +20,21 @@ class GetMyWorkers(Resource):
             return {'state': "fail, the username is not exist(not a business owner)."}
         my_workers = businessInfo["workers"]
         return jsonify(my_workers)
+
+
+remove_worker_account_parser = reqparse.RequestParser()
+remove_worker_account_parser.add_argument('username', required=True, help="username name cannot be blank!")
+remove_worker_account_parser.add_argument('worker_name', required=True, help="username name cannot be blank!")
+
+class RemoveMyWorkers(Resource):
+
+    def post(self):
+        data = remove_worker_account_parser.parse_args()
+        print(data)
+        businessInfo = db_business.find_one({"username": data["username"]})
+        # check if there are queues for the customer
+        if not businessInfo:
+            return {'state': "fail, the username is not exist(not a business owner)."}
+
+        my_workers = businessInfo["workers"]
+        return jsonify(my_workers)
