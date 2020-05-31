@@ -309,3 +309,35 @@ and the returned json :
   "state": "fail"
 }
 ```
+
+### remove worker  :
+
+#### url : https://curona.herokuapp.com/RemoveWorkers
+
+send a username and worker_name - and receive an state success or fail.
+<u>example for JSON:</u>
+
+```
+{
+    "username":"test",
+    "worker_name":"vcbfrd"
+}
+```
+and the returned json :
+```
+{
+  "state": "success"
+}
+```
+or :
+```
+{
+  "state": "fail"
+}
+```
+or :
+```
+{
+ "state": "fail, the username is not exist(not a business owner)."
+}
+```

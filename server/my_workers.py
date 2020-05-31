@@ -24,7 +24,7 @@ class GetMyWorkers(Resource):
 
 remove_worker_account_parser = reqparse.RequestParser()
 remove_worker_account_parser.add_argument('username', required=True, help="username name cannot be blank!")
-remove_worker_account_parser.add_argument('worker_name', required=True, help="username name cannot be blank!")
+remove_worker_account_parser.add_argument('worker_name', required=True, help="worker_name name cannot be blank!")
 
 class RemoveMyWorkers(Resource):
 
