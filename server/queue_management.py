@@ -49,7 +49,7 @@ def calc_date(Day):
     else:
         queue_day = 5
     current_day = datetime.datetime.today().weekday()
-    if current_day < queue_day:
+    if current_day <= queue_day:
         difference = queue_day - current_day
     else:
         difference = 7 - (current_day - queue_day)
