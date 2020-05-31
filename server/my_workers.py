@@ -35,6 +35,8 @@ class RemoveMyWorkers(Resource):
         # check if there are queues for the customer
         if not businessInfo:
             return {'state': "fail, the username is not exist(not a business owner)."}
-
-        my_workers = businessInfo["workers"]
-        return jsonify(my_workers)
+        deleted_from_array = businessInfo.update({'username': data["username"]},
+                                               {'$pull': {"orders": data["worker_name"]}})
+        ret_val = dict()
+        ret_val["state"] = 'success' if deleted_from_array['nModified'] else 'fail'
+        return jsonify(ret_val)
