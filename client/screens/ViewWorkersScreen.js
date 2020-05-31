@@ -21,7 +21,7 @@ const ViewWorkersScreen = props => {
             <FlatList
                 data={workers}
                 renderItem={({ item }) =>
-                    <WorkerItem user={item}/>
+                    <WorkerItem user={item} businessOwner={username} navigation={props.navigation}/>
                 }
                 keyExtractor={item => item}
             />

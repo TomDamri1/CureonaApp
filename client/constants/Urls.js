@@ -16,6 +16,7 @@ export default {
         currentAmountOfPeapleInTheStore : MainURL + 'currentAmount',
         SpontaneousAppointment : MainURL + 'SpontaneousAppointment',
         getMyWorkers : MainURL + 'GetMyWorkers',
+        removeWorkers : MainURL + 'RemoveWorkers',
     }
 
 }
