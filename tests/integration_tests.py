@@ -78,7 +78,17 @@ class TestUser(unittest.TestCase):
         response = requests.post(url, data=myobj)
         except_result = {'state': 'failed, sorry the queue is full'}
         self.assertEqual(response.json(), except_result)
-
+    # add and remove a worker to IKEA c_id 123, business owner test.
+    def test_add_and_remove_worker(self):
+        url = 'https://curona.herokuapp.com/RegistrationWorker'
+        myobj = {"company_id": "123", "password": "12345"}
+        response = requests.post(url, data=myobj)
+        url = 'https://curona.herokuapp.com/RemoveWorkers'
+        print(response.json()["username"])
+        myobj = {"username": "test", "worker_name": response.json()["username"]}
+        response = requests.post(url, data=myobj)
+        except_result = {'state': "success"}
+        self.assertEqual(response.json(), except_result)
 
 
 if __name__ == '__main__':
