@@ -145,3 +145,17 @@ class UpdateMyMessage(Resource):
         business_info.update({'company_id': data["company_id"]},
                              {'$set': {"msg": data["msg"]}})
         return jsonify({'state': "success"})
+
+
+GetBusinessMessage_parser = reqparse.RequestParser()
+GetBusinessMessage_parser.add_argument('company_id', required=True, help="company id cannot be blank!")
+
+class GetBusinessMessage(Resource):
+
+    def post(self):
+        data = GetBusinessMessage_parser.parse_args()
+        print(data)
+        businessInfo = business_info.find_one({"company_id": data["company_id"]})
+        if not businessInfo:
+            return {'state': "fail, the company_id is not exist."}
+        return jsonify({'state': "success", "msg": businessInfo["msg"]})
