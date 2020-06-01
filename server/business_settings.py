@@ -150,6 +150,7 @@ class UpdateMyMessage(Resource):
 GetBusinessMessage_parser = reqparse.RequestParser()
 GetBusinessMessage_parser.add_argument('company_id', required=True, help="company id cannot be blank!")
 
+
 class GetBusinessMessage(Resource):
 
     def post(self):
