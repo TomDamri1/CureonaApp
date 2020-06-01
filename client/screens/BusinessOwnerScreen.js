@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { StyleSheet, Text, View, Button } from 'react-native';
 import Title from '../components/Title';
 import text from '../constants/text';
@@ -7,62 +7,121 @@ import requestFromUrl from '../functions/routeFunctions/requestFromUrl';
 import Urls from '../constants/Urls';
 
 const BusinessOwnerScreen = props => {
-    const handleAddWorkerUserToMyBusiness = () => {
-        props.navigation.setParams({company_id : company_id});
-        props.navigation.navigate({
-            routeName: "AddWorkerScreen",
-            params : {
-                company_id : company_id,
-            }
-        })
-    }
     const company_id = props.navigation.getParam('company_id');
-    return(
+    const [amountOfCustomersInBusiness, setAmountOfCustomersInBusiness] = useState('0');
+    const [maxCapacity, setMaxCapacity] = useState('0');
+    const checkAmountOfPeaple = async (company_id) => {
+        const req = await requestFromUrl(Urls.routes.currentAmountOfPeapleInTheStore, { company_id: company_id });
+        const current_amount_in_business = await req.current_amount_in_business;
+        const max_capacity = await req.max_capacity;
+    
+        return {
+            current_amount_in_business: current_amount_in_business,
+            max_capacity: max_capacity
+        };
+    }
+    useEffect(() => {
+        const interval = setInterval(async () => {
+            const AmountOfPeaple = await (await checkAmountOfPeaple(company_id)).current_amount_in_business;
+            const MaxCapacity = await (await checkAmountOfPeaple(company_id)).max_capacity;
+            setAmountOfCustomersInBusiness(AmountOfPeaple);
+            setMaxCapacity(MaxCapacity);
+        }, 5000);
+        return () => clearInterval(interval);
+    })
+    
+    return (
         <View>
-            <Title title="welcome!" subTitle={props.navigation.getParam('username')}/>
-            <Title title={`your business : ${props.navigation.getParam('businessName')}`}/>
-            <Button title="manage business"/>
-            <Button title="view workers" onPress={ async () => {
-                props.navigation.setParams({company_id : company_id});
+            <Title title="welcome!" subTitle={props.navigation.getParam('username')} />
+            <Title title={`your business : ${props.navigation.getParam('businessName')}`} />
+            <Button title="manage business" />
+            <Button title="view workers" onPress={async () => {
+                props.navigation.setParams({ company_id: company_id });
                 getIntoLoadingScreen(props.navigation);
                 const workers = await requestFromUrl(Urls.routes.getMyWorkers, {
-                    username : props.navigation.getParam('username'),
+                    username: props.navigation.getParam('username'),
                 });
                 console.log(workers);
                 props.navigation.pop();
                 props.navigation.navigate({
                     routeName: "ViewWorkersScreen",
-                    params : {
-                        company_id : company_id,
-                        username : props.navigation.getParam('username'),
-                        workers : workers,
+                    params: {
+                        company_id: company_id,
+                        username: props.navigation.getParam('username'),
+                        workers: workers,
                     }
                 })
-            }}/>
+            }} />
             <Button title="Add worker user to my business" onPress={() => {
-                props.navigation.setParams({company_id : company_id});
+                props.navigation.setParams({ company_id: company_id });
                 props.navigation.navigate({
                     routeName: "AddWorkerScreen",
-                    params : {
-                        company_id : company_id
+                    params: {
+                        company_id: company_id
                     }
                 })
             }} />
-            <Button title={text.updateTheOpeningHoursBusinessOwner}onPress={() => {
-                props.navigation.setParams({company_id : company_id});
+            <Button title={text.updateTheOpeningHoursBusinessOwner} onPress={() => {
+                props.navigation.setParams({ company_id: company_id });
                 props.navigation.navigate({
                     routeName: "BusinessOwnerchangesScreen",
-                    params : {
-                        company_id : company_id
+                    params: {
+                        company_id: company_id
                     }
                 })
             }} />
+
+            <View style={styles.customerNubmerText}>
+                <Text style={styles.label}>{amountOfCustomersInBusiness} / {maxCapacity}</Text>
+                <Text>Customers in the shop</Text>
+            </View>
 
         </View>
 
     )
 }
 
+const styles = StyleSheet.create({
+    form: {
+        margin: 20,
+    },
+    label: {
+        marginTop: 30,
+        marginVertical: 8,
+        fontWeight: 'bold',
+        fontSize: 18,
+    },
+    input: {
+        paddingHorizontal: 2,
+        paddingVertical: 5,
+        borderBottomColor: '#ccc',
+        borderBottomWidth: 1
+    },
+    buttonRow: {
+        flexDirection: "row",
+    },
+    button: {
+        margin: "5%",
+        width: "40%"
+    },
+    getinText: {
+        fontSize: 25,
+        color: 'white',
+        letterSpacing: 1.2
+    },
+    getinTextContainer: {
+        paddingTop: 5,
+        width: '100%',
+        height: 50,
+        textAlign: "center",
+        alignItems: "center"
+    },
+    customerNubmerText: {
+        alignItems: "center",
+        margin: 20,
+    }
+
+})
 
 
 export default BusinessOwnerScreen
