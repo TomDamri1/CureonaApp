@@ -15,7 +15,6 @@ updateSettings_parser.add_argument('company_id', required=True, help="company id
 updateSettings_parser.add_argument('open', required=False)
 updateSettings_parser.add_argument('open_hours', type=dict, required=False)
 updateSettings_parser.add_argument('max_capacity', type=int, required=False)
-updateSettings_parser.add_argument('msg', required=False)
 
 
 def updateOpen(cid, business_open):
@@ -130,15 +129,19 @@ def update_hours_and_inform_costumers(cid, new_opening_hours, minutes_intervals,
                              )
 
 
-class update_my_msg(Resource):
+updateMessage_parser = reqparse.RequestParser()
+updateMessage_parser.add_argument('company_id', required=True, help="company id cannot be blank!")
+updateMessage_parser.add_argument('msg', required=True, help="message cannot be blank!")
+
+
+class UpdateMyMessage(Resource):
 
     def post(self):
-        data = updateSettings_parser.parse_args()
+        data = updateMessage_parser.parse_args()
         print(data)
         businessInfo = business_info.find_one({"company_id": data["company_id"]})
-        # check if there are queues for the customer
         if not businessInfo:
             return {'state': "fail, the company_id is not exist."}
         business_info.update({'company_id': data["company_id"]},
-                                                         {'set': {"workers": data["worker_name"]}})
-        return jsonify({})
+                             {'$set': {"msg": data["msg"]}})
+        return jsonify({'state': "success"})
