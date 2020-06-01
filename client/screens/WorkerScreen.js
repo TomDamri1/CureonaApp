@@ -104,7 +104,38 @@ const WorkerScreen = props => {
     })
 
     const handleOutPress = async () => {
+         props.navigation.navigate({
+            routeName: "Loading"
+        })
+        console.log(JSON.stringify({
+            company_id: company_id,
+            key: entranceKey,
+        }))
+        const response = await fetch(Urls.routes.letsUserIntoBusiness, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                company_id: company_id,
+                key: entranceKey,
+            }),
+        });
+        const resData = await response.json();
+        console.log(resData);
+        props.navigation.pop();
+        if (resData.state == Response.success) {
+            Alert.alert(text.alert.success, text.alert.theUserCanGetOut)
+            setPass(Colors.success);
+            setCanTheUserGetIn(true);
+        }
 
+        else {
+            Alert.alert(text.alert.failed, text.alert.theUserCannotGetOut)
+            setPass(Colors.fail);
+            setCanTheUserGetIn(false);
+        }
     }
 
     return (
