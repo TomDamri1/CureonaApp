@@ -45,7 +45,7 @@ api.add_resource(generateCodeForSpontaneousAppointment, '/SpontaneousAppointment
 api.add_resource(GetMyWorkers, '/GetMyWorkers')
 api.add_resource(RemoveMyWorkers, '/RemoveWorkers')
 api.add_resource(getAmountOfCostumersForDayAndHour, '/AmountForDayAndHour')
-
+api.add_resource(UpdateMyMessage, '/UpdateMyMessage')
 # driver function
 
 if __name__ == '__main__':
