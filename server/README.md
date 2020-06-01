@@ -341,3 +341,53 @@ or :
  "state": "fail, the username is not exist(not a business owner)."
 }
 ```
+### write message for customers  :
+
+#### url : https://curona.herokuapp.com/UpdateMyMessage
+
+send a cid and the message - and receive an state success or fail.
+<u>example for JSON:</u>
+
+```
+{
+    "company_id":"123",
+    "msg":"Hello all"
+}
+```
+and the returned json :
+```
+{
+  "state": "success"
+}
+```
+or :
+```
+{
+  "state": "fail, the company_id is not exist."
+}
+```
+### read business message  :
+
+#### url : https://curona.herokuapp.com/GetBusinessMessage
+
+send the cid - and receive an state success or fail and the business message.
+<u>example for JSON:</u>
+
+```
+{
+    "company_id":"123",
+}
+```
+and the returned json :
+```
+{
+  "msg": "Hello all",
+  "state": "success"
+}
+```
+or :
+```
+{
+    "state": "fail, the company_id is not exist."
+}
+```
