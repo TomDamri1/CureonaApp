@@ -101,6 +101,7 @@ class RegisterBusiness(Resource):
             login_dict['type'] = 'business_owner'
 
             business_info_dict['username'] = data['username']
+            business_info_dict['current_amount'] = 0
             business_info_dict['business_name'] = data['business_name']
             business_info_dict['address'] = data['address']
             business_info_dict['company_id'] = data['company_id']
