@@ -391,3 +391,26 @@ or :
     "state": "fail, the company_id is not exist."
 }
 ```
+
+
+
+### get the precise amount of costumers in the business  :
+
+#### url : https://curona.herokuapp.com/PreciseAmount
+
+send a company id - and you will get the precise amount of costumers in the business at the moment.
+<u>example for JSON:</u>
+
+```
+{
+"company_id" : 44445555
+}
+```
+
+<u>The returned JSON is :</u>
+```
+{
+  "current amount of costumers in the business ": 0,
+  "state": "success"
+}
+```
