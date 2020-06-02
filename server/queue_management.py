@@ -284,15 +284,36 @@ class LetsUserIntoBusiness(Resource):
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")[11:16]
         print(dt_string)
         print(dt_string[3:])
-        if int(dt_string[3:]) >= 45:
-            dt_string = dt_string[:3] + "45"
-        elif 0 <= int(dt_string[3:]) <= 15:
-            dt_string = dt_string[:3] + "00"
-        elif 15 <= int(dt_string[3:]) <= 30:
-            dt_string = dt_string[:3] + "15"
-        elif 30 <= int(dt_string[3:]) <= 45:
-            dt_string = dt_string[:3] + "30"
+        if business["minutes_interval"] == "10":
+            if int(dt_string[3:]) >= 50:
+                dt_string = dt_string[:3] + "50"
+            elif int(dt_string[3:]) >= 40:
+                dt_string = dt_string[:3] + "40"
+            elif int(dt_string[3:]) >= 30:
+                dt_string = dt_string[:3] + "30"
+            elif int(dt_string[3:]) >= 20:
+                dt_string = dt_string[:3] + "20"
+            elif int(dt_string[3:]) >= 10:
+                dt_string = dt_string[:3] + "10"
+            else:
+                dt_string = dt_string[:3] + "00"
+        elif business["minutes_interval"] == "30":
+            if int(dt_string[3:]) >= 30:
+                dt_string = dt_string[:3] + "30"
+            else:
+                dt_string = dt_string[:3] + "00"
 
+        elif business["minutes_interval"] == "60":
+            dt_string = dt_string[:3] + "00"
+        else:
+            if int(dt_string[3:]) >= 45:
+                dt_string = dt_string[:3] + "45"
+            elif int(dt_string[3:]) >= 30:
+                dt_string = dt_string[:3] + "30"
+            elif int(dt_string[3:]) >= 15:
+                dt_string = dt_string[:3] + "15"
+            else:
+                dt_string = dt_string[:3] + "00"
         print(dt_string)
 
         code_arr = business["queue"][name_current_day][dt_string]

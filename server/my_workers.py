@@ -26,6 +26,7 @@ remove_worker_account_parser = reqparse.RequestParser()
 remove_worker_account_parser.add_argument('username', required=True, help="username name cannot be blank!")
 remove_worker_account_parser.add_argument('worker_name', required=True, help="worker_name name cannot be blank!")
 
+
 class RemoveMyWorkers(Resource):
 
     def post(self):
@@ -35,8 +36,10 @@ class RemoveMyWorkers(Resource):
         # check if there are queues for the customer
         if not businessInfo:
             return {'state': "fail, the username is not exist(not a business owner)."}
-        deleted_from_business_array = db_business.update({'username': data["username"]}, {'$pull': {"workers": data["worker_name"]}})
+        deleted_from_business_array = db_business.update({'username': data["username"]},
+                                                         {'$pull': {"workers": data["worker_name"]}})
         deleted_from_login_array = db_login.delete_one({"username": data["worker_name"]})
         ret_val = dict()
-        ret_val["state"] = 'success' if deleted_from_business_array['nModified'] or deleted_from_login_array['nModified'] else 'fail'
+        ret_val["state"] = 'success' if deleted_from_business_array['nModified'] or deleted_from_login_array[
+            'nModified'] else 'fail'
         return jsonify(ret_val)
