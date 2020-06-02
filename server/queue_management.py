@@ -298,6 +298,7 @@ class LetsUserIntoBusiness(Resource):
         code_arr = business["queue"][name_current_day][dt_string]
 
         if data["key"] in code_arr:
+            increase_amount_in_business(business["company_id"])
             return jsonify({'state': 'success'})
         return jsonify({'state': 'failed'})
 
@@ -348,6 +349,8 @@ class generateCodeForSpontaneousAppointment(Resource):
                                             {"$push": {
                                                 "queue." + current_time[0] + "." + current_time[1]: data['cellphone']}})
         no_error = True if query_result['nModified'] != 0 else False
+        if no_error:
+            increase_amount_in_business(business['company_id'])
         return jsonify({"state": 'success' if no_error else 'fail',
                         'costumer_entered': data['cellphone'] if no_error else 'unknown error'})
 
@@ -390,6 +393,7 @@ class LetsUserOutBusiness(Resource):
         code_arr = business["queue"][name_current_day]
         print(code_arr)
         if flag == 1:
+            decrease_amount_in_business(business['company_id'])
             return jsonify({'state': 'success', 'msg': 'the code exist'})
         else:
             return jsonify({'state': 'failed', 'msg': 'the code is not exist'})
@@ -408,5 +412,20 @@ class getAmountOfCostumersForDayAndHour(Resource):
         business = get_business_data(data['company_id'])
         time_to_check = [data['day'], data['hour']]
         amount = check_if_hour_exists(business, time_to_check)
-        return jsonify({"state": 'success' if not 'error' in amount else 'fail','amount' : amount})
+        return jsonify({"state": 'success' if not 'error' in amount else 'fail', 'amount': amount})
 
+
+get_precise_amount = reqparse.RequestParser()
+get_precise_amount.add_argument('company_id', required=True, help="company_id name cannot be blank!")
+
+
+class getPreciseAmountOfCostumers(Resource):
+
+    def post(self):
+        data = get_precise_amount.parse_args()
+        try:
+            business = get_business_data(data['company_id'])
+        except Exception as e:
+            return jsonify({"state": "fail", "error": str(e)})
+
+        return jsonify({"state": 'success', 'current amount of costumers in the business ': business['current_amount']})

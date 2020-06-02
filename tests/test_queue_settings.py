@@ -64,6 +64,16 @@ class TestUserUpdateSettings(unittest.TestCase):
         except_result = {"current_amount_in_business": "0", "max_capacity": 10, "state": "success"}
         self.assertNotEqual(except_result, response)
 
+    def test_current_amount_in_store(self):
+        url = 'https://curona.herokuapp.com/PreciseAmount'
+        myobj = {"company_id": "44445555"}
+        response = requests.post(url, data=myobj)
+        except_result = {
+                      "current amount of costumers in the business ": 0,
+                      "state": "success"
+                    }
+        self.assertNotEqual(except_result, response)
+
 
 if __name__ == '__main__':
     unittest.main()
