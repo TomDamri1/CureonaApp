@@ -349,6 +349,8 @@ class generateCodeForSpontaneousAppointment(Resource):
                                             {"$push": {
                                                 "queue." + current_time[0] + "." + current_time[1]: data['cellphone']}})
         no_error = True if query_result['nModified'] != 0 else False
+        if no_error:
+            increase_amount_in_business(business['company_id'])
         return jsonify({"state": 'success' if no_error else 'fail',
                         'costumer_entered': data['cellphone'] if no_error else 'unknown error'})
 
