@@ -17,6 +17,7 @@ export default {
         SpontaneousAppointment : MainURL + 'SpontaneousAppointment',
         getMyWorkers : MainURL + 'GetMyWorkers',
         removeWorkers : MainURL + 'RemoveWorkers',
+        preciseAmount : MainURL + 'PreciseAmount',
     }
 
 }
