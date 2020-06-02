@@ -298,6 +298,7 @@ class LetsUserIntoBusiness(Resource):
         code_arr = business["queue"][name_current_day][dt_string]
 
         if data["key"] in code_arr:
+            increase_amount_in_business(business["company_id"])
             return jsonify({'state': 'success'})
         return jsonify({'state': 'failed'})
 

@@ -222,4 +222,14 @@ def validate_data(number):
 
 
 def increase_amount_in_business(cid):
+    business_info.update(
+        {"company_id": cid},
+        {"$inc": {"current_amount": 1}}
+    )
 
+
+def decrease_amount_in_business(cid):
+    business_info.update(
+        {"company_id": cid},
+        {"$inc": {"current_amount": -1}}
+    )
