@@ -8,6 +8,7 @@ export default StyleSheet.create({
     container: {
         padding: 20,
         marginBottom : 350,
+        maxHeight:"70%",
     },
     listConainer: {
 

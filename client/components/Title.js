@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
         marginVertical: 20,
         textAlign: 'center',
         fontWeight: 'bold',
-        fontSize: 50,
+        fontSize: 35,
         color: Colors.primaryColor,
         fontStyle: 'italic'
     },
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
         padding: 10,
         textAlign: 'center',
         fontWeight: 'bold',
-        fontSize: 35,
+        fontSize: 20,
         color: Colors.primaryColor,
     },
     titleImage: {
