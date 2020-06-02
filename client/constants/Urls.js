@@ -18,6 +18,7 @@ export default {
         getMyWorkers : MainURL + 'GetMyWorkers',
         removeWorkers : MainURL + 'RemoveWorkers',
         preciseAmount : MainURL + 'PreciseAmount',
+        amountForDayAndHour : MainURL + 'AmountForDayAndHour',
     }
 
 }

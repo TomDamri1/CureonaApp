@@ -1,40 +1,95 @@
-import React ,{useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, Image } from 'react-native'
 import PureChart from 'react-native-pure-chart';
 import Colors from '../constants/Colors';
 import IOSDayPicker from '../components/DayPicker/iOS_DayPicker/IOSDayPicker';
 import Time from '../constants/Time';
 import Title from '../components/Title';
+import requestFromUrl from '../functions/routeFunctions/requestFromUrl';
+import Urls from '../constants/Urls';
 
 
+const getDayData = async (day, company_id) => {
+    let dayData = [];
+    for (let i = 0; i < 24; i++) {
+        let hour = i < 10 ? "0" + i.toString() : i.toString();
+        let hourData = [];
+        let data = await requestFromUrl(Urls.routes.amountForDayAndHour, {
+            company_id: company_id,
+            day: day,
+            hour: hour + ":00",
+        })
+        hourData.push(parseInt(data.amount));
+        for (let j = 15; j < 60; j = j + 15) {
+            data = await requestFromUrl(Urls.routes.amountForDayAndHour, {
+                company_id: company_id,
+                day: day,
+                hour: hour + ":" + j.toString(),
+            })
+            hourData.push(parseInt(data.amount));
+        }
+        let sum = 0;
+        hourData.forEach(element => {
+            sum += element
+        });
+        let avg = Math.ceil(sum / 4);
+
+        dayData.push({
+            x: i < 10 ? "0" + i.toString() : i.toString(),
+            y: isNaN(avg) ? 0 : avg
+        })
+
+    }
+    
+    const retval = [
+        {
+            seriesName: 'series1',
+            data: dayData,
+            color: Colors.primaryColor
+        }
+    ]
+
+    return retval;
+}
 
 let sampleData = [
     {
-      seriesName: 'series1',
-      data: [
-        {x: '07:00', y: 30},
-        {x: '08:00', y: 200},
-        {x: '09:00', y: 170},
-        {x: '10:00', y: 250},
-        {x: '11:00', y: 10}
-      ],
-      color: Colors.primaryColor
+        seriesName: 'series1',
+        data: [
+            { x: '07:00', y: 30 },
+            { x: '08:00', y: 200 },
+            { x: '09:00', y: 170 },
+            { x: '10:00', y: 250 },
+            { x: '11:00', y: 10 }
+        ],
+        color: Colors.primaryColor
     },
-  ]
+]
+
+const changeData = async (selectedDay,company_id,setSampleData ) => {
+    setSampleData(await getDayData(selectedDay, company_id));
+}
 
 const BusinessStatistics = (props) => {
     const [selectedDay, setSelectedDay] = useState(Time.days[0]);
+    const [sampleData, setSampleData] = useState([]);
+    const company_id = props.navigation.getParam('company_id');
+    
+    useEffect( () => {
+        changeData(selectedDay,company_id,setSampleData);
+    }, [sampleData])
+    
     return (
-        <View>
+        <View style={styles.form}>
             <View>
-                <Title title="Amount of people that need to be in the store"/>
+                <Title title="Expected number of people " />
             </View>
             <View style={styles.picker}>
                 <IOSDayPicker selectedDayValueState={[selectedDay, setSelectedDay]} showDate={false} />
             </View>
             <View style={styles.gap}>
             </View>
-            <PureChart data={sampleData} type='bar' highlightColor={Colors.accentColor} numberOfYAxisGuideLine={10} height={300}/>
+            <PureChart data={sampleData} type='bar' highlightColor={Colors.accentColor} numberOfYAxisGuideLine={10} height={300} />
 
             <View style={styles.image}>
                 <Image style={{ width: 80, height: 80 }} source={require('../assets/cureonaIcon.png')} />
@@ -46,11 +101,17 @@ const BusinessStatistics = (props) => {
 export default BusinessStatistics
 
 const styles = StyleSheet.create({
-    gap : {
-        margin :10,
+    form: {
+        marginHorizontal: 20,
+    },
+    gap: {
+        margin: 10,
     },
     image: {
-        margin:10,
+        margin: 10,
         alignItems: 'center'
     },
+    picker: {
+        marginHorizontal: 30,
+    }
 })

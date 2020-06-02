@@ -9,6 +9,6 @@ export default async (route , requestBody) => {
         body: JSON.stringify(requestBody),
     });
     const resData = await response.json();
-    //console.log("from inside :",resData)
+    console.log("from inside :",resData)
     return resData;
 }
