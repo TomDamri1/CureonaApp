@@ -47,6 +47,9 @@ api.add_resource(RemoveMyWorkers, '/RemoveWorkers')
 api.add_resource(getAmountOfCostumersForDayAndHour, '/AmountForDayAndHour')
 api.add_resource(UpdateMyMessage, '/UpdateMyMessage')
 api.add_resource(GetBusinessMessage, '/GetBusinessMessage')
+api.add_resource(getPreciseAmountOfCostumers, '/PreciseAmount')
+
+
 # driver function
 
 if __name__ == '__main__':
