@@ -391,6 +391,7 @@ class LetsUserOutBusiness(Resource):
         code_arr = business["queue"][name_current_day]
         print(code_arr)
         if flag == 1:
+            decrease_amount_in_business(business['company_id'])
             return jsonify({'state': 'success', 'msg': 'the code exist'})
         else:
             return jsonify({'state': 'failed', 'msg': 'the code is not exist'})
