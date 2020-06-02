@@ -221,3 +221,5 @@ def validate_data(number):
 # ---------------------------------------------------------------------------- update amount if business funcs
 
 
+def increase_amount_in_business(cid):
+
