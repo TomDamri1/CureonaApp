@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, Button } from 'react-native';
 import Title from '../components/Title';
 import text from '../constants/text';
@@ -11,10 +11,10 @@ const BusinessOwnerScreen = props => {
     const [amountOfCustomersInBusiness, setAmountOfCustomersInBusiness] = useState('0');
     const [maxCapacity, setMaxCapacity] = useState('0');
     const checkAmountOfPeaple = async (company_id) => {
-        const req = await requestFromUrl(Urls.routes.currentAmountOfPeapleInTheStore, { company_id: company_id });
+        const req = await requestFromUrl(Urls.routes.preciseAmount, { company_id: company_id });
         const current_amount_in_business = await req.current_amount_in_business;
         const max_capacity = await req.max_capacity;
-    
+
         return {
             current_amount_in_business: current_amount_in_business,
             max_capacity: max_capacity
@@ -29,7 +29,7 @@ const BusinessOwnerScreen = props => {
         }, 5000);
         return () => clearInterval(interval);
     })
-    
+
     return (
         <View>
             <Title title="welcome!" subTitle={props.navigation.getParam('username')} />
@@ -41,7 +41,7 @@ const BusinessOwnerScreen = props => {
                 const workers = await requestFromUrl(Urls.routes.getMyWorkers, {
                     username: props.navigation.getParam('username'),
                 });
-                console.log(workers);
+                //console.log(workers);
                 props.navigation.pop();
                 props.navigation.navigate({
                     routeName: "ViewWorkersScreen",
@@ -70,6 +70,21 @@ const BusinessOwnerScreen = props => {
                     }
                 })
             }} />
+
+            <Button title="statistics" onPress={() => {
+                props.navigation.setParams({ company_id: company_id });
+                props.navigation.navigate({
+                    routeName: "BusinessStatistics",
+                    params: {
+                        company_id: company_id,
+                        max_capacity : maxCapacity,
+                    }
+                }
+                )
+            }
+
+            }
+            />
 
             <View style={styles.customerNubmerText}>
                 <Text style={styles.label}>{amountOfCustomersInBusiness} / {maxCapacity}</Text>

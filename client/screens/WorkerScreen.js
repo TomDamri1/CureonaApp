@@ -11,7 +11,7 @@ import requestFromUrl from '../functions/routeFunctions/requestFromUrl';
 
 
 const checkAmountOfPeaple = async (company_id) => {
-    const req = await requestFromUrl(Urls.routes.currentAmountOfPeapleInTheStore, { company_id: company_id });
+    const req = await requestFromUrl(Urls.routes.preciseAmount, { company_id: company_id });
     const current_amount_in_business = await req.current_amount_in_business;
     const max_capacity = await req.max_capacity;
 
