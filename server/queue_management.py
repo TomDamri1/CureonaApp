@@ -387,8 +387,6 @@ get_out_parser.add_argument('key', required=True, help="key cannot be blank!")
 class LetsUserOutBusiness(Resource):
     def post(self):
         data = get_out_parser.parse_args()
-
-        data = insert_parser.parse_args()
         tz_NY = pytz.timezone('Israel')
         business = business_info.find_one({"company_id": data['company_id']})
         current_date = datetime.date.today()
