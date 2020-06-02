@@ -410,3 +410,14 @@ class getAmountOfCostumersForDayAndHour(Resource):
         amount = check_if_hour_exists(business, time_to_check)
         return jsonify({"state": 'success' if not 'error' in amount else 'fail','amount' : amount})
 
+
+
+
+get_precise_amount = reqparse.RequestParser()
+get_precise_amount.add_argument('company_id', required=True, help="company_id name cannot be blank!")
+
+class getPreciseAmountOfCostumers(Resource):
+
+    def post(self):
+        data = get_amount_day_hour.parse_args()
+        business = get_business_data(data['company_id'])

@@ -216,3 +216,8 @@ def validate_number_length(number):
 def validate_data(number):
     validate_a_number(number)
     validate_number_length(number)
+
+
+# ---------------------------------------------------------------------------- update amount if business funcs
+
+
