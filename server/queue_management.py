@@ -273,6 +273,7 @@ class LetsUserIntoBusiness(Resource):
         tz_NY = pytz.timezone('Israel')
 
         business = business_info.find_one({"company_id": data['company_id']})
+        print(business)
         current_date = datetime.date.today()
         print(current_date)
         current_day = datetime.datetime.today().weekday()
@@ -284,7 +285,8 @@ class LetsUserIntoBusiness(Resource):
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")[11:16]
         print(dt_string)
         print(dt_string[3:])
-        if business["minutes_interval"] == "10":
+        print("min interval: " + str(business["minutes_intervals"]))
+        if business["minutes_intervals"] == "10":
             if int(dt_string[3:]) >= 50:
                 dt_string = dt_string[:3] + "50"
             elif int(dt_string[3:]) >= 40:
@@ -297,13 +299,13 @@ class LetsUserIntoBusiness(Resource):
                 dt_string = dt_string[:3] + "10"
             else:
                 dt_string = dt_string[:3] + "00"
-        elif business["minutes_interval"] == "30":
+        elif business["minutes_intervals"] == "30":
             if int(dt_string[3:]) >= 30:
                 dt_string = dt_string[:3] + "30"
             else:
                 dt_string = dt_string[:3] + "00"
 
-        elif business["minutes_interval"] == "60":
+        elif business["minutes_intervals"] == "60":
             dt_string = dt_string[:3] + "00"
         else:
             if int(dt_string[3:]) >= 45:
@@ -315,7 +317,8 @@ class LetsUserIntoBusiness(Resource):
             else:
                 dt_string = dt_string[:3] + "00"
         print(dt_string)
-
+        print("all queue for current_day")
+        print(business["queue"][name_current_day])
         code_arr = business["queue"][name_current_day][dt_string]
 
         if data["key"] in code_arr:
