@@ -273,6 +273,7 @@ class LetsUserIntoBusiness(Resource):
         tz_NY = pytz.timezone('Israel')
 
         business = business_info.find_one({"company_id": data['company_id']})
+        print(business)
         current_date = datetime.date.today()
         print(current_date)
         current_day = datetime.datetime.today().weekday()
@@ -284,17 +285,40 @@ class LetsUserIntoBusiness(Resource):
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")[11:16]
         print(dt_string)
         print(dt_string[3:])
-        if int(dt_string[3:]) >= 45:
-            dt_string = dt_string[:3] + "45"
-        elif 0 <= int(dt_string[3:]) <= 15:
+        print("min interval: " + str(business["minutes_intervals"]))
+        if business["minutes_intervals"] == "10":
+            if int(dt_string[3:]) >= 50:
+                dt_string = dt_string[:3] + "50"
+            elif int(dt_string[3:]) >= 40:
+                dt_string = dt_string[:3] + "40"
+            elif int(dt_string[3:]) >= 30:
+                dt_string = dt_string[:3] + "30"
+            elif int(dt_string[3:]) >= 20:
+                dt_string = dt_string[:3] + "20"
+            elif int(dt_string[3:]) >= 10:
+                dt_string = dt_string[:3] + "10"
+            else:
+                dt_string = dt_string[:3] + "00"
+        elif business["minutes_intervals"] == "30":
+            if int(dt_string[3:]) >= 30:
+                dt_string = dt_string[:3] + "30"
+            else:
+                dt_string = dt_string[:3] + "00"
+
+        elif business["minutes_intervals"] == "60":
             dt_string = dt_string[:3] + "00"
-        elif 15 <= int(dt_string[3:]) <= 30:
-            dt_string = dt_string[:3] + "15"
-        elif 30 <= int(dt_string[3:]) <= 45:
-            dt_string = dt_string[:3] + "30"
-
+        else:
+            if int(dt_string[3:]) >= 45:
+                dt_string = dt_string[:3] + "45"
+            elif int(dt_string[3:]) >= 30:
+                dt_string = dt_string[:3] + "30"
+            elif int(dt_string[3:]) >= 15:
+                dt_string = dt_string[:3] + "15"
+            else:
+                dt_string = dt_string[:3] + "00"
         print(dt_string)
-
+        print("all queue for current_day")
+        print(business["queue"][name_current_day])
         code_arr = business["queue"][name_current_day][dt_string]
 
         if data["key"] in code_arr:
@@ -363,8 +387,6 @@ get_out_parser.add_argument('key', required=True, help="key cannot be blank!")
 class LetsUserOutBusiness(Resource):
     def post(self):
         data = get_out_parser.parse_args()
-
-        data = insert_parser.parse_args()
         tz_NY = pytz.timezone('Israel')
         business = business_info.find_one({"company_id": data['company_id']})
         current_date = datetime.date.today()

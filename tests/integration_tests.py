@@ -57,27 +57,29 @@ class TestUser(unittest.TestCase):
 
     def test_register_business_and_closed_for_customer(self):
         url = 'https://curona.herokuapp.com/RegisterBusiness'
-        myobj = {'username': 'aabbcc','address' : 'aaccbb', 'password': '121212', 'type': 'business_owner',
+        myobj = {'username': 'aabbcc', 'address': 'aaccbb', 'password': '121212', 'type': 'business_owner',
                  'business_name': 'SCE', 'company_id': '111', 'search_key': {'keys': []}}
         requests.post(url, data=myobj)
         url = 'https://curona.herokuapp.com/AvailableQueues'
         myobj = {'company_id': '111'}
         response = requests.post(url, data=myobj)
         except_result = {'state': 'success', 'queue': {'sunday': [], 'monday': [], 'tuesday': [], 'wednesday': [],
-                                                          'thursday': [], 'friday': [], 'saturday': []}}
+                                                       'thursday': [], 'friday': [], 'saturday': []}}
         self.assertEqual(response.json(), except_result)
 
     def test_change_max_capacity_and_schedule_an_appointment(self):
         url = 'https://curona.herokuapp.com/businessSettings'
-        myobj = {'company_id':'1213', 'max_capacity': 1}
+        myobj = {'company_id': '1213', 'max_capacity': 1}
         requests.post(url, data=myobj)
         url = 'https://curona.herokuapp.com/GetQueue'
-        myobj = {"username": "hadas", 'company_id': '1213', "BusinessName": "STAMESEK", "Day": "sunday", "Hour": "16:00"}
+        myobj = {"username": "hadas", 'company_id': '1213', "BusinessName": "STAMESEK", "Day": "sunday",
+                 "Hour": "16:00"}
         requests.post(url, data=myobj)
         myobj = {"username": "tal", 'company_id': '1213', "BusinessName": "STAMESEK", "Day": "sunday", "Hour": "16:00"}
         response = requests.post(url, data=myobj)
         except_result = {'state': 'failed, sorry the queue is full'}
         self.assertEqual(response.json(), except_result)
+
     # add and remove a worker to IKEA c_id 123, business owner test.
     def test_add_and_remove_worker(self):
         url = 'https://curona.herokuapp.com/RegistrationWorker'
@@ -90,9 +92,21 @@ class TestUser(unittest.TestCase):
         except_result = {'state': "success"}
         self.assertEqual(response.json(), except_result)
 
+    # set a new message to IKEA(cid=123) and get IKEA message.
+    def test_set_and_get_business_msg(self):
+        url = 'https://curona.herokuapp.com/UpdateMyMessage'
+        myobj = {"company_id": "123", "msg": "test msg2"}
+        requests.post(url, data=myobj)
+
+        url = 'https://curona.herokuapp.com/GetBusinessMessage'
+        myobj = {"company_id": "123"}
+        response = requests.post(url, data=myobj)
+
+        except_result = {'state': "success", "msg": "test msg2"}
+        self.assertEqual(response.json(), except_result)
+
 
 if __name__ == '__main__':
     unittest.main()
-
 
 #  sh 'python --version tests/measure_url_response.py'
