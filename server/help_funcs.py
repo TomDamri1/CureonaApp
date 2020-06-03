@@ -233,3 +233,47 @@ def decrease_amount_in_business(cid):
         {"company_id": cid},
         {"$inc": {"current_amount": -1}}
     )
+
+
+# ---------------------------------------------------------------------------- statistics
+
+
+def calculate_x_for_graph(business):
+    optimal_x = 60
+    if business['minutes_intervals'] % optimal_x == 0:
+        return optimal_x
+    else:
+        x = 0
+        while x <= optimal_x:
+            x = x + business['minutes_intervals']
+        return x
+
+
+def convert_to_hour_string(time_in_minutes):
+    hour = time_in_minutes // 60
+    minutes = time_in_minutes % 60
+    if minutes < 10:
+        minutes = "0" + str(minutes)
+    return str(hour) + ":" + str(minutes)
+
+
+def add_hours(hour1, hour2):
+    hours1, minutes1 = hour1.split(":")
+    hours2, minutes2 = hour2.split(":")
+    new_minutes = int(minutes1) + int(minutes2)
+    new_hour = int(hours1) + int(hours2)
+    hour_to_add = 0
+    if new_minutes >= 60:
+        hour_to_add = 1
+    new_hour = new_hour + hour_to_add
+    new_minutes = str(new_minutes % 60) if new_minutes % 60 > 9 else "0" + str(new_minutes % 60)
+    new_hour = str(new_hour % 24) if new_hour % 24 != 0 else "00"
+    return new_hour + ":" + new_minutes
+
+
+def compare_hour1_grater_then_hour2(hour1, hour2):
+    pass
+
+
+def calc_avg(time_range, minutes_intervals):
+    sum_product, avg = 0, 0
