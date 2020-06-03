@@ -2,13 +2,6 @@ from flask import jsonify
 from flask_restful import reqparse, Resource
 
 from server.help_funcs import *
-from server.mongo_connection import *
-from server.apps_calendar import *
-import random
-import string
-import datetime
-import calendar
-import pytz
 
 avg_statistics_hour = reqparse.RequestParser()
 avg_statistics_hour.add_argument('company_id', required=True, help="company_id cannot be blank!")
@@ -29,10 +22,10 @@ class avgStatisticsPerHour(Resource):
                 milon[day] = {}
                 for time_range in status:
                     start_hour = split_time_range(time_range)
-                    while compare_hour1_smaller_then_hour2(start_hour[0], list(business["queue"][day])[-1]):
-                        # print("++++++++++++++" + start_hour[0], list(business["queue"][day])[-1])
+                    while compare_hour1_smaller_then_hour2(start_hour[0], start_hour[1]):#list(business["queue"][day])[-1]):
+                        print("++++++++++++++" + start_hour[0], start_hour[1],day)# list(business["queue"][day])[-1])
                         milon[day][start_hour[0]] = calc_avg(day, start_hour[0], add_hours(start_hour[0], x_graph),
-                                                             business)
+                                                             business,start_hour[1])
                         start_hour[0] = add_hours(start_hour[0], x_graph)
 
         return jsonify(milon)

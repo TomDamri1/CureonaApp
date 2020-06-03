@@ -287,15 +287,21 @@ def compare_hour1_smaller_then_hour2(hour1, hour2):
         return False
 
 
-def calc_avg(day, time1, time2, business):
+def calc_avg(day, time1, time2, business, end_of_interval):
+
     cnt = sum_product = 0
     minutes_intervals = convert_to_hour_string(business['minutes_intervals'])
-    while compare_hour1_smaller_then_hour2(time1, time2):
+    while compare_hour1_smaller_then_hour2(time1, time2) :
+        print("-----****")
+        print(time1, time2)
+        print("-----+++++")
 
+        if not compare_hour1_smaller_then_hour2(time2,end_of_interval):
+            return str(sum_product / cnt) if cnt!=0 else "0.0"
         sum_product = sum_product + len(business['queue'][day][time1])
         time1 = add_hours(time1, minutes_intervals)
         cnt = cnt + 1
-    return sum_product / cnt
+    return str(sum_product / cnt)
 
 
 def split_time_range(range):
