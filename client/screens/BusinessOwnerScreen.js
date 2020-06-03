@@ -63,6 +63,7 @@ const BusinessOwnerScreen = props => {
                 })
             }} />
             <Button title="view workers" onPress={async () => {
+                console.log(props.navigation.getParam('username'))
                 props.navigation.setParams({ company_id: company_id });
                 getIntoLoadingScreen(props.navigation);
                 const workers = await requestFromUrl(Urls.routes.getMyWorkers, {
