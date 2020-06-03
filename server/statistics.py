@@ -19,5 +19,20 @@ class avgStatisticsPerHour(Resource):
     def post(self):
         data = avg_statistics_hour.parse_args()
         business = get_business_data(data['company_id'])
+        print(business)
         x_graph = calculate_x_for_graph(business)
         x_graph = convert_to_hour_string(x_graph)
+
+        milon = {}
+        for day, status in business["open_hours"].items():
+            if status != "closed":
+                milon[day] = {}
+                for time_range in status:
+                    start_hour = split_time_range(time_range)
+                    while compare_hour1_smaller_then_hour2(start_hour[0], list(business["queue"][day])[-1]):
+                        # print("++++++++++++++" + start_hour[0], list(business["queue"][day])[-1])
+                        milon[day][start_hour[0]] = calc_avg(day, start_hour[0], add_hours(start_hour[0], x_graph),
+                                                             business)
+                        start_hour[0] = add_hours(start_hour[0], x_graph)
+
+        return jsonify(milon)

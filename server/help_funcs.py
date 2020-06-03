@@ -240,7 +240,7 @@ def decrease_amount_in_business(cid):
 
 def calculate_x_for_graph(business):
     optimal_x = 60
-    if business['minutes_intervals'] % optimal_x == 0:
+    if optimal_x % business['minutes_intervals']  == 0:
         return optimal_x
     else:
         x = 0
@@ -268,12 +268,36 @@ def add_hours(hour1, hour2):
     new_hour = new_hour + hour_to_add
     new_minutes = str(new_minutes % 60) if new_minutes % 60 > 9 else "0" + str(new_minutes % 60)
     new_hour = str(new_hour % 24) if new_hour % 24 != 0 else "00"
+    if (len(new_hour) < 2):
+        new_hour = "0" + new_hour
     return new_hour + ":" + new_minutes
 
 
-def compare_hour1_grater_then_hour2(hour1, hour2):
-    pass
+def compare_hour1_smaller_then_hour2(hour1, hour2):
+    hours1, minutes1 = hour1.split(":")
+    hours2, minutes2 = hour2.split(":")
+    if int(hours1) == int(hours2):
+        if int(minutes1) < int(minutes2):
+            return True
+        if int(minutes1) >= int(minutes2):
+            return False
+    if int(hours1) < int(hours2):
+        return True
+    if int(hours1) > int(hours2):
+        return False
 
 
-def calc_avg(time_range, minutes_intervals):
-    sum_product, avg = 0, 0
+def calc_avg(day, time1, time2, business):
+    cnt = sum_product = 0
+    minutes_intervals = convert_to_hour_string(business['minutes_intervals'])
+    while compare_hour1_smaller_then_hour2(time1, time2):
+
+        sum_product = sum_product + len(business['queue'][day][time1])
+        time1 = add_hours(time1, minutes_intervals)
+        cnt = cnt + 1
+    return sum_product / cnt
+
+
+def split_time_range(range):
+    return range.split("-")
+

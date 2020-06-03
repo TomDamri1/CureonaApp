@@ -2,7 +2,7 @@
 # import necessary libraries and functions
 from flask import Flask
 from flask_restful import Api
-
+from server.statistics import *
 from server.business_search import *
 from server.business_settings import *
 from server.queue_management import *
@@ -48,6 +48,7 @@ api.add_resource(getAmountOfCostumersForDayAndHour, '/AmountForDayAndHour')
 api.add_resource(UpdateMyMessage, '/UpdateMyMessage')
 api.add_resource(GetBusinessMessage, '/GetBusinessMessage')
 api.add_resource(getPreciseAmountOfCostumers, '/PreciseAmount')
+api.add_resource(avgStatisticsPerHour, '/avgStats')
 
 
 # driver function
