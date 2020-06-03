@@ -450,4 +450,5 @@ class getPreciseAmountOfCostumers(Resource):
         except Exception as e:
             return jsonify({"state": "fail", "error": str(e)})
 
-        return jsonify({"state": 'success', 'current amount of costumers in the business ': business['current_amount']})
+        return jsonify({"state": 'success', 'current_amount_in_business ': str(business['current_amount']),
+                        'max_capacity': str(business['max_capacity'])})

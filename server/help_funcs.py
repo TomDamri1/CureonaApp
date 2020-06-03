@@ -233,3 +233,77 @@ def decrease_amount_in_business(cid):
         {"company_id": cid},
         {"$inc": {"current_amount": -1}}
     )
+
+
+# ---------------------------------------------------------------------------- statistics
+
+
+def calculate_x_for_graph(business):
+    optimal_x = 60
+    if optimal_x % business['minutes_intervals']  == 0:
+        return optimal_x
+    else:
+        x = 0
+        while x <= optimal_x:
+            x = x + business['minutes_intervals']
+        return x
+
+
+def convert_to_hour_string(time_in_minutes):
+    hour = time_in_minutes // 60
+    minutes = time_in_minutes % 60
+    if minutes < 10:
+        minutes = "0" + str(minutes)
+    return str(hour) + ":" + str(minutes)
+
+
+def add_hours(hour1, hour2):
+    hours1, minutes1 = hour1.split(":")
+    hours2, minutes2 = hour2.split(":")
+    new_minutes = int(minutes1) + int(minutes2)
+    new_hour = int(hours1) + int(hours2)
+    hour_to_add = 0
+    if new_minutes >= 60:
+        hour_to_add = 1
+    new_hour = new_hour + hour_to_add
+    new_minutes = str(new_minutes % 60) if new_minutes % 60 > 9 else "0" + str(new_minutes % 60)
+    new_hour = str(new_hour % 24) if new_hour % 24 != 0 else "00"
+    if (len(new_hour) < 2):
+        new_hour = "0" + new_hour
+    return new_hour + ":" + new_minutes
+
+
+def compare_hour1_smaller_then_hour2(hour1, hour2):
+    hours1, minutes1 = hour1.split(":")
+    hours2, minutes2 = hour2.split(":")
+    if int(hours1) == int(hours2):
+        if int(minutes1) < int(minutes2):
+            return True
+        if int(minutes1) >= int(minutes2):
+            return False
+    if int(hours1) < int(hours2):
+        return True
+    if int(hours1) > int(hours2):
+        return False
+
+
+def calc_avg(day, time1, time2, business, end_of_interval):
+
+    cnt = sum_product = 0
+    minutes_intervals = convert_to_hour_string(business['minutes_intervals'])
+    while compare_hour1_smaller_then_hour2(time1, time2) :
+        print("-----****")
+        print(time1, time2)
+        print("-----+++++")
+
+        if not compare_hour1_smaller_then_hour2(time2,end_of_interval):
+            return str(sum_product / cnt) if cnt!=0 else "0.0"
+        sum_product = sum_product + len(business['queue'][day][time1])
+        time1 = add_hours(time1, minutes_intervals)
+        cnt = cnt + 1
+    return str(sum_product / cnt)
+
+
+def split_time_range(range):
+    return range.split("-")
+
