@@ -80,7 +80,7 @@ const WorkerScreen = props => {
             setCanTheUserGetIn(true);
         }
 
-        if (resData.state == Response.failed) {
+        else if (resData.state == Response.failed) {
             Alert.alert(text.alert.failed, text.alert.theUserCannotGetIn)
             setPass(Colors.fail);
             setCanTheUserGetIn(false);

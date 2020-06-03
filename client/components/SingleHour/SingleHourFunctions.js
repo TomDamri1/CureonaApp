@@ -20,18 +20,10 @@ const makeRegistrationHourBody = (props) => {
 
 export default registerToHour = async (props, navigation) => {
     const hour = props.time
-
     getIntoLoadingScreen(navigation);
-
     const registerHourBody = makeRegistrationHourBody(props);
     const resData = await requestFromUrl(Urls.routes.makeAnAppointment, registerHourBody)
     console.log(resData);
     navigation.pop();
-
-    if (resData.state.toLowerCase() === Response.success) {
-        Alert.alert(text.alert.success, text.alert.youAreNowRegisteredToHour(hour , resData.key));
-    }
-    else {
-        Alert.alert(text.alert.failed, text.alert.somethingWentWrong);
-    }
+    
 }
