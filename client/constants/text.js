@@ -44,6 +44,8 @@ export default {
         theUserCannotGetIn: "The user can't get in!\ntry again or ask him to leave.",
         yes: "Yes",
         no: "No",
+        theUserCanGetOut: "The User Can Get Out",
+        theUserCannotGetOut: "The User Cannot Get Out",
     },
     type: {
         customer: "customer",
