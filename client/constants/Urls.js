@@ -22,6 +22,7 @@ export default {
         updateMyMessage : MainURL + 'UpdateMyMessage',
         getBusinessMessage : MainURL + 'GetBusinessMessage',
         avgStats : MainURL + 'avgStats',
+        letsUserOutBusiness: MainURL + 'LetsUserOutBusiness',
     }
 
 }
