@@ -46,6 +46,7 @@ export default {
         no: "No",
         theUserCanGetOut: "The User Can Get Out",
         theUserCannotGetOut: "The User Cannot Get Out",
+        
     },
     type: {
         customer: "customer",
@@ -71,7 +72,11 @@ export default {
     DoYouhaveABreak: "Do you have a break?",
     fillDowndTheHours: "fill down the opening hours after the break",
     close: "close",
-    update: "Update"
-     
+    update: "Update",
+    enterYourMotd: "enter your motd",
+    MOTD:"MOTD",
+    cancel: "Cancel",
+    publish:"Publish",
+    MessageFromTheOwner : "Message from the Owner :",
 }
 

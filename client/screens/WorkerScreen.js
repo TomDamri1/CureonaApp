@@ -168,7 +168,7 @@ const WorkerScreen = props => {
                 />
             </View>
             <View style={{ ...styles.getinTextContainer, backgroundColor: pass }}>
-                <Text style={styles.getinText}>{canTheUserGetIn ? text.theUserCanGetIn : text.theUserCannotGetIn}</Text>
+                <Text style={styles.getinText}>{canTheUserGetIn ? text.alert.success : text.alert.failed}</Text>
             </View>
             <View style={styles.customerNubmerText}>
                 <Text style={styles.label}>{amountOfCustomersInBusiness} / {maxCapacity}</Text>

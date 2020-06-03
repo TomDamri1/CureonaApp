@@ -3,12 +3,13 @@ import { StyleSheet, Text, View } from 'react-native'
 import requestFromUrl from '../../functions/routeFunctions/requestFromUrl'
 import Urls from '../../constants/Urls'
 import Colors from '../../constants/Colors'
+import text from '../../constants/text'
 
 
 const MOTD_banner = (props) => {
     return (
         <View style={styles.container}>
-            <Text style={styles.label}>Message from the Owner :</Text>
+            <Text style={styles.label}>{text.MessageFromTheOwner}</Text>
             <Text style={styles.nonLabel}>{props.msg}</Text>
         </View>
     )

@@ -4,6 +4,7 @@ import Colors from '../../constants/Colors';
 import requestFromUrl from '../../functions/routeFunctions/requestFromUrl';
 import Urls from '../../constants/Urls';
 import getIntoLoadingScreen from '../../functions/navigationFunctions/getIntoLoadingScreen';
+import text from '../../constants/text';
 
 
 const MOTD = (props) => {
@@ -23,9 +24,9 @@ const MOTD = (props) => {
                 <ScrollView style={styles.centeredView}>
                     <View style={styles.modalView}>
                         <View style={styles.formControl}>
-                            <Text style={styles.label}>{"MOTD"}</Text>
+                            <Text style={styles.label}>{text.MOTD}</Text>
                             <TextInput
-                                placeholder={"enter your motd"}
+                                placeholder={text.enterYourMotd}
                                 style={styles.input}
                                 value={motd}
                                 onChangeText={text => setMotd(text)}
@@ -33,13 +34,13 @@ const MOTD = (props) => {
                             />
                         </View>
                         <View style={styles.row}>
-                        <Button title="Cancel"
+                        <Button title={text.cancel}
                             color = {Colors.accentColor}
                             onPress={() => {
                                 setModalVisible(false);
                             }} 
                         />
-                        <Button title="Publish"
+                        <Button title={text.publish}
                             color = {Colors.primaryColor}
                             onPress={async () => {
                                 setModalVisible(false);
