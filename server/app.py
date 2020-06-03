@@ -40,14 +40,14 @@ api.add_resource(getBusinesses, '/getBusinesses')
 api.add_resource(LetsUserIntoBusiness, '/LetsUserIntoBusiness')
 api.add_resource(LetsUserOutBusiness, '/LetsUserOutBusiness')
 api.add_resource(deleteAppointment, '/deleteAppointment')
-# api.add_resource(currentAmountAtBusiness, '/currentAmount')
+api.add_resource(currentAmountAtBusiness, '/currentAmount')
 api.add_resource(generateCodeForSpontaneousAppointment, '/SpontaneousAppointment')
 api.add_resource(GetMyWorkers, '/GetMyWorkers')
 api.add_resource(RemoveMyWorkers, '/RemoveWorkers')
 api.add_resource(getAmountOfCostumersForDayAndHour, '/AmountForDayAndHour')
 api.add_resource(UpdateMyMessage, '/UpdateMyMessage')
 api.add_resource(GetBusinessMessage, '/GetBusinessMessage')
-# api.add_resource(getPreciseAmountOfCostumers, '/PreciseAmount')
+api.add_resource(getPreciseAmountOfCostumers, '/PreciseAmount')
 
 
 # driver function
