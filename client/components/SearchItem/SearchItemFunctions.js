@@ -21,9 +21,10 @@ const makeAnAppointment = async (props, navigation) => {
     getIntoLoadingScreen(navigation);
     try {
         const resData = await getAvailableQueues(item);
+        const motd = await requestFromUrl(Urls.routes.getBusinessMessage, {company_id : item.id});
         navigation.pop();
         if (resData.state === "success") {
-            getIntoAppointmentScreen(props, navigation, resData);
+            getIntoAppointmentScreen(props, navigation, resData, motd);
         }
     }
     catch{

@@ -8,7 +8,7 @@ import Title from '../components/Title';
 import requestFromUrl from '../functions/routeFunctions/requestFromUrl';
 import Urls from '../constants/Urls';
 
-
+/*
 const getDayData = async (day, company_id) => {
     let dayData = [];
     for (let i = 0; i < 24; i++) {
@@ -51,6 +51,7 @@ const getDayData = async (day, company_id) => {
 
     return retval;
 }
+*/
 
 let sampleData = [
     {
@@ -66,18 +67,14 @@ let sampleData = [
     },
 ]
 
-const changeData = async (selectedDay,company_id,setSampleData ) => {
-    setSampleData(await getDayData(selectedDay, company_id));
-}
+//umbg
+
 
 const BusinessStatistics = (props) => {
     const [selectedDay, setSelectedDay] = useState(Time.days[0]);
-    const [sampleData, setSampleData] = useState([]);
+    const sampleData = props.navigation.getParam('data');
     const company_id = props.navigation.getParam('company_id');
-    
-    useEffect( () => {
-        changeData(selectedDay,company_id,setSampleData);
-    }, [sampleData])
+    console.log(sampleData)
     
     return (
         <View style={styles.form}>
@@ -89,7 +86,7 @@ const BusinessStatistics = (props) => {
             </View>
             <View style={styles.gap}>
             </View>
-            <PureChart data={sampleData} type='bar' highlightColor={Colors.accentColor} numberOfYAxisGuideLine={10} height={300} />
+            <PureChart data={sampleData[selectedDay.toLowerCase()]} type='bar' highlightColor={Colors.accentColor} numberOfYAxisGuideLine={10} height={300} />
 
             <View style={styles.image}>
                 <Image style={{ width: 80, height: 80 }} source={require('../assets/cureonaIcon.png')} />

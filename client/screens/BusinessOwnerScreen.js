@@ -5,6 +5,25 @@ import text from '../constants/text';
 import getIntoLoadingScreen from '../functions/navigationFunctions/getIntoLoadingScreen';
 import requestFromUrl from '../functions/routeFunctions/requestFromUrl';
 import Urls from '../constants/Urls';
+import Colors from '../constants/Colors';
+
+
+const getDataSample = async (company_id) =>{
+    let weeklyData = {}
+    const res = await requestFromUrl(Urls.routes.avgStats,{company_id : company_id})
+    await Object.keys(res).map( async (key,index) => {
+        let dayData =[{seriesName: 'series1',
+        data: [
+        ],
+        color: Colors.primaryColor}];
+         Object.keys(res[key]).map((hour, i) => {
+            dayData[0].data.push({x:hour, y:parseFloat(res[key][hour])});
+        })
+        weeklyData[key] = dayData;
+    })
+    return weeklyData;
+}
+
 
 const BusinessOwnerScreen = props => {
     const company_id = props.navigation.getParam('company_id');
@@ -34,14 +53,22 @@ const BusinessOwnerScreen = props => {
         <View>
             <Title title="welcome!" subTitle={props.navigation.getParam('username')} />
             <Title title={`your business : ${props.navigation.getParam('businessName')}`} />
-            <Button title="manage business" />
+            <Button title="manage business" onPress={() => {
+                props.navigation.setParams({ company_id: company_id });
+                props.navigation.navigate({
+                    routeName: "ManageBusiness",
+                    params: {
+                        company_id: company_id
+                    }
+                })
+            }} />
             <Button title="view workers" onPress={async () => {
                 props.navigation.setParams({ company_id: company_id });
                 getIntoLoadingScreen(props.navigation);
                 const workers = await requestFromUrl(Urls.routes.getMyWorkers, {
                     username: props.navigation.getParam('username'),
                 });
-                //console.log(workers);
+                console.log(workers);
                 props.navigation.pop();
                 props.navigation.navigate({
                     routeName: "ViewWorkersScreen",
@@ -71,12 +98,16 @@ const BusinessOwnerScreen = props => {
                 })
             }} />
 
-            <Button title="statistics" onPress={() => {
-                props.navigation.setParams({ company_id: company_id });
+            <Button title="statistics" onPress={ async () => {
+                getIntoLoadingScreen(props.navigation);
+                const data = await getDataSample(company_id);
+                props.navigation.pop();
+                props.navigation.setParams({ company_id: company_id, data : data });
                 props.navigation.navigate({
                     routeName: "BusinessStatistics",
                     params: {
                         company_id: company_id,
+                        data : data,
                         max_capacity : maxCapacity,
                     }
                 }

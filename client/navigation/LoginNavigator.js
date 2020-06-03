@@ -21,6 +21,8 @@ import AddWorkerScreen from '../screens/AddWorkerScreen';
 import BusinessOwnerchangesScreen from '../screens/BusinessOwnerchangesScreen';
 import ViewWorkersScreen from "../screens/ViewWorkersScreen";
 import BusinessStatistics from "../screens/BusinessStatistics";
+import ManageBusiness from '../screens/ManageBusiness';
+
 const LoginNavigator = createStackNavigator({
     Login: LoginScreen,
     Registration: RegisterScreen,
@@ -59,6 +61,7 @@ const LoginNavigator = createStackNavigator({
             headerShown: false
         }
     },
+    ManageBusiness : ManageBusiness,
 
 })
 

@@ -9,7 +9,7 @@ import WorkerItem from '../components/WorkerItem/WorkerItem';
 const ViewWorkersScreen = props => {
     const username = props.navigation.getParam('username');
     const workers = props.navigation.getParam('workers');
-
+    console.log(username,workers);
 
 
     return (

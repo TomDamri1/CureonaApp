@@ -70,9 +70,9 @@ const RegisterScreen = props => {
       let conditionCount = 0;
       if (businessName.length > 0) conditionCount += 1;
       if (cid.length > 0) conditionCount += 1;
-      if (ownerId.length > 0 ) conditionCount += 1;
-      if (ownerName.length > 0 ) conditionCount += 1;
-      if (address.length > 0 ) conditionCount += 1;
+      if (ownerId.length > 0) conditionCount += 1;
+      if (ownerName.length > 0) conditionCount += 1;
+      if (address.length > 0) conditionCount += 1;
 
       if (conditionCount == 5) {
         return true;
@@ -129,7 +129,7 @@ const RegisterScreen = props => {
             address: address,
             company_id: cid,
             password: userPassword,
-            search_key: {keys : [businessName]},
+            search_key: { keys: [businessName] },
 
           })
         ,
@@ -140,7 +140,7 @@ const RegisterScreen = props => {
       console.log("got here");
       props.navigation.pop();
       if (resData.state === Response.success) {
-        
+
         if (!isBusinessOwner) {
           props.navigation.popToTop();
           props.navigation.navigate({
@@ -192,7 +192,7 @@ const RegisterScreen = props => {
                 placeholder={text.placeholder.username}
                 style={styles.input}
                 value={username}
-                onChangeText={text => {setUsername(text)}}
+                onChangeText={text => { setUsername(text) }}
                 returnKeyType="next"
 
               />

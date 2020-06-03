@@ -13,7 +13,6 @@ const ADDRESS = 4;
 
 const CustomerScreen = props => {
     const username = props.navigation.getParam('username');
-    console.log(username)
     const handleSearchABusinessPress = async () => {
         props.navigation.navigate({
             routeName: "Loading"
@@ -37,7 +36,6 @@ const CustomerScreen = props => {
             storeList.push(newStore);
         })
 
-        console.log(storeList);
 
 
         props.navigation.pop(); //pop out the loading screen from the stack 
@@ -79,7 +77,6 @@ const CustomerScreen = props => {
             queuesList.push(newQueue);
         })
 
-        console.log(queuesList);
 
 
         props.navigation.pop(); //pop out the loading screen from the stack 

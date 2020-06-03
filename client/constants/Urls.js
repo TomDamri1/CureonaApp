@@ -19,6 +19,9 @@ export default {
         removeWorkers : MainURL + 'RemoveWorkers',
         preciseAmount : MainURL + 'PreciseAmount',
         amountForDayAndHour : MainURL + 'AmountForDayAndHour',
+        updateMyMessage : MainURL + 'UpdateMyMessage',
+        getBusinessMessage : MainURL + 'GetBusinessMessage',
+        avgStats : MainURL + 'avgStats',
     }
 
 }
