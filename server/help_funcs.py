@@ -268,7 +268,7 @@ def add_hours(hour1, hour2):
     new_hour = new_hour + hour_to_add
     new_minutes = str(new_minutes % 60) if new_minutes % 60 > 9 else "0" + str(new_minutes % 60)
     new_hour = str(new_hour % 24) if new_hour % 24 != 0 else "00"
-    if (len(new_hour) < 2):
+    if len(new_hour) < 2:
         new_hour = "0" + new_hour
     return new_hour + ":" + new_minutes
 
