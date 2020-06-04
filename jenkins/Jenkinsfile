@@ -90,10 +90,8 @@ pipeline {
 
             }
             steps {
-                script {
-                    sh "python --version tests/measure_url_response.py"
 
-                }
+                sh 'python -m py_compile tests/measure_url_response.py'
 
             }
 
