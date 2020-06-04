@@ -94,6 +94,15 @@ pipeline {
                 sh 'python -m py_compile tests/measure_url_response.py'
 
             }
+            post {
+                failure {
+                    mail to: 'cureonaapp@gmail.com',subject: 'failed2',body: 'Test failed2'
+                }
+                success {
+                    mail to: 'cureonaapp@gmail.com',subject: 'success2',body: 'Test success2'
+                }
+
+            }
 
         }
 
