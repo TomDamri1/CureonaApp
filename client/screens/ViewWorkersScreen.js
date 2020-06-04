@@ -5,6 +5,7 @@ import MakeAppointment from '../components/MakeAppointment/MakeAppointment'
 import DayPicker from '../components/DayPicker/DayPicker';
 import Time from '../constants/Time';
 import WorkerItem from '../components/WorkerItem/WorkerItem';
+import text from '../constants/text';
 
 const ViewWorkersScreen = props => {
     const username = props.navigation.getParam('username');
@@ -15,7 +16,7 @@ const ViewWorkersScreen = props => {
     return (
         <View>
             <Title
-                title={`workers`}
+                title={text.workers}
             />
 
             <FlatList

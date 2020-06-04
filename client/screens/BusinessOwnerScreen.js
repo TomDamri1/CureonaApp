@@ -58,7 +58,7 @@ const BusinessOwnerScreen = props => {
                     }
                 })
             }} />
-            <Button title="view workers" onPress={async () => {
+            <Button title= {text.viewWorkers} onPress={async () => {
                 console.log(props.navigation.getParam('username'))
                 props.navigation.setParams({ company_id: company_id });
                 getIntoLoadingScreen(props.navigation);
@@ -76,7 +76,7 @@ const BusinessOwnerScreen = props => {
                     }
                 })
             }} />
-            <Button title="Add worker user to my business" onPress={() => {
+            <Button title={text.AddWorkerUserToMyBusiness} onPress={() => {
                 props.navigation.setParams({ company_id: company_id });
                 props.navigation.navigate({
                     routeName: "AddWorkerScreen",

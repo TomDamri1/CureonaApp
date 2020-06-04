@@ -6,6 +6,7 @@ import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from 'react-navigation-stack';
 
 //import screens : 
+import BusinessOwnerchangesScreen from '../screens/BusinessOwnerchangesScreen';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from "../screens/RegisterScreen";
 import CustomerScreen from "../screens/CustomerScreen";
@@ -18,7 +19,6 @@ import AppointmentScreen from '../screens/AppointmentScreen';
 import AdminChangesScreen from '../screens/AdminChangesScreen';
 import WorkerScreen from '../screens/WorkerScreen';
 import AddWorkerScreen from '../screens/AddWorkerScreen';
-import BusinessOwnerchangesScreen from '../screens/BusinessOwnerchangesScreen';
 import ViewWorkersScreen from "../screens/ViewWorkersScreen";
 import BusinessStatistics from "../screens/BusinessStatistics";
 import ManageBusiness from '../screens/ManageBusiness';
@@ -34,6 +34,13 @@ const LoginNavigator = createStackNavigator({
         }
     },
     BusinessStatistics : BusinessStatistics,
+    BusinessOwnerchangesScreen: BusinessOwnerchangesScreen,
+    Loading: {
+        screen: LoadingScreen,
+        navigationOptions: {
+            headerShown: false
+        }
+    },
     ViewWorkersScreen : ViewWorkersScreen,
     AppointmentScreen: AppointmentScreen,
     BusinessOwnerScreen: BusinessOwnerScreen,
@@ -54,13 +61,6 @@ const LoginNavigator = createStackNavigator({
     },
     AddWorkerScreen: AddWorkerScreen,
     CustomerQueuesScreen: CustomerQueuesScreen,
-    BusinessOwnerchangesScreen: BusinessOwnerchangesScreen,
-    Loading: {
-        screen: LoadingScreen,
-        navigationOptions: {
-            headerShown: false
-        }
-    },
     ManageBusiness : ManageBusiness,
 
 })
