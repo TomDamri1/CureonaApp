@@ -67,9 +67,9 @@ class TestUserLogin(unittest.TestCase):
 
     def test_Login_worked(self):
         url = 'https://curona.herokuapp.com/Login'
-        myobj = {'username': 'vcbfrd', 'password': '123'}
+        myobj = {'username': 'stxjwi', 'password': '123456'}
         response = requests.post(url, data=myobj)
-        self.assertEqual(response.json(), {"company_id": "123","company_name": "IKEA",
+        self.assertEqual(response.json(), {"company_id": "1231233","company_name": "Hamburgeri",
                                            "state": "success","type": "worker"})
 if __name__ == '__main__':
     unittest.main()
