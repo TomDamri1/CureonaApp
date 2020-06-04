@@ -31,18 +31,14 @@ const BusinessOwnerScreen = props => {
     const [maxCapacity, setMaxCapacity] = useState('0');
     const checkAmountOfPeaple = async (company_id) => {
         const req = await requestFromUrl(Urls.routes.preciseAmount, { company_id: company_id });
-        const current_amount_in_business = await req.current_amount_in_business;
-        const max_capacity = await req.max_capacity;
-
-        return {
-            current_amount_in_business: current_amount_in_business,
-            max_capacity: max_capacity
-        };
+        return req;
     }
     useEffect(() => {
         const interval = setInterval(async () => {
-            const AmountOfPeaple = await (await checkAmountOfPeaple(company_id)).current_amount_in_business;
-            const MaxCapacity = await (await checkAmountOfPeaple(company_id)).max_capacity;
+            const counter = await checkAmountOfPeaple(company_id)
+            const AmountOfPeaple = counter["current_amount_in_business "];
+            const MaxCapacity = counter.max_capacity;
+            console.log(counter);
             setAmountOfCustomersInBusiness(AmountOfPeaple);
             setMaxCapacity(MaxCapacity);
         }, 5000);
