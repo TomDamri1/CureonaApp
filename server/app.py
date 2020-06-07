@@ -6,6 +6,7 @@ from flask_restful import Api
 from server.business_search import *
 from server.business_settings import *
 from server.queue_management import *
+from server.statistics import *
 from server.MyQueue import *
 from server.user import *
 from server.my_workers import *
@@ -48,6 +49,10 @@ api.add_resource(getAmountOfCostumersForDayAndHour, '/AmountForDayAndHour')
 api.add_resource(UpdateMyMessage, '/UpdateMyMessage')
 api.add_resource(GetBusinessMessage, '/GetBusinessMessage')
 api.add_resource(getPreciseAmountOfCostumers, '/PreciseAmount')
+api.add_resource(avgStatisticsPerHour, '/avgStats')
+
+
+
 
 
 # driver function
