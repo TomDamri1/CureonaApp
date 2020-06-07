@@ -91,7 +91,7 @@ pipeline {
             }
             steps {
 
-                sh 'python -m py_compile tests/measure_url_response.py'
+                sh 'python tests/measure_url_response.py'
 
             }
             post {
