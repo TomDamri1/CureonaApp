@@ -27,7 +27,7 @@ import LoadingScreen from '../screens/LoadingScreen';
 const AddWorkerScreen = props => {
   const company_id = props.navigation.getParam('company_id')
   //console.log("company_id : " , company_id )
-
+  const businessOwnerUsername = props.navigation.getParam('username');
   const [username, setUsername] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [userPasswordAuthentication, setUserPasswordAuthentication] = useState('');
@@ -85,12 +85,6 @@ const AddWorkerScreen = props => {
       if (resData.state === Response.success) {
           props.navigation.pop();
           Alert.alert("Success", `The worker has been register successfully\nUsername: ${resData.username}\nPassword: ${resData.password}`);
-          props.navigation.navigate({
-            routeName: "BusinessOwnerScreen",
-            params: {
-              username: username,
-            }
-          })
       }
     }
   }

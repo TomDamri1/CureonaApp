@@ -80,6 +80,6 @@ export default {
     MessageFromTheOwner : "Message from the Owner :",
     workers: "workers",
     viewWorkers: "view workers",
-    AddWorkerUserToMyBusiness: "Add worker user to my business",
+    AddWorkerUserToMyBusiness: "Add worker to my business",
 }
 

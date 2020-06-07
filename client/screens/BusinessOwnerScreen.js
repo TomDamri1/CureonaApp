@@ -8,16 +8,18 @@ import Urls from '../constants/Urls';
 import Colors from '../constants/Colors';
 
 
-const getDataSample = async (company_id) =>{
+const getDataSample = async (company_id) => {
     let weeklyData = {}
-    const res = await requestFromUrl(Urls.routes.avgStats,{company_id : company_id})
-    await Object.keys(res).map( async (key,index) => {
-        let dayData =[{seriesName: 'series1',
-        data: [
-        ],
-        color: Colors.primaryColor}];
-         Object.keys(res[key]).map((hour, i) => {
-            dayData[0].data.push({x:hour, y:parseFloat(res[key][hour])});
+    const res = await requestFromUrl(Urls.routes.avgStats, { company_id: company_id })
+    await Object.keys(res).map(async (key, index) => {
+        let dayData = [{
+            seriesName: 'series1',
+            data: [
+            ],
+            color: Colors.primaryColor
+        }];
+        Object.keys(res[key]).map((hour, i) => {
+            dayData[0].data.push({ x: hour, y: parseFloat(res[key][hour]) });
         })
         weeklyData[key] = dayData;
     })
@@ -49,70 +51,96 @@ const BusinessOwnerScreen = props => {
         <View>
             <Title title="welcome!" subTitle={props.navigation.getParam('username')} />
             <Title title={`your business : ${props.navigation.getParam('businessName')}`} />
-            <Button title="manage business" onPress={() => {
-                props.navigation.setParams({ company_id: company_id });
-                props.navigation.navigate({
-                    routeName: "ManageBusiness",
-                    params: {
-                        company_id: company_id
-                    }
-                })
-            }} />
-            <Button title= {text.viewWorkers} onPress={async () => {
-                console.log(props.navigation.getParam('username'))
-                props.navigation.setParams({ company_id: company_id });
-                getIntoLoadingScreen(props.navigation);
-                const workers = await requestFromUrl(Urls.routes.getMyWorkers, {
-                    username: props.navigation.getParam('username'),
-                });
-                console.log(workers);
-                props.navigation.pop();
-                props.navigation.navigate({
-                    routeName: "ViewWorkersScreen",
-                    params: {
-                        company_id: company_id,
-                        username: props.navigation.getParam('username'),
-                        workers: workers,
-                    }
-                })
-            }} />
-            <Button title={text.AddWorkerUserToMyBusiness} onPress={() => {
-                props.navigation.setParams({ company_id: company_id });
-                props.navigation.navigate({
-                    routeName: "AddWorkerScreen",
-                    params: {
-                        company_id: company_id
-                    }
-                })
-            }} />
-            <Button title={text.updateTheOpeningHoursBusinessOwner} onPress={() => {
-                props.navigation.setParams({ company_id: company_id });
-                props.navigation.navigate({
-                    routeName: "BusinessOwnerchangesScreen",
-                    params: {
-                        company_id: company_id
-                    }
-                })
-            }} />
+            <View style={styles.buttonView}>
+                <Button
+                    title="manage business"
+                    color={Colors.primaryColor}
+                    onPress={() => {
+                        props.navigation.setParams({ company_id: company_id });
+                        props.navigation.navigate({
+                            routeName: "ManageBusiness",
+                            params: {
+                                company_id: company_id
+                            }
+                        })
+                    }} />
+            </View>
+            <View style={styles.buttonView}>
+                <Button
+                    title={text.viewWorkers}
+                    color={Colors.accentColor}
+                    onPress={async () => {
+                        console.log("==================",props.navigation.getParam('username'))
+                        props.navigation.setParams({ company_id: company_id });
+                        getIntoLoadingScreen(props.navigation);
+                        const workers = await requestFromUrl(Urls.routes.getMyWorkers, {
+                            username: props.navigation.getParam('username'),
+                        });
+                        console.log(workers);
+                        props.navigation.pop();
+                        props.navigation.navigate({
+                            routeName: "ViewWorkersScreen",
+                            params: {
+                                company_id: company_id,
+                                username: props.navigation.getParam('username'),
+                                workers: workers,
+                            }
+                        })
+                    }} />
+            </View>
+            <View style={styles.buttonView}>
+                <Button
+                    title={text.AddWorkerUserToMyBusiness}
+                    color={Colors.primaryColor}
+                    onPress={() => {
+                        props.navigation.setParams({ company_id: company_id });
+                        props.navigation.navigate({
+                            routeName: "AddWorkerScreen",
+                            params: {
+                                company_id: company_id
+                            }
+                        })
+                    }} />
+            </View>
+            <View style={styles.buttonView}>
+                <Button
+                    title={text.updateTheOpeningHoursBusinessOwner}
+                    color={Colors.primaryColor}
+                    onPress={() => {
+                        props.navigation.setParams({ company_id: company_id, businessOwnerUsername : props.navigation.getParam('username'), });
+                        props.navigation.navigate({
+                            routeName: "BusinessOwnerchangesScreen",
+                            params: {
+                                businessOwnerUsername : props.navigation.getParam('username'),
+                                company_id: company_id
+                            }
+                        })
+                    }} />
+            </View>
+            <View style={styles.buttonView}>
 
-            <Button title="statistics" onPress={ async () => {
-                getIntoLoadingScreen(props.navigation);
-                const data = await getDataSample(company_id);
-                props.navigation.pop();
-                props.navigation.setParams({ company_id: company_id, data : data });
-                props.navigation.navigate({
-                    routeName: "BusinessStatistics",
-                    params: {
-                        company_id: company_id,
-                        data : data,
-                        max_capacity : maxCapacity,
+                <Button
+                    title="statistics"
+                    color={Colors.accentColor}
+                    onPress={async () => {
+                        getIntoLoadingScreen(props.navigation);
+                        const data = await getDataSample(company_id);
+                        props.navigation.pop();
+                        props.navigation.setParams({ company_id: company_id, data: data });
+                        props.navigation.navigate({
+                            routeName: "BusinessStatistics",
+                            params: {
+                                company_id: company_id,
+                                data: data,
+                                max_capacity: maxCapacity,
+                            }
+                        }
+                        )
                     }
-                }
-                )
-            }
 
-            }
-            />
+                    }
+                />
+            </View>
 
             <View style={styles.customerNubmerText}>
                 <Text style={styles.label}>{amountOfCustomersInBusiness} / {maxCapacity}</Text>
@@ -127,6 +155,9 @@ const BusinessOwnerScreen = props => {
 const styles = StyleSheet.create({
     form: {
         margin: 20,
+    },
+    buttonView:{
+        margin: 10,
     },
     label: {
         marginTop: 30,

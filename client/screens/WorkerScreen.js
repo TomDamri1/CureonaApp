@@ -106,7 +106,7 @@ const WorkerScreen = props => {
             company_id: company_id,
             key: entranceKey,
         }))
-        const response = await fetch(Urls.routes.letsUserIntoBusiness, {
+        const response = await fetch(Urls.routes.letsUserOutBusiness, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
