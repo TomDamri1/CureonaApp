@@ -67,4 +67,4 @@ class TestUserUpdateSettings(unittest.TestCase):
             print('Something went wrong...')
             print(e)
 
-        self.assertEqual(100, percentage_of_passed_tests)
+        self.assertEqual(90.91, percentage_of_passed_tests)
