@@ -3,7 +3,7 @@ import smtplib
 import unittest
 
 
-class TestUserUpdateSettings(unittest.TestCase):
+class TestURLs(unittest.TestCase):
 
     def test_Change_amount_of_people_in_a_business(self):
         MainURL = 'https://curona.herokuapp.com/'
