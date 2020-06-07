@@ -91,15 +91,15 @@ pipeline {
             }
             steps {
 
-                sh 'python -m py_compile tests/measure_url_response.py'
+                sh 'py.test --verbose --junit-xml test-reports/measure.xml tests/measure_url_response.py'
 
             }
             post {
                 failure {
-                    mail to: 'cureonaapp@gmail.com',subject: 'failed2',body: 'Test failed2'
+                    mail to: 'cureonaapp@gmail.com',subject: 'url measure failed',body: 'Test failed2'
                 }
                 success {
-                    mail to: 'cureonaapp@gmail.com',subject: 'success2',body: 'Test success2'
+                    mail to: 'cureonaapp@gmail.com',subject: 'url measure success',body: 'Test success2'
                 }
 
             }
