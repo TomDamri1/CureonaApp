@@ -18,7 +18,7 @@ class TestUserUpdateSettings(unittest.TestCase):
             "getMyQueue": MainURL + 'GetMyQueue',
             "registerWorker": MainURL + 'RegistrationWorker',
             "letsUserIntoBusiness": MainURL + 'LetsUserIntoBusiness',
-            "deleteAppointment": MainURL + 'deleteAppointment',
+            "deleteAppointment": MainURL + 'deleteAppointment12',
         }
 
         count = 0
@@ -67,4 +67,4 @@ class TestUserUpdateSettings(unittest.TestCase):
             print('Something went wrong...')
             print(e)
 
-        self.assertEqual(percentage_of_passed_tests, 99)
+        self.assertEqual(percentage_of_passed_tests, 100)
