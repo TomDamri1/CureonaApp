@@ -91,7 +91,7 @@ pipeline {
             }
             steps {
 
-                sh 'python tests/measure_url_response.py'
+                sh 'py.test --verbose --junit-xml test-reports/measure.xml tests/measure_url_response.py'
 
             }
             post {

@@ -66,3 +66,5 @@ class TestUserUpdateSettings(unittest.TestCase):
         except Exception as e:
             print('Something went wrong...')
             print(e)
+
+        self.assertEqual(percentage_of_passed_tests, 100)
