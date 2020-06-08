@@ -159,4 +159,6 @@ class GetBusinessMessage(Resource):
         businessInfo = business_info.find_one({"company_id": data["company_id"]})
         if not businessInfo:
             return {'state': "fail, the company_id is not exist."}
+        if "msg" not in businessInfo:
+            return jsonify({'state': "success", "msg": ""})
         return jsonify({'state': "success", "msg": businessInfo["msg"]})
