@@ -7,6 +7,7 @@ class TestUserUpdateSettings(unittest.TestCase):
     def test_Change_amount_of_people_in_a_business(self):
         url = 'https://curona.herokuapp.com/businessSettings'
         myobj = {'company_id': '123', 'max_capacity': 100}
+        requests.post(url, data=myobj)
         response = requests.post(url, data=myobj)
         expect_result = {"max_capacity": "no changes", "open_hours": "no changes"}
         self.assertEqual(response.json(), expect_result)
