@@ -3,7 +3,7 @@ from flask_restful import reqparse, Resource
 
 from server.help_funcs import *
 
-my_queue = new_db["user_queue"]
+my_queue = testDB["user_queue"]
 
 GetMyQueue_parser = reqparse.RequestParser()
 GetMyQueue_parser.add_argument('username', required=True, help="username name cannot be blank!")

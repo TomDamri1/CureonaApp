@@ -10,9 +10,9 @@ import datetime
 import calendar
 import pytz
 
-user_queue = new_db["user_queue"]
-business_info = new_db["business_info"]
-login = new_db["login"]
+user_queue = testDB["user_queue"]
+business_info = testDB["business_info"]
+login = testDB["login"]
 
 # ----------------------------------------
 timeZone = pytz.timezone('Israel')

@@ -7,8 +7,8 @@ from server.mongo_connection import *
 from server.help_funcs import *
 import hashlib
 
-new_col = new_db["login"]
-business_info = new_db["business_info"]
+new_col = testDB["login"]
+business_info = testDB["business_info"]
 
 Login_parser = reqparse.RequestParser()
 Login_parser.add_argument('username', required=True, help="username cannot be blank!")

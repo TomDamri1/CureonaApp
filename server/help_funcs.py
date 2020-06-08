@@ -7,7 +7,7 @@ import random
 
 from server.mongo_connection import *
 
-db = new_db["business_info"]
+db = testDB["business_info"]
 business_info, business_settings = db, db
 
 

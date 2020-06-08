@@ -3,8 +3,8 @@ from flask_restful import reqparse, Resource
 
 from server.help_funcs import *
 
-db_business = new_db["business_info"]
-db_login = new_db["login"]
+db_business = testDB["business_info"]
+db_login = testDB["login"]
 get_my_workers_parser = reqparse.RequestParser()
 get_my_workers_parser.add_argument('username', required=True, help="username name cannot be blank!")
 
