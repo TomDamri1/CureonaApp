@@ -67,4 +67,4 @@ class TestURLs(unittest.TestCase):
             print('Something went wrong...')
             print(e)
         print(percentage_of_passed_tests)
-        self.assertEqual(100, percentage_of_passed_tests)
+        self.assertEqual(str(100), str(percentage_of_passed_tests))
