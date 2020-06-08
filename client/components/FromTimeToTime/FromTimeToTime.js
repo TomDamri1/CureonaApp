@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Alert } from 'react-native'
 import { generateHourList, generateMinuteList } from './FromTimeToTimeFunctions'
 import IOSModal from '../IOSPicker/IOSPicker';
 
+let EnterCount = 0;
+
 const hourValidation = (startHour, startMinute, endHour, endMinute) => {
   const start_hour = parseInt(startHour);
   const end_hour = parseInt(endHour);
@@ -14,9 +16,8 @@ const hourValidation = (startHour, startMinute, endHour, endMinute) => {
     return false;
   }
   else if (start_hour == end_hour && end_minute - start_minute < 30) {
-    Alert.alert("Warning", "This hours seems impposible");
-    return false;
-  }
+      return false;
+  }  
   else if (start_hour - end_hour == 1 && end_minute - start_minute <= -15) {
     Alert.alert("Warning", "This hours seems impposible");
     return false;

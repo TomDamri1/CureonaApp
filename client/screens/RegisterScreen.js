@@ -157,6 +157,7 @@ const RegisterScreen = props => {
             params: {
               username: username,
               businessName: businessName,
+              company_id : cid,
             }
           })
         }

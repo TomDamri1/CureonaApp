@@ -24,6 +24,7 @@ const BusinessOwnerchangesScreen = props => {
 
   */
 
+  let EntringCount = 0;
   const checkBreakValidation = () => {
     if (!secondTimeNeeded) {
       return true;
