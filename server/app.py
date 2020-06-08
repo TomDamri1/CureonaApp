@@ -9,7 +9,7 @@ from server.queue_management import *
 from server.MyQueue import *
 from server.user import *
 from server.my_workers import *
-
+from server.measures import *
 # creating the flask app
 app = Flask(__name__)
 # creating an API object
@@ -48,8 +48,8 @@ api.add_resource(getAmountOfCostumersForDayAndHour, '/AmountForDayAndHour')
 api.add_resource(UpdateMyMessage, '/UpdateMyMessage')
 api.add_resource(GetBusinessMessage, '/GetBusinessMessage')
 api.add_resource(getPreciseAmountOfCostumers, '/PreciseAmount')
-
-
+api.add_resource(MeasureUrlsResponse, '/MeasureUrlsResponse')
+# api.add_resource(MeasureUrlsResponseTime, '/MeasureUrlsResponseTime')
 # driver function
 
 if __name__ == '__main__':
