@@ -24,7 +24,7 @@ pipeline {
 
         }
 
-        stage('Test') {
+        stage('Unit tests') {
 
             agent {
 
@@ -56,7 +56,7 @@ pipeline {
             }
 
          }
-        stage('integration testing') {
+        stage('Integration tests') {
 
             agent {
 
@@ -78,7 +78,7 @@ pipeline {
 
         }
 
-        stage('measure to urls activity') {
+        stage('Measure to urls activity') {
 
             agent {
 
