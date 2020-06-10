@@ -3,12 +3,12 @@ import smtplib
 import unittest
 
 
-class TestURLs(unittest.TestCase):
+class TestURLsResponseTime(unittest.TestCase):
 
-    def test_UrlsResponse(self):
+    def test_UrlsResponseTime(self):
         MainURL = 'https://curona.herokuapp.com/'
         routes = {
-            "login": MainURL + 'Login',
+             "login": MainURL + 'Login',
             "register": MainURL + 'Registration',
             "makeAnAppointment": MainURL + 'GetQueue',
             "availableQueues": MainURL + 'AvailableQueues',
@@ -37,8 +37,9 @@ class TestURLs(unittest.TestCase):
             res += "checking " + key + "... "
             myobj = dict()
             response = requests.post(value, data=myobj)
-            response = str(response)
-            if response != "<Response [404]>":
+            print(key)
+            print(response.elapsed.total_seconds())
+            if response.elapsed.total_seconds() < 1.5:
                 count += 1
                 res += "OK\n"
             else:
@@ -60,13 +61,13 @@ class TestURLs(unittest.TestCase):
         From: %s
         To: %s
         Subject: %s
-        
+
         %s
         """ % (sent_from, ", ".join(to), subject, body)
 
         try:
             server = smtplib.SMTP('smtp.gmail.com', 587)
-            #server.connect("smtp.gmail.com", 468)
+            # server.connect("smtp.gmail.com", 468)
             server.ehlo()
             server.starttls()
             server.login(gmail_user, gmail_password)
