@@ -106,7 +106,7 @@ pipeline {
 
         }
 
-        stage('measure to urls response time') {
+        stage('Measure to urls response time') {
 
             agent {
 
