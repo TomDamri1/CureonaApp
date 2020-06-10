@@ -96,10 +96,38 @@ pipeline {
             }
             post {
                 failure {
-                    mail to: 'cureonaapp@gmail.com',subject: 'url measure failed',body: 'Test failed2'
+                    mail to: 'cureonaapp@gmail.com',subject: 'url response measure failed',body: 'One of the urls is not responding'
                 }
                 success {
-                    mail to: 'cureonaapp@gmail.com',subject: 'url measure success',body: 'Test success2'
+                    mail to: 'cureonaapp@gmail.com',subject: 'url response measure success',body: 'all the urls is responding'
+                }
+
+            }
+
+        }
+
+        stage('measure to urls response time') {
+
+            agent {
+
+                docker {
+
+                    image 'qnib/pytest'
+
+                }
+
+            }
+            steps {
+
+                sh 'py.test --verbose --junit-xml test-reports/measure.xml tests/measure_url_response_time.py'
+
+            }
+            post {
+                failure {
+                    mail to: 'cureonaapp@gmail.com',subject: 'url response time measure failed',body: 'one of the urls responding very slowly'
+                }
+                success {
+                    mail to: 'cureonaapp@gmail.com',subject: 'url response time measure success',body: 'all urls respond at reasonable time'
                 }
 
             }
